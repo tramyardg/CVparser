@@ -19,14 +19,12 @@ import com.cv.parser.FileExtension.Ext;
 import com.cv.parser.FileFinderByExt;
 
 public class PDFExtractor extends ExtractFiles implements IExtractor {
-
 	Logger logger = LoggerFactory.getLogger(PDFExtractor.class);
 
 	FileExtension fe = new FileExtension();
 	FileFinderByExt find = new FileFinderByExt();
 
 	File[] pdfFiles;
-
 	List<String> contents = new ArrayList<String>();
 
 	public PDFExtractor(Button btnExtractContents, File[] filesInPublicDir, Table tableExtractedContent) {
@@ -41,7 +39,6 @@ public class PDFExtractor extends ExtractFiles implements IExtractor {
 
 	public void setFiles() {
 		this.pdfFiles = find.finder(fe.get(Ext.PDF));
-
 	}
 
 	public void extractFiles() {
