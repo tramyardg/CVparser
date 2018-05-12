@@ -32,7 +32,7 @@ public class MSExtractor extends ExtractFiles implements IExtractor {
 	FileExtension fe = new FileExtension();
 	FileFinderByExt find = new FileFinderByExt();
 
-	File[] combinedMSDocs;
+	File[] msDocs;
 	List<String> contents = new ArrayList<String>();
 
 	public MSExtractor(Button btnExtractContents, File[] filesInPublicDir, Table tableExtractedContent) {
@@ -49,16 +49,16 @@ public class MSExtractor extends ExtractFiles implements IExtractor {
 		File[] doc = find.finder(fe.get(Ext.DOC));
 		File[] docx = find.finder(fe.get(Ext.DOCX));
 		if (doc.length != 0 && docx.length != 0) {
-			this.combinedMSDocs = ArrayUtils.addAll(doc, docx);
+			this.msDocs = ArrayUtils.addAll(doc, docx);
 		} else if (doc.length != 0) {
-			this.combinedMSDocs = doc;
+			this.msDocs = doc;
 		} else if (docx.length != 0) {
-			this.combinedMSDocs = docx;
+			this.msDocs = docx;
 		}
 	}
 
 	public void extractFiles() {
-		for (File file : combinedMSDocs) {
+		for (File file : msDocs) {
 			FileInputStream fs = null;
 			XWPFDocument msDoc = null;
 			XWPFWordExtractor we = null;
