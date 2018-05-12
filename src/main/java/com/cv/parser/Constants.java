@@ -17,7 +17,7 @@ public class Constants {
 		return instance;
 	}
 
-	String resumesStoragePath = "public";
+	String resumesStoragePath = "public_";
 	public final Color yellow = Display.getDefault().getSystemColor(SWT.COLOR_YELLOW);
 	public final Color green = Display.getDefault().getSystemColor(SWT.COLOR_GREEN);
 }

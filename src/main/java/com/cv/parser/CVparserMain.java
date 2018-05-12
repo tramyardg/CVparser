@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cv.parser.extract.ExtractFiles;
 import com.cv.parser.read.ReadFiles;
 
 public class CVparserMain {
@@ -63,7 +64,6 @@ public class CVparserMain {
 
 		checkIfDirExist();
 		
-
 		File[] filesInPublicDir = this.resumesStoragePath.listFiles();
 		
 		Button btnReadDir = new Button(shell, SWT.NONE);
@@ -122,9 +122,8 @@ public class CVparserMain {
 		tblclmnContents.setWidth(592);
 		tblclmnContents.setText("Contents");
 
-		// ParseFiles pf = new ParseFiles(btnExtractContents, listOfFiles,
-		// tableExtractedContent);
-		// pf.run();
+		// extract file content from directory
+		new ExtractFiles(btnExtractContents, filesInPublicDir, tableExtractedContent).run();
 
 	}
 

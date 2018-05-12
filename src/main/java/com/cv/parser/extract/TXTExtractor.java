@@ -1,6 +1,21 @@
 package com.cv.parser.extract;
 
-public class TXTExtractor implements IExtractor {
+import java.io.File;
+
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Table;
+
+public class TXTExtractor extends ExtractFiles implements IExtractor {
+
+	public TXTExtractor(Button btnExtractContents, File[] filesInPublicDir, Table tableExtractedContent) {
+		super(btnExtractContents, filesInPublicDir, tableExtractedContent);
+	}
+	
+	public void main() {
+		setFiles();
+		extractFiles();
+		displayIntable();
+	}
 
 	public void setFiles() {
 		// TODO Auto-generated method stub
@@ -17,10 +32,6 @@ public class TXTExtractor implements IExtractor {
 		
 	}
 
-	public void main() {
-		setFiles();
-		extractFiles();
-		displayIntable();
-	}
+	
 
 }
