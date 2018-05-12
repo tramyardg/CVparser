@@ -60,7 +60,7 @@ public class CVparserMain {
 	protected void createContents() {
 		shell = new Shell();
 		shell.setSize(741, 544);
-		shell.setText("SWT Application");
+		shell.setText("Resume Parser Application");
 
 		checkIfDirExist();
 		
