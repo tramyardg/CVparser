@@ -18,7 +18,7 @@ import com.cv.parser.read.ReadFiles;
 
 public class CVparserMain {
 
-	File resumesStoragePath = new File(Constants.getInstance().resumesStoragePath);
+	File resumesStoragePath = new File(CVparserSingleton.getInstance().resumesStoragePath);
 
 	static Logger logger = LoggerFactory.getLogger(CVparserMain.class);
 

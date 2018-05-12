@@ -27,8 +27,8 @@ public class ExtractFiles {
 		btnExtractContents.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(org.eclipse.swt.widgets.Event arg0) {
 				new PDFExtractor(btnExtractContents, filesInPublicDir, tableExtractedContent).main();
-				new MSExtractor(btnExtractContents, filesInPublicDir, tableExtractedContent).main();
-				new TXTExtractor(btnExtractContents, filesInPublicDir, tableExtractedContent).main();
+//				new MSExtractor(btnExtractContents, filesInPublicDir, tableExtractedContent).main();
+//				new TXTExtractor(btnExtractContents, filesInPublicDir, tableExtractedContent).main();
 				btnExtractContents.setEnabled(false);
 			}
 		});

@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cv.parser.Constants;
+import com.cv.parser.CVparserSingleton;
 import com.cv.parser.FileExtension;
 import com.cv.parser.FileExtension.Ext;
 
@@ -67,7 +67,7 @@ public class ReadFiles {
 					item.setText(new String[] { (i + 1) + "", ext, fileName });
 				} else {
 					item.setText(new String[] { (i + 1) + "", ext, fileName });
-					item.setBackground(Constants.getInstance().yellow);
+					item.setBackground(CVparserSingleton.getInstance().yellow);
 				}
 			}
 		}

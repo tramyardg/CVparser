@@ -8,7 +8,7 @@ import com.cv.parser.FileExtension.Ext;
 
 public class FileFinderByExt {
 
-	private File resumeStorage = new File(Constants.getInstance().resumesStoragePath);
+	private File resumeStorage = new File(CVparserSingleton.getInstance().resumesStoragePath);
 
 	/**
 	 * It returns an array of files given an extension.

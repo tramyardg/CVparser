@@ -4,20 +4,20 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
 
-public class Constants {
-	private static Constants instance;
+public class CVparserSingleton {
+	private static CVparserSingleton instance;
 
-	private Constants() {
+	private CVparserSingleton() {
 	}
 
-	public static Constants getInstance() {
+	public static CVparserSingleton getInstance() {
 		if (instance == null) {
-			instance = new Constants();
+			instance = new CVparserSingleton();
 		}
 		return instance;
 	}
 
-	String resumesStoragePath = "public_";
+	String resumesStoragePath = "public";
 	public final Color yellow = Display.getDefault().getSystemColor(SWT.COLOR_YELLOW);
 	public final Color green = Display.getDefault().getSystemColor(SWT.COLOR_GREEN);
 }
