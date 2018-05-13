@@ -8,5 +8,4 @@ public interface IExtractor {
 
     void extractFiles();
 
-    void displayIntable();
 }

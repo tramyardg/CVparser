@@ -7,10 +7,8 @@ import java.util.List;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +32,6 @@ public class PDFExtractor extends ExtractFiles implements IExtractor {
     public void main() {
 	setFiles();
 	extractFiles();
-	displayIntable();
     }
 
     public void setFiles() {
@@ -54,12 +51,8 @@ public class PDFExtractor extends ExtractFiles implements IExtractor {
 	    }
 	}
     }
-
-    public void displayIntable() {
-	for (int i = 0; i < contents.size(); i++) {
-	    TableItem item = new TableItem(tableExtractedContent, SWT.NONE);
-	    item.setText(new String[] { "PDF", contents.get(i) });
-	}
+    
+    public List<String> getContents() {
+	return contents;
     }
-
 }

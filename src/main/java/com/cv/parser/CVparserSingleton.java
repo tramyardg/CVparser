@@ -17,7 +17,7 @@ public class CVparserSingleton {
 	return instance;
     }
 
-    String resumesStoragePath = "public";
+    public String resumesStoragePath = "public";
     public final Color yellow = Display.getDefault().getSystemColor(SWT.COLOR_YELLOW);
     public final Color green = Display.getDefault().getSystemColor(SWT.COLOR_GREEN);
 }
