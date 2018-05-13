@@ -19,48 +19,48 @@ import com.cv.parser.FileExtension.Ext;
 import com.cv.parser.FileFinderByExt;
 
 public class PDFExtractor extends ExtractFiles implements IExtractor {
-	Logger logger = LoggerFactory.getLogger(PDFExtractor.class);
+    Logger logger = LoggerFactory.getLogger(PDFExtractor.class);
 
-	FileExtension fe = new FileExtension();
-	FileFinderByExt find = new FileFinderByExt();
+    FileExtension fe = new FileExtension();
+    FileFinderByExt find = new FileFinderByExt();
 
-	File[] pdfFiles;
-	List<String> contents = new ArrayList<String>();
+    File[] pdfFiles;
+    List<String> contents = new ArrayList<String>();
 
-	public PDFExtractor(Button btnExtractContents, File[] filesInPublicDir, Table tableExtractedContent) {
-		super(btnExtractContents, filesInPublicDir, tableExtractedContent);
+    public PDFExtractor(Button btnExtractContents, File[] filesInPublicDir, Table tableExtractedContent) {
+	super(btnExtractContents, filesInPublicDir, tableExtractedContent);
+    }
+
+    public void main() {
+	setFiles();
+	extractFiles();
+	displayIntable();
+    }
+
+    public void setFiles() {
+	this.pdfFiles = find.finder(fe.get(Ext.PDF));
+    }
+
+    public void extractFiles() {
+	for (File file : pdfFiles) {
+	    try {
+		PDDocument document = PDDocument.load(file);
+		PDFTextStripper pdfStripper = new PDFTextStripper();
+		this.contents.add(pdfStripper.getText(document));
+		logger.info(pdfStripper.getText(document)); // for debugging
+		document.close();
+	    } catch (IOException e) {
+		logger.error(e.toString());
+	    }
+	}
+    }
+
+    public void displayIntable() {
+	for (int i = 0; i < contents.size(); i++) {
+	    TableItem item = new TableItem(tableExtractedContent, SWT.NONE);
+	    item.setText(new String[] { "PDF", contents.get(i) });
 	}
 
-	public void main() {
-		setFiles();
-		extractFiles();
-		displayIntable();
-	}
-
-	public void setFiles() {
-		this.pdfFiles = find.finder(fe.get(Ext.PDF));
-	}
-
-	public void extractFiles() {
-		for (File file : pdfFiles) {
-			try {
-				PDDocument document = PDDocument.load(file);
-				PDFTextStripper pdfStripper = new PDFTextStripper();
-				this.contents.add(pdfStripper.getText(document));
-				logger.info(pdfStripper.getText(document)); // for debugging
-				document.close();
-			} catch (IOException e) {
-				logger.error(e.toString());
-			}
-		}
-	}
-
-	public void displayIntable() {
-		for (int i = 0; i < contents.size(); i++) {
-			TableItem item = new TableItem(tableExtractedContent, SWT.NONE);
-			item.setText(new String[] { "PDF", contents.get(i) });
-		}
-
-	}
+    }
 
 }

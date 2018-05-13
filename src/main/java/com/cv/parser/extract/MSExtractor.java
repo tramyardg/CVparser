@@ -23,72 +23,73 @@ import com.cv.parser.FileFinderByExt;
 
 /**
  * Supports MS Word 2004+.
+ * 
  * @author RAYMARTHINKPAD
  *
  */
 public class MSExtractor extends ExtractFiles implements IExtractor {
-	Logger logger = LoggerFactory.getLogger(MSExtractor.class);
+    Logger logger = LoggerFactory.getLogger(MSExtractor.class);
 
-	FileExtension fe = new FileExtension();
-	FileFinderByExt find = new FileFinderByExt();
+    FileExtension fe = new FileExtension();
+    FileFinderByExt find = new FileFinderByExt();
 
-	File[] msDocs;
-	List<String> contents = new ArrayList<String>();
+    File[] msDocs;
+    List<String> contents = new ArrayList<String>();
 
-	public MSExtractor(Button btnExtractContents, File[] filesInPublicDir, Table tableExtractedContent) {
-		super(btnExtractContents, filesInPublicDir, tableExtractedContent);
+    public MSExtractor(Button btnExtractContents, File[] filesInPublicDir, Table tableExtractedContent) {
+	super(btnExtractContents, filesInPublicDir, tableExtractedContent);
+    }
+
+    public void main() {
+	setFiles();
+	extractFiles();
+	displayIntable();
+    }
+
+    public void setFiles() {
+	File[] doc = find.finder(fe.get(Ext.DOC));
+	File[] docx = find.finder(fe.get(Ext.DOCX));
+	if (doc.length != 0 && docx.length != 0) {
+	    this.msDocs = ArrayUtils.addAll(doc, docx);
+	} else if (doc.length != 0) {
+	    this.msDocs = doc;
+	} else if (docx.length != 0) {
+	    this.msDocs = docx;
 	}
+    }
 
-	public void main() {
-		setFiles();
-		extractFiles();
-		displayIntable();
-	}
-
-	public void setFiles() {
-		File[] doc = find.finder(fe.get(Ext.DOC));
-		File[] docx = find.finder(fe.get(Ext.DOCX));
-		if (doc.length != 0 && docx.length != 0) {
-			this.msDocs = ArrayUtils.addAll(doc, docx);
-		} else if (doc.length != 0) {
-			this.msDocs = doc;
-		} else if (docx.length != 0) {
-			this.msDocs = docx;
+    public void extractFiles() {
+	for (File file : msDocs) {
+	    FileInputStream fs = null;
+	    XWPFDocument msDoc = null;
+	    XWPFWordExtractor we = null;
+	    try {
+		fs = new FileInputStream(file);
+		msDoc = new XWPFDocument(fs);
+		we = new XWPFWordExtractor(msDoc);
+		this.contents.add(we.getText());
+		logger.info(we.getText());
+	    } catch (FileNotFoundException e) {
+		logger.error(e.getMessage());
+	    } catch (IOException e) {
+		logger.error(e.getMessage());
+	    } finally {
+		try {
+		    we.close();
+		    msDoc.close();
+		    fs.close();
+		} catch (IOException e) {
+		    logger.error(e.getMessage());
 		}
+	    }
 	}
+    }
 
-	public void extractFiles() {
-		for (File file : msDocs) {
-			FileInputStream fs = null;
-			XWPFDocument msDoc = null;
-			XWPFWordExtractor we = null;
-			try {
-				fs = new FileInputStream(file);
-				msDoc = new XWPFDocument(fs);
-				we = new XWPFWordExtractor(msDoc);
-				this.contents.add(we.getText());
-				logger.info(we.getText());
-			} catch (FileNotFoundException e) {
-				logger.error(e.getMessage());
-			} catch (IOException e) {
-				logger.error(e.getMessage());
-			} finally {
-				try {
-					we.close();
-					msDoc.close();
-					fs.close();
-				} catch (IOException e) {
-					logger.error(e.getMessage());
-				}
-			}
-		}
+    public void displayIntable() {
+	for (int i = 0; i < contents.size(); i++) {
+	    TableItem item = new TableItem(tableExtractedContent, SWT.NONE);
+	    item.setText(new String[] { "MSWORD", contents.get(i) });
 	}
-
-	public void displayIntable() {
-		for (int i = 0; i < contents.size(); i++) {
-			TableItem item = new TableItem(tableExtractedContent, SWT.NONE);
-			item.setText(new String[] { "MSWORD", contents.get(i) });
-		}
-	}
+    }
 
 }

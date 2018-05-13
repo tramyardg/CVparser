@@ -5,11 +5,11 @@ import java.util.List;
 
 public interface IExtractor {
 
-	void main();
-	
-	void setFiles();
+    void main();
 
-	void extractFiles();
+    void setFiles();
 
-	void displayIntable();
+    void extractFiles();
+
+    void displayIntable();
 }
