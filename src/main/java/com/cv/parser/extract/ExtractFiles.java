@@ -12,6 +12,8 @@ import org.eclipse.swt.widgets.TableItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cv.parser.applicant.StoreDetails;
+
 public class ExtractFiles {
     Logger logger = LoggerFactory.getLogger(ExtractFiles.class);
 
@@ -47,6 +49,10 @@ public class ExtractFiles {
 		setAllContents(contents);
 		displayIntable();
 
+		StoreDetails sd = new StoreDetails(contents);
+		sd.storeDetails();
+		logger.info(sd.getJobApplicantList().get(0).toString());
+		
 		btnExtractContents.setEnabled(false);
 	    }
 	    

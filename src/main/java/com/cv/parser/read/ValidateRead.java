@@ -9,10 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.cv.parser.CVparserSingleton;
-import com.cv.parser.extract.TXTExtractor;
 
 public class ValidateRead {
-    Logger logger = LoggerFactory.getLogger(TXTExtractor.class);
+    Logger logger = LoggerFactory.getLogger(ValidateRead.class);
     
     File resumesStoragePath = new File(CVparserSingleton.getInstance().resumesStoragePath);
     Shell shell;

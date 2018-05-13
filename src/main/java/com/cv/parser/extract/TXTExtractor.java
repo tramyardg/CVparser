@@ -58,7 +58,7 @@ public class TXTExtractor extends ExtractFiles implements IExtractor {
 		logger.error(e.getMessage());
 	    }
 	}
-	logger.info(contents.toString()); // for debugging
+	//logger.info(contents.toString()); // for debugging
     }
     
     public List<String> getContents() {
