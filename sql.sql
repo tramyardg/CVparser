@@ -40,5 +40,12 @@ CREATE TABLE `applicantexperience` (
   PRIMARY KEY (`idexp`,`idapplicant`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `applicantdocument` (
+  `idapplicant` int(11) NOT NULL,
+  `document` blob,
+  PRIMARY KEY (`idapplicant`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Table to store document.';
+
+
 
 
