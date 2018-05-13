@@ -17,7 +17,6 @@ import com.cv.parser.FileExtension;
 import com.cv.parser.FileExtension.Ext;
 
 public class ReadFiles {
-
     Logger logger = LoggerFactory.getLogger(ReadFiles.class);
 
     private Button btnReadDir;
@@ -25,8 +24,6 @@ public class ReadFiles {
     private Table tableDirContent;
 
     private FileExtension fe = new FileExtension();
-
-    private boolean isDoneReading;
 
     public ReadFiles(Button btnReadDir, File[] filesInPublicDir, Table tableDirContent) {
 	this.btnReadDir = btnReadDir;
@@ -70,9 +67,4 @@ public class ReadFiles {
 	    }
 	}
     }
-
-    public boolean getIsDoneReading() {
-	return isDoneReading;
-    }
-
 }

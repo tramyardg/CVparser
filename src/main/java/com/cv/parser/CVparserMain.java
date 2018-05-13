@@ -17,11 +17,9 @@ import com.cv.parser.extract.ExtractFiles;
 import com.cv.parser.read.ReadFiles;
 
 public class CVparserMain {
-
-    File resumesStoragePath = new File(CVparserSingleton.getInstance().resumesStoragePath);
-
     static Logger logger = LoggerFactory.getLogger(CVparserMain.class);
-
+    
+    File resumesStoragePath = new File(CVparserSingleton.getInstance().resumesStoragePath);
     protected Shell shell;
 
     /**
@@ -128,7 +126,7 @@ public class CVparserMain {
 
     }
 
-    private boolean noResumesInPublicDir() {
+    private boolean isPublicDirContainsResume() {
 	if (this.resumesStoragePath.listFiles().length == 0) {
 	    MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING);
 	    messageBox.setText("Warning");
@@ -155,7 +153,7 @@ public class CVparserMain {
 		logger.error("Directory public not found!");
 	    }
 	} else {
-	    if (!noResumesInPublicDir()) {
+	    if (!isPublicDirContainsResume()) {
 		return;
 	    }
 	}

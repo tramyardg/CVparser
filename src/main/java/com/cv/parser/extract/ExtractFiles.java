@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ExtractFiles {
-
     Logger logger = LoggerFactory.getLogger(ExtractFiles.class);
 
     Button btnExtractContents;

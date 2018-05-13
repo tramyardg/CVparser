@@ -60,7 +60,6 @@ public class PDFExtractor extends ExtractFiles implements IExtractor {
 	    TableItem item = new TableItem(tableExtractedContent, SWT.NONE);
 	    item.setText(new String[] { "PDF", contents.get(i) });
 	}
-
     }
 
 }

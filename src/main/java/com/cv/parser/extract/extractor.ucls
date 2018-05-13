@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <interface id="1" language="java" name="com.cv.parser.extract.IExtractor" project="CVparser" 
     file="/CVparser/src/main/java/com/cv/parser/extract/IExtractor.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="350" y="146"/>    
+    <position height="-1" width="-1" x="561" y="725"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -39,7 +39,7 @@
   </class>  
   <class id="5" language="java" name="com.cv.parser.extract.ExtractFiles" project="CVparser" 
     file="/CVparser/src/main/java/com/cv/parser/extract/ExtractFiles.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="171" width="243" x="551" y="62"/>    
+    <position height="171" width="243" x="437" y="110"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
