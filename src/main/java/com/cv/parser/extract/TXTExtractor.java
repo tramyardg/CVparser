@@ -8,10 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +33,6 @@ public class TXTExtractor extends ExtractFiles implements IExtractor {
     public void main() {
 	setFiles();
 	extractFiles();
-	displayIntable();
     }
 
     public void setFiles() {
@@ -61,14 +58,10 @@ public class TXTExtractor extends ExtractFiles implements IExtractor {
 		logger.error(e.getMessage());
 	    }
 	}
-	logger.info(contents.toString()); // for debugging
+	//logger.info(contents.toString()); // for debugging
     }
-
-    public void displayIntable() {
-	for (int i = 0; i < contents.size(); i++) {
-	    TableItem item = new TableItem(tableExtractedContent, SWT.NONE);
-	    item.setText(new String[] { "TEXT FILE", contents.get(i) });
-	}
+    
+    public List<String> getContents() {
+	return contents;
     }
-
 }

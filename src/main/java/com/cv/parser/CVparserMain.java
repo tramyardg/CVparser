@@ -6,7 +6,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -15,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import com.cv.parser.extract.ExtractFiles;
 import com.cv.parser.read.ReadFiles;
+import com.cv.parser.read.ValidateRead;
 
 public class CVparserMain {
     static Logger logger = LoggerFactory.getLogger(CVparserMain.class);
@@ -60,7 +60,7 @@ public class CVparserMain {
 	shell.setSize(741, 544);
 	shell.setText("Resume Parser Application");
 
-	checkIfDirExist();
+	new ValidateRead(shell).validateBeforeRead();
 
 	File[] filesInPublicDir = this.resumesStoragePath.listFiles();
 
@@ -113,49 +113,13 @@ public class CVparserMain {
 	tableExtractedContent.setHeaderVisible(true);
 	tableExtractedContent.setLinesVisible(true);
 
-	TableColumn tblclmnNewColumn = new TableColumn(tableExtractedContent, SWT.NONE);
-	tblclmnNewColumn.setWidth(71);
-	tblclmnNewColumn.setText("Type");
-
 	TableColumn tblclmnContents = new TableColumn(tableExtractedContent, SWT.NONE);
-	tblclmnContents.setWidth(592);
+	tblclmnContents.setWidth(664);
 	tblclmnContents.setText("Contents");
 
 	// extract file content from directory
-	new ExtractFiles(btnExtractContents, filesInPublicDir, tableExtractedContent).run();
+	ExtractFiles ef = new ExtractFiles(btnExtractContents, filesInPublicDir, tableExtractedContent);
+	ef.run();
 
-    }
-
-    private boolean isPublicDirContainsResume() {
-	if (this.resumesStoragePath.listFiles().length == 0) {
-	    MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING);
-	    messageBox.setText("Warning");
-	    messageBox.setMessage("No resume files found in public directory.");
-
-	    int buttonID = messageBox.open();
-	    if (buttonID == SWT.OK) {
-		logger.error("No resumes found");
-	    }
-	    return false;
-	} else {
-	    return true;
-	}
-    }
-
-    private void checkIfDirExist() {
-	if (!this.resumesStoragePath.exists()) {
-	    MessageBox messageBox = new MessageBox(shell, SWT.ICON_ERROR);
-	    messageBox.setText("Error");
-	    messageBox.setMessage("Directory public not found!");
-
-	    int buttonID = messageBox.open();
-	    if (buttonID == SWT.OK) {
-		logger.error("Directory public not found!");
-	    }
-	} else {
-	    if (!isPublicDirContainsResume()) {
-		return;
-	    }
-	}
     }
 }

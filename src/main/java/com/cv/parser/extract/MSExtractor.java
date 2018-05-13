@@ -10,10 +10,8 @@ import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +41,6 @@ public class MSExtractor extends ExtractFiles implements IExtractor {
     public void main() {
 	setFiles();
 	extractFiles();
-	displayIntable();
     }
 
     public void setFiles() {
@@ -68,7 +65,7 @@ public class MSExtractor extends ExtractFiles implements IExtractor {
 		msDoc = new XWPFDocument(fs);
 		we = new XWPFWordExtractor(msDoc);
 		this.contents.add(we.getText());
-		logger.info(we.getText());
+		//logger.info(we.getText());
 	    } catch (FileNotFoundException e) {
 		logger.error(e.getMessage());
 	    } catch (IOException e) {
@@ -84,12 +81,8 @@ public class MSExtractor extends ExtractFiles implements IExtractor {
 	    }
 	}
     }
-
-    public void displayIntable() {
-	for (int i = 0; i < contents.size(); i++) {
-	    TableItem item = new TableItem(tableExtractedContent, SWT.NONE);
-	    item.setText(new String[] { "MSWORD", contents.get(i) });
-	}
+    
+    public List<String> getContents() {
+	return contents;
     }
-
 }
