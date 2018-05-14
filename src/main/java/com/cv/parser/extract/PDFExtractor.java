@@ -44,7 +44,6 @@ public class PDFExtractor implements IExtractor {
 		PDDocument document = PDDocument.load(file);
 		PDFTextStripper pdfStripper = new PDFTextStripper();
 		this.contents.add(pdfStripper.getText(document));
-		//logger.info(pdfStripper.getText(document)); // for debugging
 		document.close();
 	    } catch (IOException e) {
 		logger.error(e.toString());

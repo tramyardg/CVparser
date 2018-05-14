@@ -58,7 +58,6 @@ public class TXTExtractor implements IExtractor {
 		logger.error(e.getMessage());
 	    }
 	}
-	//logger.info(contents.toString()); // for debugging
     }
     
     public List<String> getContents() {

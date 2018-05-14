@@ -23,14 +23,14 @@ public class ExtractFiles {
 	this.tableExtractedContent = tableExtractedContent;
     }
 
-    public void run() {
+    public void handleButtonClick() {
 	btnExtractContents.addListener(SWT.Selection, new Listener() {
 	    public void handleEvent(org.eclipse.swt.widgets.Event arg0) {
 		displayDocumentsInTable();
 		btnExtractContents.setEnabled(false);
 	    }
 
-	    public void displayDocumentsInTable() {
+	    private void displayDocumentsInTable() {
 		for (int i = 0; i < superList.size(); i++) {
 		    TableItem item = new TableItem(tableExtractedContent, SWT.NONE);
 		    item.setText(new String[] { superList.get(i) });

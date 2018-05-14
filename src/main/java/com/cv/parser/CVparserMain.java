@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cv.parser.applicant.DocumentDetails;
 import com.cv.parser.extract.ExtractFiles;
 import com.cv.parser.extract.MSExtractor;
 import com.cv.parser.extract.PDFExtractor;
@@ -110,8 +111,8 @@ public class CVparserMain {
 	btnExtractContents.setBounds(10, 170, 705, 25);
 	btnExtractContents.setText("Extract contents");
 
-	// read files in public directory
-	new ReadFiles(btnReadDir, filesInPublicDir, tableDirContent).run();
+	/** read files in public directory START **/
+	new ReadFiles(btnReadDir, filesInPublicDir, tableDirContent).handleButtonClick();
 
 	Table tableExtractedContent = new Table(shell, SWT.BORDER | SWT.FULL_SELECTION);
 	tableExtractedContent.setBounds(10, 201, 705, 107);
@@ -121,33 +122,38 @@ public class CVparserMain {
 	TableColumn tblclmnContents = new TableColumn(tableExtractedContent, SWT.NONE);
 	tblclmnContents.setWidth(664);
 	tblclmnContents.setText("Contents");
-	// reading END
+	/** reading END **/
 	
+	////////////////////////////////////////
 	
-	// extract file content from directory
+	/*** extract file content from directory START ***/
 	List<String> superList = new ArrayList<String>();
 	
-	// extract PDF files from the directory
 	PDFExtractor pdf = new PDFExtractor(filesInPublicDir);
 	pdf.main();
 	superList.addAll(pdf.getContents());
 	
-	// extract MS word documents from the directory
 	MSExtractor ms = new MSExtractor(filesInPublicDir);
 	ms.main();
 	superList.addAll(ms.getContents());
 	
-	// extract text files from the directory
 	TXTExtractor txt = new TXTExtractor(filesInPublicDir);
 	txt.main();
 	superList.addAll(txt.getContents());
 	
 	// display extracted documents in table
-	new ExtractFiles(btnExtractContents, superList, tableExtractedContent).run();
-	// extracting END
+	new ExtractFiles(btnExtractContents, superList, tableExtractedContent).handleButtonClick();
+	/*** extracting END ***/
 	
-	Button btnSaveDocumentsTo = new Button(shell, SWT.NONE);
-	btnSaveDocumentsTo.setBounds(10, 314, 705, 25);
-	btnSaveDocumentsTo.setText("Save documents to database");
+	//////////////////////////////////////
+	
+	/**** saving to database START ****/
+	Button btnSaveDocumentsToDb = new Button(shell, SWT.NONE);
+	btnSaveDocumentsToDb.setBounds(10, 314, 705, 25);
+	btnSaveDocumentsToDb.setText("Save documents to database");
+	
+	DocumentDetails dd = new DocumentDetails(btnSaveDocumentsToDb, superList);
+	dd.handleButtonClick();
+	/**** saving to database END ****/
     }
 }

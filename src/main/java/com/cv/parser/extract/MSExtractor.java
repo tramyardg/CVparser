@@ -65,7 +65,6 @@ public class MSExtractor implements IExtractor {
 		msDoc = new XWPFDocument(fs);
 		we = new XWPFWordExtractor(msDoc);
 		this.contents.add(we.getText());
-		//logger.info(we.getText());
 	    } catch (FileNotFoundException e) {
 		logger.error(e.getMessage());
 	    } catch (IOException e) {
