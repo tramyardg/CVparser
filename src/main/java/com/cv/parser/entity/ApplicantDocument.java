@@ -1,4 +1,4 @@
-package com.cv.parser.model;
+package com.cv.parser.entity;
 
 public class ApplicantDocument {
     private int id;

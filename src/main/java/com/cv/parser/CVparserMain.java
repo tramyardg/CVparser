@@ -118,8 +118,6 @@ public class CVparserMain {
 	tblclmnContents.setText("Contents");
 
 	// extract file content from directory
-	ExtractFiles ef = new ExtractFiles(btnExtractContents, filesInPublicDir, tableExtractedContent);
-	ef.run();
-
+	new ExtractFiles(btnExtractContents, filesInPublicDir, tableExtractedContent).run();
     }
 }

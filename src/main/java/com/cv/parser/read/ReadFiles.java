@@ -32,22 +32,15 @@ public class ReadFiles {
     }
 
     public void run() {
+	setEnabledExtractButton(false);
 	btnReadDir.addListener(SWT.Selection, new Listener() {
 	    public void handleEvent(org.eclipse.swt.widgets.Event arg0) {
 		setFiles();
 		showHiddenLables();
 		btnReadDir.setEnabled(false);
+		setEnabledExtractButton(true);
 	    }
 	});
-    }
-
-    protected void showHiddenLables() {
-	Control[] controls = btnReadDir.getParent().getChildren();
-	for (Control c : controls) {
-	    if (!c.getVisible()) {
-		c.setVisible(true);
-	    }
-	}
     }
 
     protected void setFiles() {
@@ -67,4 +60,23 @@ public class ReadFiles {
 	    }
 	}
     }
+    
+    protected void showHiddenLables() {
+	Control[] controls = btnReadDir.getParent().getChildren();
+	for (Control c : controls) {
+	    if (!c.getVisible()) {
+		c.setVisible(true);
+	    }
+	}
+    }
+    
+    protected void setEnabledExtractButton(boolean isEnabled) {
+	Control[] controls = btnReadDir.getParent().getChildren();
+	for (Control c : controls) {
+	    if (c.toString().equals("Button {Extract contents}")) {
+		c.setEnabled(isEnabled);
+	    }
+	}
+    }
 }
+

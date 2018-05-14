@@ -46,12 +46,12 @@ public class ExtractFiles {
 		txt.main();
 		contents.addAll(txt.getContents());
 		
-		setAllContents(contents);
+		setAllContents(contents); // combined all types of documents into one list for parsing
 		displayIntable();
 
-		DocumentDetails dd = new DocumentDetails(contents);
-		dd.storeDetails();
-		logger.info(dd.getApplicantList().get(0).toString());
+		DocumentDetails dd = new DocumentDetails(getAllContents());
+		dd.main();
+		logger.info(dd.getAppDocList().get(0).toString());
 		
 		btnExtractContents.setEnabled(false);
 	    }
