@@ -7,17 +7,19 @@ public class Applicant {
     private String email;
     private String phoneNumber;
     private String links;
+    private String objective;
 
     public Applicant() {
 
     }
 
-    public Applicant(String name, String address, String email, String phoneNumber, String links) {
+    public Applicant(String name, String address, String email, String phoneNumber, String links, String objective) {
 	this.name = name;
 	this.address = address;
 	this.email = email;
 	this.phoneNumber = phoneNumber;
 	this.links = links;
+	this.objective = objective;
     }
 
     public String getName() {
@@ -59,10 +61,18 @@ public class Applicant {
     public void setLinks(String links) {
 	this.links = links;
     }
+    
+    public String getObjective() {
+	return objective;
+    }
+    
+    public void setObjective(String objective) {
+	this.objective = objective;
+    }
 
     @Override
     public String toString() {
 	return "Applicant [name=" + name + ", address=" + address + ", email=" + email + ", phoneNumber=" + phoneNumber
-		+ ", links=" + links + "]";
+		+ ", links=" + links + ", objective=" + objective + "]";
     }
 }

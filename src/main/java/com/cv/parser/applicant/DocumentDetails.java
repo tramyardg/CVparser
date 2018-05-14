@@ -19,15 +19,29 @@ public class DocumentDetails {
 
     List<Applicant> applicant = new ArrayList<Applicant>();
 
-    final String linkRegex = "(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)" + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
+    String linkRegex = "(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)" 
+	    + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
 	    + "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)";
-    final String emailRegex = "[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+";
+    String emailRegex = "[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+";
 
     public DocumentDetails(List<String> allContents) {
 	this.allContents = allContents;
     }
+    
+    public List<ApplicantDocument> getAppDocList() {
+	return appDocList;
+    }
+    
+    public void main() {
+	storeDocumentAsString();
+	applicantInfo();
 
-    public void storeDetails() {
+	for (Applicant app : applicant) {
+	    logger.info(app.toString());
+	}
+    }
+
+    public void storeDocumentAsString() {
 	for (int index = 0; index < allContents.size(); index++) {
 	    String details = allContents.get(index);
 
@@ -38,27 +52,6 @@ public class DocumentDetails {
 
 	    this.appDocList.add(new ApplicantDocument(index, nextLineRemoved));
 	}
-    }
-
-    public List<ApplicantDocument> getAppDocList() {
-	return appDocList;
-    }
-
-    public void main() {
-	storeDetails();
-	applicantInfo();
-
-	for (Applicant app : applicant) {
-	    logger.info(app.toString());
-	}
-	// i.e. it prints
-	// [main] INFO com.cv.parser.applicant.DocumentDetails - Applicant
-	// [name=null, address=null, email=[], phoneNumber=null]
-	// [main] INFO com.cv.parser.applicant.DocumentDetails - Applicant
-	// [name=null, address=null, email=[mepnd@nd.edu], phoneNumber=null]
-	// [main] INFO com.cv.parser.applicant.DocumentDetails - Applicant
-	// [name=null, address=null, email=[alexs.dbk@gmail.com, leo@gmail.com],
-	// phoneNumber=null]
     }
 
     private void applicantInfo() {
@@ -74,15 +67,12 @@ public class DocumentDetails {
     }
 
     private String findEmail(String details) {
-	List<String> emailList = new ArrayList<String>(); // since you can have one
-							  // or more email in a resume
-
+	List<String> emailList = new ArrayList<String>();
 	Pattern pattern = Pattern.compile(emailRegex, Pattern.MULTILINE);
 	Matcher matcher = pattern.matcher(details);
 	while (matcher.find()) {
 	    emailList.add(matcher.group());
 	}
-
 	return emailList.toString(); 
     }
 
@@ -93,13 +83,31 @@ public class DocumentDetails {
      */
     private String findLinks(String details) {
 	List<String> links = new ArrayList<String>();
-
 	Pattern pattern = Pattern.compile(linkRegex, Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 	Matcher matcher = pattern.matcher(details);
 	while (matcher.find()) {
 	    links.add(matcher.group());
 	}
-
 	return links.toString();
+    }
+    
+    private String findName(String details) {
+	// TODO
+	return null;
+    }
+    
+    private String findObjective(String details) {
+	// TODO
+	return null;
+    }
+    
+    private String findPhoneNumber(String details) {
+	// TODO
+	return null;
+    }
+    
+    private String findAddress(String details) {
+	// TODO
+	return null;
     }
 }

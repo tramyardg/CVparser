@@ -40,9 +40,3 @@ CREATE TABLE `applicantdocument` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Table to store document.';
 
 
-
-CREATE TABLE `applicantdocument` (
-  `idapplicant` int NOT NULL,
-  `document` blob,
-  PRIMARY KEY (`idapplicant`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Table to store document.';
