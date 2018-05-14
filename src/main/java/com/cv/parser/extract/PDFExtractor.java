@@ -7,8 +7,6 @@ import java.util.List;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +14,7 @@ import com.cv.parser.FileExtension;
 import com.cv.parser.FileExtension.Ext;
 import com.cv.parser.FileFinderByExt;
 
-public class PDFExtractor extends ExtractFiles implements IExtractor {
+public class PDFExtractor implements IExtractor {
     Logger logger = LoggerFactory.getLogger(PDFExtractor.class);
 
     FileExtension fe = new FileExtension();
@@ -25,12 +23,14 @@ public class PDFExtractor extends ExtractFiles implements IExtractor {
     File[] pdfFiles;
     List<String> contents = new ArrayList<String>();
 
-    public PDFExtractor(Button btnExtractContents, File[] filesInPublicDir, Table tableExtractedContent) {
-	super(btnExtractContents, filesInPublicDir, tableExtractedContent);
+    File[] filesInPublicDir;
+    
+    public PDFExtractor(File[] filesInPublicDir) {
+	this.filesInPublicDir = filesInPublicDir;
     }
 
     public void main() {
-	setFiles();
+	setFiles(); // get all PDF documents
 	extractFiles();
     }
 

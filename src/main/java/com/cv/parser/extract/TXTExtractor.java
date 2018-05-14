@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +15,7 @@ import com.cv.parser.FileExtension;
 import com.cv.parser.FileExtension.Ext;
 import com.cv.parser.FileFinderByExt;
 
-public class TXTExtractor extends ExtractFiles implements IExtractor {
+public class TXTExtractor implements IExtractor {
     Logger logger = LoggerFactory.getLogger(TXTExtractor.class);
 
     private FileExtension fe = new FileExtension();
@@ -26,8 +24,10 @@ public class TXTExtractor extends ExtractFiles implements IExtractor {
     File[] txtFiles;
     List<String> contents = new ArrayList<String>();
 
-    public TXTExtractor(Button btnExtractContents, File[] filesInPublicDir, Table tableExtractedContent) {
-	super(btnExtractContents, filesInPublicDir, tableExtractedContent);
+    File[] filesInPublicDir;
+    
+    public TXTExtractor(File[] filesInPublicDir) {
+	this.filesInPublicDir = filesInPublicDir;
     }
 
     public void main() {

@@ -1,6 +1,8 @@
 package com.cv.parser;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
@@ -13,6 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.cv.parser.extract.ExtractFiles;
+import com.cv.parser.extract.MSExtractor;
+import com.cv.parser.extract.PDFExtractor;
+import com.cv.parser.extract.TXTExtractor;
 import com.cv.parser.read.ReadFiles;
 import com.cv.parser.read.ValidateRead;
 
@@ -73,7 +78,7 @@ public class CVparserMain {
 	lblExtensions.setText("Acceptable extensions include .pdf, .doc, .docx");
 
 	Table tableDirContent = new Table(shell, SWT.BORDER | SWT.FULL_SELECTION);
-	tableDirContent.setBounds(10, 41, 705, 138);
+	tableDirContent.setBounds(10, 41, 705, 102);
 	tableDirContent.setHeaderVisible(true);
 	tableDirContent.setLinesVisible(true);
 
@@ -91,33 +96,58 @@ public class CVparserMain {
 
 	Label lblTotalFiles = new Label(shell, SWT.NONE);
 	lblTotalFiles.setToolTipText("total number of files ");
-	lblTotalFiles.setBounds(10, 185, 152, 15);
+	lblTotalFiles.setBounds(10, 149, 152, 15);
 	lblTotalFiles.setText("Total number of files: " + filesInPublicDir.length);
 	lblTotalFiles.setVisible(false);
 
 	Label lblNumAcceptableFiles = new Label(shell, SWT.NONE);
-	lblNumAcceptableFiles.setBounds(426, 185, 289, 15);
+	lblNumAcceptableFiles.setBounds(426, 149, 289, 15);
 	lblNumAcceptableFiles
 		.setText("Number of .pdf, .doc, .docx, .txt files: " + new FileFinderByExt().countAcceptableFiles());
 	lblNumAcceptableFiles.setVisible(false);
 
 	Button btnExtractContents = new Button(shell, SWT.NONE);
-	btnExtractContents.setBounds(10, 206, 705, 25);
+	btnExtractContents.setBounds(10, 170, 705, 25);
 	btnExtractContents.setText("Extract contents");
 
 	// read files in public directory
 	new ReadFiles(btnReadDir, filesInPublicDir, tableDirContent).run();
 
 	Table tableExtractedContent = new Table(shell, SWT.BORDER | SWT.FULL_SELECTION);
-	tableExtractedContent.setBounds(10, 237, 705, 151);
+	tableExtractedContent.setBounds(10, 201, 705, 107);
 	tableExtractedContent.setHeaderVisible(true);
 	tableExtractedContent.setLinesVisible(true);
 
 	TableColumn tblclmnContents = new TableColumn(tableExtractedContent, SWT.NONE);
 	tblclmnContents.setWidth(664);
 	tblclmnContents.setText("Contents");
-
+	// reading END
+	
+	
 	// extract file content from directory
-	new ExtractFiles(btnExtractContents, filesInPublicDir, tableExtractedContent).run();
+	List<String> superList = new ArrayList<String>();
+	
+	// extract PDF files from the directory
+	PDFExtractor pdf = new PDFExtractor(filesInPublicDir);
+	pdf.main();
+	superList.addAll(pdf.getContents());
+	
+	// extract MS word documents from the directory
+	MSExtractor ms = new MSExtractor(filesInPublicDir);
+	ms.main();
+	superList.addAll(ms.getContents());
+	
+	// extract text files from the directory
+	TXTExtractor txt = new TXTExtractor(filesInPublicDir);
+	txt.main();
+	superList.addAll(txt.getContents());
+	
+	// display extracted documents in table
+	new ExtractFiles(btnExtractContents, superList, tableExtractedContent).run();
+	// extracting END
+	
+	Button btnSaveDocumentsTo = new Button(shell, SWT.NONE);
+	btnSaveDocumentsTo.setBounds(10, 314, 705, 25);
+	btnSaveDocumentsTo.setText("Save documents to database");
     }
 }

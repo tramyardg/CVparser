@@ -10,8 +10,6 @@ import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +23,7 @@ import com.cv.parser.FileFinderByExt;
  * @author RAYMARTHINKPAD
  *
  */
-public class MSExtractor extends ExtractFiles implements IExtractor {
+public class MSExtractor implements IExtractor {
     Logger logger = LoggerFactory.getLogger(MSExtractor.class);
 
     FileExtension fe = new FileExtension();
@@ -34,8 +32,10 @@ public class MSExtractor extends ExtractFiles implements IExtractor {
     File[] msDocs;
     List<String> contents = new ArrayList<String>();
 
-    public MSExtractor(Button btnExtractContents, File[] filesInPublicDir, Table tableExtractedContent) {
-	super(btnExtractContents, filesInPublicDir, tableExtractedContent);
+    File[] filesInPublicDir;
+    
+    public MSExtractor(File[] filesInPublicDir) {
+	this.filesInPublicDir = filesInPublicDir;
     }
 
     public void main() {
