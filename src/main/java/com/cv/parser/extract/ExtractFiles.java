@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cv.parser.applicant.StoreDetails;
+import com.cv.parser.applicant.DocumentDetails;
 
 public class ExtractFiles {
     Logger logger = LoggerFactory.getLogger(ExtractFiles.class);
@@ -46,12 +46,12 @@ public class ExtractFiles {
 		txt.main();
 		contents.addAll(txt.getContents());
 		
-		setAllContents(contents);
+		setAllContents(contents); // combined all types of documents into one list for parsing
 		displayIntable();
 
-		StoreDetails sd = new StoreDetails(contents);
-		sd.storeDetails();
-		logger.info(sd.getJobApplicantList().get(0).toString());
+		DocumentDetails dd = new DocumentDetails(getAllContents());
+		dd.main();
+		logger.info(dd.getAppDocList().get(0).toString());
 		
 		btnExtractContents.setEnabled(false);
 	    }

@@ -14,7 +14,7 @@ Technology
     Server side PHP programming, REST, OPP, MVC, Yii framework.
     SQL Database programming: MySQL, SQL, MSSQL.
     Client-side programming: JavaScript, AJAX, jQuery.
-    Smarty Template Engine, HTML5, CSS3.
+    Smarty Template Engine, HTML5, CSS3. leo@gmail.com
     Webserver installation and configuration: Apache, Nginx, IIS.
     Source control: SVN/Subversion, GIT.
     Platforms: Linux, Mac, Windows.
