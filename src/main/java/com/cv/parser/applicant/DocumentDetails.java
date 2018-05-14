@@ -15,10 +15,14 @@ public class DocumentDetails {
     Logger logger = LoggerFactory.getLogger(DocumentDetails.class);
 
     List<String> allContents = new ArrayList<String>();
+
+    // toString(): ApplicantDocument [id={number}, details={resume details......}]
     List<ApplicantDocument> appDocList = new ArrayList<ApplicantDocument>();
 
+    // toString(): Applicant [name=null, address=null, email=[], phoneNumber=null, links=[], objective=null]
     List<Applicant> applicant = new ArrayList<Applicant>();
 
+    // regular expressions
     String linkRegex = "(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)" 
 	    + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
 	    + "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)";
@@ -36,6 +40,7 @@ public class DocumentDetails {
 	storeDocumentAsString();
 	applicantInfo();
 
+	// for debugging purpose
 	for (Applicant app : applicant) {
 	    logger.info(app.toString());
 	}
@@ -56,12 +61,15 @@ public class DocumentDetails {
 
     private void applicantInfo() {
 	for (ApplicantDocument ad : appDocList) {
+	    
 	    Applicant a = new Applicant();
-	    a.setName(null);
-	    a.setPhoneNumber(null);
-	    a.setAddress(null);
+	    a.setName(findName(ad.getDetails()));
+	    a.setPhoneNumber(findPhoneNumber(ad.getDetails()));
+	    a.setAddress(findAddress(ad.getDetails()));
 	    a.setEmail(findEmail(ad.getDetails()));
 	    a.setLinks(findLinks(ad.getDetails()));
+	    a.setObjective(findObjective(ad.getDetails()));
+	    
 	    this.applicant.add(a);
 	}
     }
