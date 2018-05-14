@@ -63,11 +63,10 @@ Belarus, Minsk. February 2012 - September 2014
 
 Real Estate Agency Assistant heals LLC, Full stack PHP Developer
 Belarus, Minsk, http://www.a-h.by; May 2011 - January 2012
-
+google.com
     Dynamic website design and programming using PHP, MySQL, HTML, CSS. Setup and administration of web servers and server software.
     Business consulting of securing/ planning project.
     Development to online marketing, search engine placement and promotion (http://www.mogu.by; http://www.a-h.by).
-
 EDUCATION
 
     Belarusian University of Informatics and Radioelectronics,

@@ -19,13 +19,24 @@ public class DocumentDetails {
 
     List<Applicant> applicant = new ArrayList<Applicant>();
 
+    final String linkRegex = "(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)" + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
+	    + "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)";
+    final String emailRegex = "[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+";
+
     public DocumentDetails(List<String> allContents) {
 	this.allContents = allContents;
     }
 
     public void storeDetails() {
 	for (int index = 0; index < allContents.size(); index++) {
-	    this.appDocList.add(new ApplicantDocument(index, allContents.get(index)));
+	    String details = allContents.get(index);
+
+	    // cleaning: removing next line
+	    // if one next line: "\n"
+	    // if more than one next line: "\r"
+	    String nextLineRemoved = details.replace("\n", " ").replace("\r", " ");
+
+	    this.appDocList.add(new ApplicantDocument(index, nextLineRemoved));
 	}
     }
 
@@ -36,14 +47,18 @@ public class DocumentDetails {
     public void main() {
 	storeDetails();
 	applicantInfo();
-	
-	for(Applicant app : applicant) {
+
+	for (Applicant app : applicant) {
 	    logger.info(app.toString());
 	}
 	// i.e. it prints
-        // [main] INFO com.cv.parser.applicant.DocumentDetails - Applicant [name=null, address=null, email=[], phoneNumber=null]
-        // [main] INFO com.cv.parser.applicant.DocumentDetails - Applicant [name=null, address=null, email=[mepnd@nd.edu], phoneNumber=null]
-        // [main] INFO com.cv.parser.applicant.DocumentDetails - Applicant [name=null, address=null, email=[alexs.dbk@gmail.com, leo@gmail.com], phoneNumber=null]
+	// [main] INFO com.cv.parser.applicant.DocumentDetails - Applicant
+	// [name=null, address=null, email=[], phoneNumber=null]
+	// [main] INFO com.cv.parser.applicant.DocumentDetails - Applicant
+	// [name=null, address=null, email=[mepnd@nd.edu], phoneNumber=null]
+	// [main] INFO com.cv.parser.applicant.DocumentDetails - Applicant
+	// [name=null, address=null, email=[alexs.dbk@gmail.com, leo@gmail.com],
+	// phoneNumber=null]
     }
 
     private void applicantInfo() {
@@ -53,18 +68,38 @@ public class DocumentDetails {
 	    a.setPhoneNumber(null);
 	    a.setAddress(null);
 	    a.setEmail(findEmail(ad.getDetails()));
+	    a.setLinks(findLinks(ad.getDetails()));
 	    this.applicant.add(a);
 	}
     }
 
     private String findEmail(String details) {
-	Matcher m = Pattern.compile("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+").matcher(details);
-	List<String> emailList = new ArrayList<String>(); // since you can one or more than one email in a resume
-	while (m.find()) {
-	    emailList.add(m.group());
+	List<String> emailList = new ArrayList<String>(); // since you can have one
+							  // or more email in a resume
+
+	Pattern pattern = Pattern.compile(emailRegex, Pattern.MULTILINE);
+	Matcher matcher = pattern.matcher(details);
+	while (matcher.find()) {
+	    emailList.add(matcher.group());
 	}
-	return emailList.toString(); // return as i.e. [email1@gmail.com, email2@gmail.com] if more than one
+
+	return emailList.toString(); 
     }
-    
-    // TODO find name, phone number, and address
+
+    /**
+     * a link without http://|https://|www is not considered a link i.e. google.com (invalid)
+     * 
+     * @return
+     */
+    private String findLinks(String details) {
+	List<String> links = new ArrayList<String>();
+
+	Pattern pattern = Pattern.compile(linkRegex, Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+	Matcher matcher = pattern.matcher(details);
+	while (matcher.find()) {
+	    links.add(matcher.group());
+	}
+
+	return links.toString();
+    }
 }
