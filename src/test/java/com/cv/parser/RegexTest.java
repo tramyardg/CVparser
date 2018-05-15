@@ -27,16 +27,9 @@ public class RegexTest extends TestCase {
     }
     
     public void testObjective() {
-	Faker faker = new Faker();
-	List<String> lorems = faker.lorem().paragraphs(3);
-	String fakeObjective = "ads OBJECTIVE lkajdlkajd education slkajsd objective asdsad ".concat(lorems.get(0));
-	String fakeEducation = " Education ".concat(lorems.get(1));
-	String fakeExperience = " Experience ".concat(lorems.get(2));
-	
-	String combined = fakeObjective.concat(fakeEducation).concat(fakeExperience);
-	
+	// goal is to extract ONLY the objective of the applicant
 	Pattern pattern = Pattern.compile(Regex.OBJECTIVE.toString(), Pattern.MULTILINE | Pattern.DOTALL);
-	Matcher matcher = pattern.matcher(combined);
+	Matcher matcher = pattern.matcher(goodResumeFormat());
 	List<String> objective = new ArrayList<String>();
 	List<Integer> indexOfObjective = new ArrayList<Integer>();
 	while (matcher.find()) {
@@ -44,74 +37,52 @@ public class RegexTest extends TestCase {
 	    indexOfObjective.add(matcher.start());
 	}
 	
-	int firstOccurenceOfObjective = indexOfObjective.get(0);
-	List<Integer> startIndexOfFollowingSections = testGetFollowingSections(Regex.OBJECTIVE, combined);
-	
-	logger.info(combined);
-	logger.info(indexOfObjective.get(0).toString());
-	logger.info(startIndexOfFollowingSections.toString());
-	
-	String assumedObjective = null;
-	
-	// hopefully the words "education" or "experience" does not appear in objective section
-	// if they appear take the index of last occurrence of these words
-	if (startIndexOfFollowingSections.size() == 1) {
-	    assumedObjective = combined.substring(indexOfObjective.get(0), startIndexOfFollowingSections.get(0));    
-	} else {
-	    int lastIndex = startIndexOfFollowingSections.size() - 1;
-	    // these ignores "education" or "experience" words inside objective section
-	    assumedObjective = combined.substring(indexOfObjective.get(0), startIndexOfFollowingSections.get(lastIndex));   
-	}
-	
-	logger.info(assumedObjective);
+	logger.info(goodResumeFormat());
+	// you can basically use substring to parse objective text
+	// [main] INFO com.cv.parser.RegexTest - OBJECTIVE: 0
+	// [main] INFO com.cv.parser.RegexTest - EDUCATION: 188
+	// [main] INFO com.cv.parser.RegexTest - EXPERIENCE: 415
+	// [main] INFO com.cv.parser.RegexTest - [0, 188, 415]
+	getIndexesOfSection(goodResumeFormat());
     }
-    
-    
-    public List<Integer> testGetFollowingSections(Regex currentRegexName, String line) {
+       
+    public void getIndexesOfSection(String line) {
 	Regex[] sectionRegex = {Regex.OBJECTIVE, Regex.EDUCATION, Regex.EXPERIENCE};
-	List<Integer> startIndexOfFollowingSections = new ArrayList<Integer>();
-	
-	for (Regex r : sectionRegex) {
-	    if (!r.name().equals(currentRegexName.name())) {
-		Pattern pattern = Pattern.compile(r.toString(), Pattern.MULTILINE | Pattern.DOTALL);
-		Matcher matcher = pattern.matcher(line);
-		while(matcher.find()) {
-		    // store starting index of sections that follows i.e. education, experience 
-		    logger.info(matcher.group());
-		    startIndexOfFollowingSections.add(matcher.start()); 
-		}
-	    }
-	}
-	return startIndexOfFollowingSections;
-    }
-    
-    public void getStartIndexesOfSection(String line) {
-	Regex[] sectionRegex = {Regex.OBJECTIVE, Regex.EDUCATION, Regex.EXPERIENCE};
-	List<Integer> startIndexOfSections = new ArrayList<Integer>();
-	
+	List<Integer> indexesOfSection = new ArrayList<Integer>();
 	for (Regex r : sectionRegex) {
 		Pattern pattern = Pattern.compile(r.toString(), Pattern.MULTILINE | Pattern.DOTALL);
 		Matcher matcher = pattern.matcher(line);
 		while(matcher.find()) {
-		    // store starting index of sections that follows i.e. education, experience 
-		    logger.info(matcher.group());
-		    startIndexOfSections.add(matcher.start()); 
+		    logger.info(matcher.group() + ": " + matcher.start() + "");
+		    indexesOfSection.add(matcher.start()); 
 		}
 	}
-	logger.info(startIndexOfSections.toString());
+	// it prints in order of the array sectionRegex
+	logger.info(indexesOfSection.toString());
+    }
+    
+    /**
+     * Resume has a good format if section headings i.e. objective, education
+     * and experience appear only once before the start of a paragraph or
+     * section.
+     * 
+     * @return
+     */
+    private String goodResumeFormat() {
+	Faker faker = new Faker();
+	List<String> lorems = faker.lorem().paragraphs(3);
+	String fakeObjective = "OBJECTIVE ".concat(lorems.get(0));
+	String fakeEducation = " EDUCATION ".concat(lorems.get(1));
+	String fakeExperience = " EXPERIENCE ".concat(lorems.get(2));
+	return fakeObjective.concat(fakeEducation).concat(fakeExperience);
+    }
+    
+    private String badResumeFormat() {
+	Faker faker = new Faker();
+	List<String> lorems = faker.lorem().paragraphs(3);
+	String fakeObjective = "abcde OBJECTIVE abcde education abcde objective abcde ".concat(lorems.get(0));
+	String fakeEducation = " Education abcde objective abcde".concat(lorems.get(1));
+	String fakeExperience = " Experience ".concat(lorems.get(2));
+	return fakeObjective.concat(fakeEducation).concat(fakeExperience);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
