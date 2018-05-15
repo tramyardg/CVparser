@@ -25,6 +25,8 @@ public class FetchApplicant {
 	    + "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)";
 
     String emailRegex = "[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+";
+    
+    String phoneNumberRegex = "\\(?([0-9]{3})\\)?[-. ]([0-9]{3})[-. ]?[-. ]?([0-9]{4})";
 
     List<ApplicantDocument> appDocList = new ArrayList<ApplicantDocument>();
     List<Applicant> applicants = new ArrayList<Applicant>();
@@ -60,26 +62,40 @@ public class FetchApplicant {
     }
 
     private String findName(String details) {
-	// first word of document 1, i.e. tokens[0]
 	String[] tokens = details.split(" ");
-	// assuming the first 4 elements of each document has the name of
+	// assuming the first 3 elements of each document has the name of
 	// the applicant
-	String[] possibleName = new String[4];
+	String[] possibleName = new String[3];
 	List<String> nameList;
-	for (int index = 0; index < 4; index++) {
+	for (int index = 0; index < 3; index++) {
 	    possibleName[index] = tokens[index];
 	}
 	nameList = Arrays.asList(possibleName);
-	logger.info(nameList.toString());
-	return nameList.toString();
+	nameList.toString();
+	String joined = String.join(" ", nameList);
+	logger.info(joined);
+	return joined;
     }
 
     private String findObjective(String details) {
 	return null;
     }
 
+    /**
+     * http://www.harshbaid.in/2013/08/03/regular-expression-for-us-and-canada-phone-number/
+     * Standard format: (123) 456-7890
+     * 
+     * @param details
+     * @return
+     */
     private String findPhoneNumber(String details) {
-	return null;
+	List<String> phoneNumbers = new ArrayList<String>();
+	Pattern pattern = Pattern.compile(phoneNumberRegex, Pattern.MULTILINE | Pattern.DOTALL);
+	Matcher matcher = pattern.matcher(details);
+	while (matcher.find()) {
+	    phoneNumbers.add(matcher.group());
+	}
+	return phoneNumbers.toString();
     }
 
     private String findAddress(String details) {
@@ -88,7 +104,6 @@ public class FetchApplicant {
 
     public void applicantInfo() {
 	for (ApplicantDocument ad : appDocList) {
-
 	    Applicant a = new Applicant();
 	    a.setName(findName(ad.getDetails()));
 	    a.setPhoneNumber(findPhoneNumber(ad.getDetails()));
@@ -96,7 +111,6 @@ public class FetchApplicant {
 	    a.setEmail(findEmail(ad.getDetails()));
 	    a.setLinks(findLinks(ad.getDetails()));
 	    a.setObjective(findObjective(ad.getDetails()));
-
 	    this.applicants.add(a);
 	}
     }
