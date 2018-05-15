@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cv.parser.Regex;
 import com.cv.parser.entity.Applicant;
 import com.cv.parser.entity.ApplicantDocument;
 
@@ -21,13 +22,6 @@ import com.cv.parser.entity.ApplicantDocument;
 public class FetchApplicant {
     Logger logger = LoggerFactory.getLogger(FetchApplicant.class);
 
-    String linkRegex = "(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)" + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
-	    + "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)";
-
-    String emailRegex = "[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+";
-    
-    String phoneNumberRegex = "\\(?([0-9]{3})\\)?[-. ]([0-9]{3})[-. ]?[-. ]?([0-9]{4})";
-
     List<ApplicantDocument> appDocList = new ArrayList<ApplicantDocument>();
     List<Applicant> applicants = new ArrayList<Applicant>();
 
@@ -37,7 +31,7 @@ public class FetchApplicant {
 
     private String findEmail(String details) {
 	List<String> emailList = new ArrayList<String>();
-	Pattern pattern = Pattern.compile(emailRegex, Pattern.MULTILINE);
+	Pattern pattern = Pattern.compile(Regex.EMAIL.toString(), Pattern.MULTILINE);
 	Matcher matcher = pattern.matcher(details);
 	while (matcher.find()) {
 	    emailList.add(matcher.group());
@@ -53,7 +47,8 @@ public class FetchApplicant {
      */
     private String findLinks(String details) {
 	List<String> links = new ArrayList<String>();
-	Pattern pattern = Pattern.compile(linkRegex, Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+	Pattern pattern = Pattern.compile(Regex.LINK.toString(),
+		Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 	Matcher matcher = pattern.matcher(details);
 	while (matcher.find()) {
 	    links.add(matcher.group());
@@ -61,6 +56,13 @@ public class FetchApplicant {
 	return links.toString();
     }
 
+    /**
+     * Usually the first few lines contains the name of the applicant
+     * 
+     * @param details
+     *            line to parse
+     * @return assumed names
+     */
     private String findName(String details) {
 	String[] tokens = details.split(" ");
 	// assuming the first 3 elements of each document has the name of
@@ -75,10 +77,6 @@ public class FetchApplicant {
 	return String.join(" ", nameList);
     }
 
-    private String findObjective(String details) {
-	return null;
-    }
-
     /**
      * http://www.harshbaid.in/2013/08/03/regular-expression-for-us-and-canada-phone-number/
      * Standard format: (123) 456-7890
@@ -88,12 +86,21 @@ public class FetchApplicant {
      */
     private String findPhoneNumber(String details) {
 	List<String> phoneNumbers = new ArrayList<String>();
-	Pattern pattern = Pattern.compile(phoneNumberRegex, Pattern.MULTILINE | Pattern.DOTALL);
+	Pattern pattern = Pattern.compile(Regex.PHONE.toString(), Pattern.MULTILINE | Pattern.DOTALL);
 	Matcher matcher = pattern.matcher(details);
 	while (matcher.find()) {
 	    phoneNumbers.add(matcher.group());
 	}
 	return phoneNumbers.toString();
+    }
+
+    private String findObjective(String details) {
+	// will match
+	// objective
+	// objectives
+	// OBJECTIVE
+	// objectif
+	return null;
     }
 
     private String findAddress(String details) {
