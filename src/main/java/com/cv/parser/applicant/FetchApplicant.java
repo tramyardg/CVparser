@@ -72,9 +72,7 @@ public class FetchApplicant {
 	}
 	nameList = Arrays.asList(possibleName);
 	nameList.toString();
-	String joined = String.join(" ", nameList);
-	logger.info(joined);
-	return joined;
+	return String.join(" ", nameList);
     }
 
     private String findObjective(String details) {
@@ -104,14 +102,14 @@ public class FetchApplicant {
 
     public void applicantInfo() {
 	for (ApplicantDocument ad : appDocList) {
-	    Applicant a = new Applicant();
-	    a.setName(findName(ad.getDetails()));
-	    a.setPhoneNumber(findPhoneNumber(ad.getDetails()));
-	    a.setAddress(findAddress(ad.getDetails()));
-	    a.setEmail(findEmail(ad.getDetails()));
-	    a.setLinks(findLinks(ad.getDetails()));
-	    a.setObjective(findObjective(ad.getDetails()));
-	    this.applicants.add(a);
+	    Applicant applicant = new Applicant();
+	    applicant.setName(findName(ad.getDetails()));
+	    applicant.setPhoneNumber(findPhoneNumber(ad.getDetails()));
+	    applicant.setAddress(findAddress(ad.getDetails()));
+	    applicant.setEmail(findEmail(ad.getDetails()));
+	    applicant.setLinks(findLinks(ad.getDetails()));
+	    applicant.setObjective(findObjective(ad.getDetails()));
+	    this.applicants.add(applicant);
 	}
     }
 

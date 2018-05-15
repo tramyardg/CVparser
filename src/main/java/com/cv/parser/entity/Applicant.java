@@ -10,16 +10,12 @@ public class Applicant {
     private String objective;
 
     public Applicant() {
-
-    }
-
-    public Applicant(String name, String address, String email, String phoneNumber, String links, String objective) {
-	this.name = name;
-	this.address = address;
-	this.email = email;
-	this.phoneNumber = phoneNumber;
-	this.links = links;
-	this.objective = objective;
+	this.name = null;
+	this.address = null;
+	this.email = null;
+	this.phoneNumber = null;
+	this.links = null;
+	this.objective = null;
     }
 
     public String getName() {
