@@ -1,9 +1,13 @@
 package com.cv.parser.applicant;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cv.parser.entity.Applicant;
 import com.cv.parser.entity.ApplicantDocument;
@@ -15,16 +19,16 @@ import com.cv.parser.entity.ApplicantDocument;
  *
  */
 public class FetchApplicant {
-    
-    String linkRegex = "(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)" 
-	    + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
+    Logger logger = LoggerFactory.getLogger(FetchApplicant.class);
+
+    String linkRegex = "(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)" + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
 	    + "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)";
-    
+
     String emailRegex = "[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+";
-    
+
     List<ApplicantDocument> appDocList = new ArrayList<ApplicantDocument>();
     List<Applicant> applicants = new ArrayList<Applicant>();
-    
+
     public FetchApplicant(List<ApplicantDocument> appDocList) {
 	this.appDocList = appDocList;
     }
@@ -56,7 +60,18 @@ public class FetchApplicant {
     }
 
     private String findName(String details) {
-	return null;
+	// first word of document 1, i.e. tokens[0]
+	String[] tokens = details.split(" ");
+	// assuming the first 4 elements of each document has the name of
+	// the applicant
+	String[] possibleName = new String[4];
+	List<String> nameList;
+	for (int index = 0; index < 4; index++) {
+	    possibleName[index] = tokens[index];
+	}
+	nameList = Arrays.asList(possibleName);
+	logger.info(nameList.toString());
+	return nameList.toString();
     }
 
     private String findObjective(String details) {
@@ -70,7 +85,7 @@ public class FetchApplicant {
     private String findAddress(String details) {
 	return null;
     }
-    
+
     public void applicantInfo() {
 	for (ApplicantDocument ad : appDocList) {
 
@@ -85,8 +100,8 @@ public class FetchApplicant {
 	    this.applicants.add(a);
 	}
     }
-    
+
     public List<Applicant> getApplicants() {
-        return applicants;
+	return applicants;
     }
 }

@@ -24,7 +24,7 @@ public class PDFExtractor implements IExtractor {
     List<String> contents = new ArrayList<String>();
 
     File[] filesInPublicDir;
-    
+
     public PDFExtractor(File[] filesInPublicDir) {
 	this.filesInPublicDir = filesInPublicDir;
     }
@@ -41,16 +41,17 @@ public class PDFExtractor implements IExtractor {
     public void extractFiles() {
 	for (File file : pdfFiles) {
 	    try {
-		PDDocument document = PDDocument.load(file);
+		PDDocument document = PDDocument.load(file);		
 		PDFTextStripper pdfStripper = new PDFTextStripper();
-		this.contents.add(pdfStripper.getText(document));
+		String removedPageNumberRegex = "\\bPage\\d\\b";
+		this.contents.add(pdfStripper.getText(document).replaceAll(removedPageNumberRegex, ""));
 		document.close();
 	    } catch (IOException e) {
 		logger.error(e.toString());
 	    }
 	}
     }
-    
+
     public List<String> getContents() {
 	return contents;
     }

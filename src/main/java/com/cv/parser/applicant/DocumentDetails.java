@@ -2,6 +2,8 @@ package com.cv.parser.applicant;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Listener;
@@ -33,6 +35,7 @@ public class DocumentDetails {
 		
 		FetchApplicant application = new FetchApplicant(appDocList);
 		application.applicantInfo();
+		
 		for (Applicant a : application.getApplicants()) {
 		    logger.info(a.toString());
 		}
@@ -50,11 +53,8 @@ public class DocumentDetails {
     private void storeDocumentAsString() {
 	for (int index = 0; index < superList.size(); index++) {
 	    String details = superList.get(index);
-	    // cleaning: removing next line
-	    // if one next line: "\n"
-	    // if more than one next line: "\r"
-	    String nextLineRemoved = details.replace("\n", " ").replace("\r", " ");
-	    this.appDocList.add(new ApplicantDocument(index, nextLineRemoved));
+	    String normalize = StringUtils.normalizeSpace(details); // i.e. hello     world -> hello world
+	    this.appDocList.add(new ApplicantDocument(index, normalize));
 	}
     }
 

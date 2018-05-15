@@ -32,11 +32,11 @@ public class ReadFiles {
     }
 
     public void handleButtonClick() {
-	//setEnabledExtractButton(false);
+	setEnabledExtractButton(false);
 	btnReadDir.addListener(SWT.Selection, new Listener() {
 	    public void handleEvent(org.eclipse.swt.widgets.Event arg0) {
 		setFiles();
-		showHiddenLables();
+		//showHiddenLables();
 		btnReadDir.setEnabled(false);
 		setEnabledExtractButton(true);
 	    }
