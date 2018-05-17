@@ -45,6 +45,7 @@ public class DocumentDetails {
 		//FetchApplicantSkill applicantSkill = new FetchApplicantSkill(appDocList);
 		
 		// insert application + applicationEducation + applicationExperience + applicantSkill in the database
+		
 	    }
 	});
 	

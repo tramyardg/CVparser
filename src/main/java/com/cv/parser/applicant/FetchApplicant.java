@@ -2,7 +2,6 @@ package com.cv.parser.applicant;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import com.cv.parser.RegEx;
 import com.cv.parser.entity.Applicant;
 import com.cv.parser.entity.ApplicantDocument;
+import com.cv.parser.helper.ParserHelper;
 
 /**
  * This is for storing data in Applicant object;
@@ -97,11 +97,12 @@ public class FetchApplicant {
 
     private String findObjective(String details) {
 	RegEx obj = RegEx.OBJECTIVE;
-	Helper helper = new Helper();
+	ParserHelper helper = new ParserHelper();
 	int beginIndex = helper.getIndexOfThisSection(obj, details);
 	int endIndex = helper.getIndexesOfSection(obj, details).get(0);
 	// logger.info(beginIndex + "=" + details);
-	return details.substring(beginIndex, endIndex);
+	String objective = details.replaceFirst(RegEx.OBJECTIVE.toString(), "");
+	return objective.substring(beginIndex, endIndex);
     }
 
     private String findAddress(String details) {
@@ -118,7 +119,7 @@ public class FetchApplicant {
 	    applicant.setLinks(findLinks(ad.getDetails()));
 	    
 	    // test if objective section exists in the first place
-	    if (new Helper().getIndexOfThisSection(RegEx.OBJECTIVE, ad.getDetails())  != -1) {
+	    if (new ParserHelper().getIndexOfThisSection(RegEx.OBJECTIVE, ad.getDetails())  != -1) {
 		applicant.setObjective(findObjective(ad.getDetails()));
 	    } else {
 		applicant.setObjective(null);

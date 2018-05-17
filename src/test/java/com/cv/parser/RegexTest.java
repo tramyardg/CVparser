@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cv.parser.applicant.Helper;
+import com.cv.parser.helper.ParserHelper;
 import com.github.javafaker.Faker;
 
 import junit.framework.TestCase;
@@ -32,7 +32,7 @@ public class RegexTest extends TestCase {
 	// this means the next section would be getIndexesOfSection(RegEx.OBJECTIVE, line).get(0);
 	String line = goodResumeFormat();
 	logger.info(line);
-	Helper helper = new Helper();
+	ParserHelper helper = new ParserHelper();
 	RegEx regEx = RegEx.OBJECTIVE;
 	int objIndex = helper.getIndexOfThisSection(regEx, line);
 	int indexOfFollowingSection = helper.getIndexesOfSection(regEx, line).get(0);
