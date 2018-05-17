@@ -17,7 +17,7 @@ public class RegexTest extends TestCase {
 
     public void testEmail() {
 	String email = "hello@world.com";
-	Pattern pattern = Pattern.compile(Regex.EMAIL.toString(), Pattern.MULTILINE);
+	Pattern pattern = Pattern.compile(RegEx.EMAIL.toString(), Pattern.MULTILINE);
 	Matcher matcher = pattern.matcher(email);
 	List<String> emailList = new ArrayList<String>();
 	while (matcher.find()) {
@@ -25,10 +25,10 @@ public class RegexTest extends TestCase {
 	}
 	assertEquals(email, emailList.get(0));
     }
-    
+
     public void testObjective() {
 	// goal is to extract ONLY the objective of the applicant
-	Pattern pattern = Pattern.compile(Regex.OBJECTIVE.toString(), Pattern.MULTILINE | Pattern.DOTALL);
+	Pattern pattern = Pattern.compile(RegEx.OBJECTIVE.toString(), Pattern.MULTILINE | Pattern.DOTALL);
 	Matcher matcher = pattern.matcher(goodResumeFormat());
 	List<String> objective = new ArrayList<String>();
 	List<Integer> indexOfObjective = new ArrayList<Integer>();
@@ -47,9 +47,9 @@ public class RegexTest extends TestCase {
     }
        
     public void getIndexesOfSection(String line) {
-	Regex[] sectionRegex = {Regex.OBJECTIVE, Regex.EDUCATION, Regex.EXPERIENCE};
+	RegEx[] sectionRegex = {RegEx.OBJECTIVE, RegEx.EDUCATION, RegEx.EXPERIENCE};
 	List<Integer> indexesOfSection = new ArrayList<Integer>();
-	for (Regex r : sectionRegex) {
+	for (RegEx r : sectionRegex) {
 		Pattern pattern = Pattern.compile(r.toString(), Pattern.MULTILINE | Pattern.DOTALL);
 		Matcher matcher = pattern.matcher(line);
 		while(matcher.find()) {

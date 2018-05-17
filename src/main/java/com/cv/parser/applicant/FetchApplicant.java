@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cv.parser.Regex;
+import com.cv.parser.RegEx;
 import com.cv.parser.entity.Applicant;
 import com.cv.parser.entity.ApplicantDocument;
 
@@ -31,7 +31,7 @@ public class FetchApplicant {
 
     private String findEmail(String details) {
 	List<String> emailList = new ArrayList<String>();
-	Pattern pattern = Pattern.compile(Regex.EMAIL.toString(), Pattern.MULTILINE);
+	Pattern pattern = Pattern.compile(RegEx.EMAIL.toString(), Pattern.MULTILINE);
 	Matcher matcher = pattern.matcher(details);
 	while (matcher.find()) {
 	    emailList.add(matcher.group());
@@ -47,7 +47,7 @@ public class FetchApplicant {
      */
     private String findLinks(String details) {
 	List<String> links = new ArrayList<String>();
-	Pattern pattern = Pattern.compile(Regex.LINK.toString(),
+	Pattern pattern = Pattern.compile(RegEx.LINK.toString(),
 		Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 	Matcher matcher = pattern.matcher(details);
 	while (matcher.find()) {
@@ -86,7 +86,7 @@ public class FetchApplicant {
      */
     private String findPhoneNumber(String details) {
 	List<String> phoneNumbers = new ArrayList<String>();
-	Pattern pattern = Pattern.compile(Regex.PHONE.toString(), Pattern.MULTILINE | Pattern.DOTALL);
+	Pattern pattern = Pattern.compile(RegEx.PHONE.toString(), Pattern.MULTILINE | Pattern.DOTALL);
 	Matcher matcher = pattern.matcher(details);
 	while (matcher.find()) {
 	    phoneNumbers.add(matcher.group());

@@ -1,16 +1,16 @@
 package com.cv.parser;
 
-public enum Regex {
+public enum RegEx {
     LINK ("(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)"), 
     EMAIL ("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+"), 
     PHONE ("\\(?([0-9]{3})\\)?[-. ]([0-9]{3})[-. ]?[-. ]?([0-9]{4})"), 
-    OBJECTIVE ("\\b(?i)(objective|objectives|objectif)\\b"),
-    EDUCATION ("\\b(?i)(education|educations)\\b"),
-    EXPERIENCE ("\\b(?i)(experience|experiences|work experience|work experiences)\\b");
+    OBJECTIVE ("\\b(Objective|Objectives|OBJECTIVE|OBJECTIVES)\\b"),
+    EDUCATION ("\\b(Education|Educations|EDUCATION|EDUCATIONS)\\b"),
+    EXPERIENCE ("\\b(Experience|Experiences|EXPERIENCE|EXPERIENCES)\\b");
     
     private final String name;
 
-    private Regex(String name) {
+    private RegEx(String name) {
 	this.name = name;
     }
 
