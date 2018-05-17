@@ -16,18 +16,18 @@ import com.cv.parser.helper.Address;
 import com.cv.parser.helper.ParserHelper;
 
 /**
- * This is for storing data in Applicant object;
+ * This is for storing data in {@link} Applicant model;
  * 
  * @author RAYMARTHINKPAD
  *
  */
-public class FetchApplicant {
-    Logger logger = LoggerFactory.getLogger(FetchApplicant.class);
+public class ParseApplicant {
+    Logger logger = LoggerFactory.getLogger(ParseApplicant.class);
 
     List<ApplicantDocument> appDocList = new ArrayList<ApplicantDocument>();
     List<Applicant> applicants = new ArrayList<Applicant>();
 
-    public FetchApplicant(List<ApplicantDocument> appDocList) {
+    public ParseApplicant(List<ApplicantDocument> appDocList) {
 	this.appDocList = appDocList;
     }
 

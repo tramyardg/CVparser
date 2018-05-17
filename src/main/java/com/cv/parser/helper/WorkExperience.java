@@ -2,6 +2,7 @@ package com.cv.parser.helper;
 
 /**
  * Helper class for {@link} ApplicantExperience
+ * 
  * @author RAYMARTHINKPAD
  *
  */
@@ -47,8 +48,5 @@ public class WorkExperience {
      * <description>
      * 
      */
-    
-    
-    
     
 }

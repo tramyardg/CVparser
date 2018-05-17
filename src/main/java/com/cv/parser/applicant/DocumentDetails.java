@@ -33,7 +33,7 @@ public class DocumentDetails {
 		
 		storeDocumentAsString();
 		
-		FetchApplicant application = new FetchApplicant(appDocList);
+		ParseApplicant application = new ParseApplicant(appDocList);
 		application.applicantInfo();
 		
 		for (Applicant a : application.getApplicants()) {
