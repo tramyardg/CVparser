@@ -4,7 +4,7 @@ public enum RegEx {
     LINK ("(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)"), 
     EMAIL ("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+"), 
     PHONE ("\\(?([0-9]{3})\\)?[-. ]([0-9]{3})[-. ]?[-. ]?([0-9]{4})"), 
-    OBJECTIVE ("\\b(Objective|Objectives|OBJECTIVE|OBJECTIVES)\\b"),
+    OBJECTIVE ("\\b(Objective|Objectives|OBJECTIVE|OBJECTIVES)([^-!@#$%^&*()+.,?])\\b"),
     EDUCATION ("\\b(Education|Educations|EDUCATION|EDUCATIONS)\\b"),
     EXPERIENCE ("\\b(Experience|Experiences|EXPERIENCE|EXPERIENCES)\\b");
     

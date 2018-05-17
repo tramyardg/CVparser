@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cv.parser.applicant.Helper;
 import com.github.javafaker.Faker;
 
 import junit.framework.TestCase;
@@ -28,37 +29,17 @@ public class RegexTest extends TestCase {
 
     public void testObjective() {
 	// goal is to extract ONLY the objective of the applicant
-	Pattern pattern = Pattern.compile(RegEx.OBJECTIVE.toString(), Pattern.MULTILINE | Pattern.DOTALL);
-	Matcher matcher = pattern.matcher(goodResumeFormat());
-	List<String> objective = new ArrayList<String>();
-	List<Integer> indexOfObjective = new ArrayList<Integer>();
-	while (matcher.find()) {
-	    objective.add(matcher.group(0));
-	    indexOfObjective.add(matcher.start());
-	}
-	
-	logger.info(goodResumeFormat());
-	// you can basically use substring to parse objective text
-	// [main] INFO com.cv.parser.RegexTest - OBJECTIVE: 0
-	// [main] INFO com.cv.parser.RegexTest - EDUCATION: 188
-	// [main] INFO com.cv.parser.RegexTest - EXPERIENCE: 415
-	// [main] INFO com.cv.parser.RegexTest - [0, 188, 415]
-	getIndexesOfSection(goodResumeFormat());
-    }
-       
-    public void getIndexesOfSection(String line) {
-	RegEx[] sectionRegex = {RegEx.OBJECTIVE, RegEx.EDUCATION, RegEx.EXPERIENCE};
-	List<Integer> indexesOfSection = new ArrayList<Integer>();
-	for (RegEx r : sectionRegex) {
-		Pattern pattern = Pattern.compile(r.toString(), Pattern.MULTILINE | Pattern.DOTALL);
-		Matcher matcher = pattern.matcher(line);
-		while(matcher.find()) {
-		    logger.info(matcher.group() + ": " + matcher.start() + "");
-		    indexesOfSection.add(matcher.start()); 
-		}
-	}
-	// it prints in order of the array sectionRegex
-	logger.info(indexesOfSection.toString());
+	// this means the next section would be getIndexesOfSection(RegEx.OBJECTIVE, line).get(0);
+	String line = goodResumeFormat();
+	logger.info(line);
+	Helper helper = new Helper();
+	RegEx regEx = RegEx.OBJECTIVE;
+	int objIndex = helper.getIndexOfThisSection(regEx, line);
+	int indexOfFollowingSection = helper.getIndexesOfSection(regEx, line).get(0);
+	logger.info("object index {}", objIndex);
+	logger.info("index of following section {}", indexOfFollowingSection);
+	String objective = line.substring(objIndex, indexOfFollowingSection);
+	logger.info(objective);
     }
     
     /**
@@ -72,17 +53,17 @@ public class RegexTest extends TestCase {
 	Faker faker = new Faker();
 	List<String> lorems = faker.lorem().paragraphs(3);
 	String fakeObjective = "OBJECTIVE ".concat(lorems.get(0));
-	String fakeEducation = " EDUCATION ".concat(lorems.get(1));
-	String fakeExperience = " EXPERIENCE ".concat(lorems.get(2));
-	return fakeObjective.concat(fakeEducation).concat(fakeExperience);
+	String fakeExperience = " EXPERIENCE ".concat(lorems.get(1));
+	String fakeEducation = " EDUCATION ".concat(lorems.get(2));
+	return fakeObjective.concat(fakeExperience).concat(fakeEducation);
     }
     
     private String badResumeFormat() {
 	Faker faker = new Faker();
 	List<String> lorems = faker.lorem().paragraphs(3);
 	String fakeObjective = "abcde OBJECTIVE abcde education abcde objective abcde ".concat(lorems.get(0));
-	String fakeEducation = " Education abcde objective abcde".concat(lorems.get(1));
-	String fakeExperience = " Experience ".concat(lorems.get(2));
+	String fakeEducation = "Education abcde objective abcde".concat(lorems.get(1));
+	String fakeExperience = "Experience ".concat(lorems.get(2));
 	return fakeObjective.concat(fakeEducation).concat(fakeExperience);
     }
 }
