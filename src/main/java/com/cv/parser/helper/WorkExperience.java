@@ -5,14 +5,23 @@ package com.cv.parser.helper;
  * @author RAYMARTHINKPAD
  *
  */
-public class WorkExperienceHelper {
+public class WorkExperience {
 
     private String position;
     private String company;
-    private String location;
+    private Address address;
     private String dateFrom;
     private String dateTo;
     private String description;
+    
+    public WorkExperience() {
+	this.position = null;
+	this.company = null;
+	this.address = null;
+	this.dateFrom = null;
+	this.dateTo = null;
+	this.description = null;
+    }
     
     /*
      * 

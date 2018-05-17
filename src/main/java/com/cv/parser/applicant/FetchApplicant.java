@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import com.cv.parser.RegEx;
 import com.cv.parser.entity.Applicant;
 import com.cv.parser.entity.ApplicantDocument;
+import com.cv.parser.helper.Address;
 import com.cv.parser.helper.ParserHelper;
 
 /**
@@ -46,11 +47,11 @@ public class FetchApplicant {
      * 
      * @return
      */
-    private String findLinks(String details) {
+    private String findLinks(String line) {
 	List<String> links = new ArrayList<String>();
 	Pattern pattern = Pattern.compile(RegEx.LINK.toString(),
 		Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
-	Matcher matcher = pattern.matcher(details);
+	Matcher matcher = pattern.matcher(line);
 	while (matcher.find()) {
 	    links.add(matcher.group());
 	}
@@ -64,8 +65,8 @@ public class FetchApplicant {
      *            line to parse
      * @return assumed names
      */
-    private String findName(String details) {
-	String[] tokens = details.split(" ");
+    private String findName(String line) {
+	String[] tokens = line.split(" ");
 	// assuming the first 3 elements of each document has the name of
 	// the applicant
 	String[] possibleName = new String[3];
@@ -85,27 +86,26 @@ public class FetchApplicant {
      * @param details
      * @return
      */
-    private String findPhoneNumber(String details) {
+    private String findPhoneNumber(String line) {
 	List<String> phoneNumbers = new ArrayList<String>();
 	Pattern pattern = Pattern.compile(RegEx.PHONE.toString(), Pattern.MULTILINE | Pattern.DOTALL);
-	Matcher matcher = pattern.matcher(details);
+	Matcher matcher = pattern.matcher(line);
 	while (matcher.find()) {
 	    phoneNumbers.add(matcher.group());
 	}
 	return phoneNumbers.toString();
     }
 
-    private String findObjective(String details) {
+    private String findObjective(String line) {
 	RegEx obj = RegEx.OBJECTIVE;
 	ParserHelper helper = new ParserHelper();
-	int beginIndex = helper.getIndexOfThisSection(obj, details);
-	int endIndex = helper.getIndexesOfSection(obj, details).get(0);
-	// logger.info(beginIndex + "=" + details);
-	String objective = details.replaceFirst(RegEx.OBJECTIVE.toString(), "");
+	int beginIndex = helper.getIndexOfThisSection(obj, line);
+	String objective = line.replaceFirst(RegEx.OBJECTIVE.toString(), ""); // section heading is removed
+	int endIndex = helper.getIndexesOfSection(obj, objective).get(0);
 	return objective.substring(beginIndex, endIndex);
     }
 
-    private String findAddress(String details) {
+    private String findAddress(String line) {
 	return null;
     }
     
@@ -114,7 +114,7 @@ public class FetchApplicant {
 	    Applicant applicant = new Applicant();
 	    applicant.setName(findName(ad.getDetails()));
 	    applicant.setPhoneNumber(findPhoneNumber(ad.getDetails()));
-	    applicant.setAddress(findAddress(ad.getDetails()));
+	    applicant.setAddress(new Address());
 	    applicant.setEmail(findEmail(ad.getDetails()));
 	    applicant.setLinks(findLinks(ad.getDetails()));
 	    

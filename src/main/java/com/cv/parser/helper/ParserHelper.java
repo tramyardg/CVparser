@@ -11,6 +11,13 @@ import org.slf4j.LoggerFactory;
 
 import com.cv.parser.RegEx;
 
+/**
+ * Helper class for {@link} FetchApplicant, {@link} FetchApplicantEducation, and
+ * {@link} FetchApplicantExperience
+ * 
+ * @author RAYMARTHINKPAD
+ *
+ */
 public class ParserHelper {
     Logger logger = LoggerFactory.getLogger(ParserHelper.class);
 
