@@ -5,7 +5,7 @@ package com.cv.parser.helper;
  * @author RAYMARTHINKPAD
  *
  */
-public class Address {
+public class AddressHelper {
     private String streetNo; // optional
     private String streetName; // optional
     private String appNo; // optional
@@ -14,7 +14,7 @@ public class Address {
     private String postalCode; // you can use regular expression for each country but this is also optional
     private String country; // optional
     
-    public Address() {
+    public AddressHelper() {
 	this.streetNo = null;
 	this.streetName = null;
 	this.appNo = null;

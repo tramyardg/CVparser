@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import com.cv.parser.RegEx;
 import com.cv.parser.entity.Applicant;
 import com.cv.parser.entity.ApplicantDocument;
-import com.cv.parser.helper.Address;
+import com.cv.parser.helper.AddressHelper;
 import com.cv.parser.helper.ParserHelper;
 
 /**
@@ -114,7 +114,7 @@ public class ParseApplicant {
 	    Applicant applicant = new Applicant();
 	    applicant.setName(findName(ad.getDetails()));
 	    applicant.setPhoneNumber(findPhoneNumber(ad.getDetails()));
-	    applicant.setAddress(new Address());
+	    applicant.setAddress(new AddressHelper());
 	    applicant.setEmail(findEmail(ad.getDetails()));
 	    applicant.setLinks(findLinks(ad.getDetails()));
 	    

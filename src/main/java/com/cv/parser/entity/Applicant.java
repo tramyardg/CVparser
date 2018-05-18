@@ -1,11 +1,11 @@
 package com.cv.parser.entity;
 
-import com.cv.parser.helper.Address;
+import com.cv.parser.helper.AddressHelper;
 
 public class Applicant {
 
     private String name;
-    private Address address;
+    private AddressHelper address;
     private String email;
     private String phoneNumber;
     private String links;
@@ -28,11 +28,11 @@ public class Applicant {
 	this.name = name;
     }
 
-    public Address getAddress() {
+    public AddressHelper getAddress() {
 	return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(AddressHelper address) {
 	this.address = address;
     }
 

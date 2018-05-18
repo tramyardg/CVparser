@@ -1,11 +1,17 @@
 package com.cv.parser.helper;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,4 +70,47 @@ public class ParserHelper {
 	return indexesOfSection;
     }
     
+    /**
+     * Read JSON file in resources folder and return it as a Map
+     * 
+     * @return US states as Map object where [key=stateAbbreviation] and
+     *         [value=stateName]
+     */
+    @SuppressWarnings("unchecked")
+    public Map<String, String> getUSstatesMap() {
+	JSONParser parser = new JSONParser();
+	try {
+	    Object obj = parser.parse(new FileReader("resources\\states.hash.json"));
+	    return (Map<String, String>) obj;
+	} catch (FileNotFoundException e) {
+	    logger.info(e.getMessage());
+	} catch (IOException e) {
+	    logger.info(e.getMessage());
+	} catch (ParseException e) {
+	    logger.info(e.getMessage());
+	}
+	return null;
+    }
+    
+    /**
+     * Read JSON file in resources folder and return it as a Map
+     * 
+     * @return Canadian provinces as Map object where [key=provinceAbbreviation] and
+     *         [value=provinceName]
+     */
+    @SuppressWarnings("unchecked")
+    public Map<String, String> getCanadianProvincesMap() {
+	JSONParser parser = new JSONParser();
+	try {
+	    Object obj = parser.parse(new FileReader("resources\\canadian.provinces.json"));
+	    return (Map<String, String>) obj;
+	} catch (FileNotFoundException e) {
+	    logger.info(e.getMessage());
+	} catch (IOException e) {
+	    logger.info(e.getMessage());
+	} catch (ParseException e) {
+	    logger.info(e.getMessage());
+	}
+	return null;
+    }
 }
