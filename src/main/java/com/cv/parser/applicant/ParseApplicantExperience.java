@@ -6,12 +6,14 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cv.parser.RegEx;
 import com.cv.parser.entity.ApplicantDocument;
 import com.cv.parser.entity.ApplicantExperience;
+import com.cv.parser.helper.ParserHelper;
 import com.cv.parser.helper.WorkExperienceHelper;
 
 /**
- * Fetches data to be stored in {@link} ApplicantExperience
+ * Fetches data to be stored in {@link ApplicantExperience} 
  * 
  * @author RAYMARTHINKPAD
  *
@@ -42,7 +44,10 @@ public class ParseApplicantExperience {
     }
 
     private WorkExperienceHelper[] findWorkExperience(String line) {
-	return null;
+	WorkExperienceHelper[] experiences = null;
+	ParserHelper parser = new ParserHelper();
+	logger.info(parser.getIndexOfThisSection(RegEx.EXPERIENCE, line)+"");
+	return experiences;
     }
     
 }
