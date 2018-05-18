@@ -18,7 +18,7 @@ public class About extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public About() {
+	public About() { 
 		
 		JPanel panel = new JPanel();
 		GroupLayout groupLayout = new GroupLayout(this);
