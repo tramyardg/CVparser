@@ -4,7 +4,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cv.parser.helper.AddressHelper;
 import com.cv.parser.helper.ParserHelper;
 import com.github.javafaker.Faker;
 
@@ -15,7 +14,6 @@ public class AddressTest extends TestCase {
 
     public void test() {
 	Faker faker = new Faker();
-	AddressHelper address = new AddressHelper();
 	
 	String usAddress = faker.address().fullAddress();
 	logger.info(usAddress);
@@ -27,16 +25,11 @@ public class AddressTest extends TestCase {
 	
 	Map<String, String> us = parserHelper.getUSstatesMap();
 	for (Map.Entry<String, String> usKV: us.entrySet()) {
-	    if (usAddress.indexOf(usKV.getKey()) != -1) {
-		logger.info(usKV.getValue());
-	    }
+	    // use pattern and regular expression not indexOf
 	}
 	
 	Map<String, String> can = parserHelper.getCanadianProvincesMap();
 	for (Map.Entry<String, String> canKV: can.entrySet()) {
-	    if (canadianAddress.indexOf(canKV.getKey()) != -1) {
-		logger.info(canKV.getValue());
-	    }
 	}	
     }
 }

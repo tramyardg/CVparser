@@ -34,6 +34,7 @@ public class ExtractFiles {
 		for (int i = 0; i < superList.size(); i++) {
 		    TableItem item = new TableItem(tableExtractedContent, SWT.NONE);
 		    item.setText(new String[] { superList.get(i) });
+		    //logger.info(superList.get(i));
 		}
 	    }
 	});

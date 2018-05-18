@@ -8,6 +8,10 @@ public enum RegEx {
     EDUCATION ("\\b(Education|Educations|EDUCATION|EDUCATIONS)\\b"),
     EXPERIENCE ("\\b(Experience|Experiences|EXPERIENCE|EXPERIENCES)\\b");
     
+    // TODO
+    // there is also SKILLS, LANGUAGES and
+    // ADDITIONAL that contains (awards, honors, projects, courses, certification)
+    
     private final String name;
 
     private RegEx(String name) {

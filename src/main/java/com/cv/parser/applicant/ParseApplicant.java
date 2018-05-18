@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import com.cv.parser.RegEx;
 import com.cv.parser.entity.Applicant;
 import com.cv.parser.entity.ApplicantDocument;
-import com.cv.parser.helper.AddressHelper;
 import com.cv.parser.helper.ParserHelper;
 
 /**
@@ -59,32 +58,25 @@ public class ParseApplicant {
     }
 
     /**
-     * Usually the first few lines contains the name of the applicant
+     * The introduction of an applicant may contains the name and the address
      * 
-     * @param details
-     *            line to parse
-     * @return assumed names
+     * @return the profile containing name (most likely) and address (possibly)
      */
-    private String findName(String line) {
-	String[] tokens = line.split(" ");
-	// assuming the first 3 elements of each document has the name of
-	// the applicant
-	String[] possibleName = new String[3];
-	List<String> nameList;
-	for (int index = 0; index < 3; index++) {
-	    possibleName[index] = tokens[index];
-	}
-	nameList = Arrays.asList(possibleName);
-	nameList.toString();
-	return String.join(" ", nameList);
+    private String findProfile(String line) {
+	// copies everything up to the next section
+	ParserHelper helper = new ParserHelper();
+	List<Integer> indexes = helper.getIndexesOfSection(line);
+	int beginIndex = 0;
+	int endIndex = indexes.get(0);
+	return line.substring(beginIndex, endIndex);
     }
 
     /**
-     * http://www.harshbaid.in/2013/08/03/regular-expression-for-us-and-canada-phone-number/
-     * Standard format: (123) 456-7890
+     * Find phone numbers in the resume
      * 
-     * @param details
-     * @return
+     * @param line
+     *            to search for
+     * @return phone numbers found from resume
      */
     private String findPhoneNumber(String line) {
 	List<String> phoneNumbers = new ArrayList<String>();
@@ -105,18 +97,13 @@ public class ParseApplicant {
 	return objective.substring(beginIndex, endIndex);
     }
 
-    private String findAddress(String line) {
-	return null;
-    }
-    
     public void applicantInfo() {
 	for (ApplicantDocument ad : appDocList) {
 	    Applicant applicant = new Applicant();
-	    applicant.setName(findName(ad.getDetails()));
 	    applicant.setPhoneNumber(findPhoneNumber(ad.getDetails()));
-	    applicant.setAddress(new AddressHelper());
 	    applicant.setEmail(findEmail(ad.getDetails()));
 	    applicant.setLinks(findLinks(ad.getDetails()));
+	    applicant.setProfile(findProfile(ad.getDetails()));
 	    
 	    // test if objective section exists in the first place
 	    if (new ParserHelper().getIndexOfThisSection(RegEx.OBJECTIVE, ad.getDetails())  != -1) {

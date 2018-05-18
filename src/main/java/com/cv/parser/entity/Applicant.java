@@ -1,39 +1,28 @@
 package com.cv.parser.entity;
 
-import com.cv.parser.helper.AddressHelper;
 
 public class Applicant {
 
-    private String name;
-    private AddressHelper address;
+    private String profile;
     private String email;
     private String phoneNumber;
     private String links;
     private String objective;
 
     public Applicant() {
-	this.name = null;
-	this.address = null;
+	this.profile = null;
 	this.email = null;
 	this.phoneNumber = null;
 	this.links = null;
 	this.objective = null;
     }
 
-    public String getName() {
-	return name;
+    public String getProfile() {
+        return profile;
     }
 
-    public void setName(String name) {
-	this.name = name;
-    }
-
-    public AddressHelper getAddress() {
-	return address;
-    }
-
-    public void setAddress(AddressHelper address) {
-	this.address = address;
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 
     public String getEmail() {
@@ -70,8 +59,7 @@ public class Applicant {
 
     @Override
     public String toString() {
-	return "Applicant [name=" + name + ", address=" + address + ", email=" + email + ", phoneNumber=" + phoneNumber
-		+ ", links=" + links + ", objective=" + objective + "]";
+	return "Applicant [profile=" + profile + ", email=" + email + ", phoneNumber=" + phoneNumber + ", links="
+		+ links + ", objective=" + objective + "]";
     }
-    
 }

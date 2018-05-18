@@ -10,7 +10,7 @@ public class WorkExperienceHelper {
 
     private String position;
     private String company;
-    private AddressHelper address;
+    private String address;
     private String dateFrom;
     private String dateTo;
     private String description;
