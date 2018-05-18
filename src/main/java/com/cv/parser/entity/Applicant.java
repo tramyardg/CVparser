@@ -3,6 +3,7 @@ package com.cv.parser.entity;
 
 public class Applicant {
 
+    private int id;
     private String profile;
     private String email;
     private String phoneNumber;
@@ -10,6 +11,7 @@ public class Applicant {
     private String objective;
 
     public Applicant() {
+	this.id = 0;
 	this.profile = null;
 	this.email = null;
 	this.phoneNumber = null;
@@ -17,6 +19,14 @@ public class Applicant {
 	this.objective = null;
     }
 
+    public int getId() {
+	return id;
+    }
+    
+    public void setId(int id) {
+	this.id = id;
+    }
+    
     public String getProfile() {
         return profile;
     }
@@ -59,7 +69,7 @@ public class Applicant {
 
     @Override
     public String toString() {
-	return "Applicant [profile=" + profile + ", email=" + email + ", phoneNumber=" + phoneNumber + ", links="
-		+ links + ", objective=" + objective + "]";
+	return "Applicant [id=" + id + ", profile=" + profile + ", email=" + email + ", phoneNumber=" + phoneNumber
+		+ ", links=" + links + ", objective=" + objective + "]";
     }
 }

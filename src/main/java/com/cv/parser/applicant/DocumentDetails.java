@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.cv.parser.entity.Applicant;
 import com.cv.parser.entity.ApplicantDocument;
+import com.cv.parser.entity.ApplicantExperience;
 
 public class DocumentDetails {
     Logger logger = LoggerFactory.getLogger(DocumentDetails.class);
@@ -34,13 +35,20 @@ public class DocumentDetails {
 		storeDocumentAsString();
 		
 		ParseApplicant application = new ParseApplicant(appDocList);
-		application.applicantInfo();
-		
+		application.setApplicantInfo();
 		for (Applicant a : application.getApplicants()) {
 		    logger.info(a.toString());
 		}
+
+		////////////////////////////////////
 		
-		//FetchApplicantEducation applicationEducation = new FetchApplicantEducation(appDocList);
+		ParseApplicantExperience applicantExperience = new ParseApplicantExperience(appDocList);
+		applicantExperience.setApplicantExperience();
+		for (ApplicantExperience ae : applicantExperience.getApplicantExperience()) {
+		    logger.info(ae.toString());
+		}
+		
+		
 		//FetchApplicantExperience applicationExperience = new FetchApplicantExperience(appDocList);
 		//FetchApplicantSkill applicantSkill = new FetchApplicantSkill(appDocList);
 		
@@ -55,7 +63,7 @@ public class DocumentDetails {
 	for (int index = 0; index < superList.size(); index++) {
 	    String details = superList.get(index);
 	    String normalize = StringUtils.normalizeSpace(details); // i.e. hello     world -> hello world
-	    this.appDocList.add(new ApplicantDocument(index, normalize));
+	    this.appDocList.add(new ApplicantDocument((index + 1), normalize));
 	}
     }
 

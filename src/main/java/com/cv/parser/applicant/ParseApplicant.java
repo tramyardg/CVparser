@@ -1,7 +1,6 @@
 package com.cv.parser.applicant;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -97,17 +96,18 @@ public class ParseApplicant {
 	return objective.substring(beginIndex, endIndex);
     }
 
-    public void applicantInfo() {
+    public void setApplicantInfo() {
 	for (ApplicantDocument ad : appDocList) {
 	    Applicant applicant = new Applicant();
-	    applicant.setPhoneNumber(findPhoneNumber(ad.getDetails()));
-	    applicant.setEmail(findEmail(ad.getDetails()));
-	    applicant.setLinks(findLinks(ad.getDetails()));
-	    applicant.setProfile(findProfile(ad.getDetails()));
+	    applicant.setId(ad.getId());
+	    applicant.setPhoneNumber(findPhoneNumber(ad.getLine()));
+	    applicant.setEmail(findEmail(ad.getLine()));
+	    applicant.setLinks(findLinks(ad.getLine()));
+	    applicant.setProfile(findProfile(ad.getLine()));
 	    
 	    // test if objective section exists in the first place
-	    if (new ParserHelper().getIndexOfThisSection(RegEx.OBJECTIVE, ad.getDetails())  != -1) {
-		applicant.setObjective(findObjective(ad.getDetails()));
+	    if (new ParserHelper().getIndexOfThisSection(RegEx.OBJECTIVE, ad.getLine())  != -1) {
+		applicant.setObjective(findObjective(ad.getLine()));
 	    } else {
 		applicant.setObjective(null);
 	    }

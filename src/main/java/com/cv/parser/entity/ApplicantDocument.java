@@ -2,11 +2,11 @@ package com.cv.parser.entity;
 
 public class ApplicantDocument {
     private int id;
-    private String document;
+    private String line;
 
-    public ApplicantDocument(int id, String details) {
+    public ApplicantDocument(int id, String line) {
 	this.id = id;
-	this.document = details;
+	this.line = line;
     }
 
     public int getId() {
@@ -17,16 +17,16 @@ public class ApplicantDocument {
 	this.id = id;
     }
 
-    public String getDetails() {
-	return document;
+    public String getLine() {
+	return line;
     }
 
     public void setDetails(String details) {
-	this.document = details;
+	this.line = details;
     }
 
     @Override
     public String toString() {
-	return "ApplicantDocument [id=" + id + ", details=" + document + "]";
+	return "ApplicantDocument [id=" + id + ", details=" + line + "]";
     }
 }
