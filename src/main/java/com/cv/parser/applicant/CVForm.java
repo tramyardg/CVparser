@@ -22,6 +22,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.cv.parser.entity.*;
+
 public class CVForm extends JPanel {
 	private JTextField txtFirstName;
 	private JTextField txtLastName;
@@ -120,39 +122,6 @@ public class CVForm extends JPanel {
 		JLabel lblPleaseUploadCv = new JLabel("Please upload CV in Word Document or PDF only,   or  input candidate data manually.");
 		lblPleaseUploadCv.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPleaseUploadCv.setFont(new Font("Tahoma", Font.BOLD, 14));
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(18)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(tabPanel, GroupLayout.PREFERRED_SIZE, 917, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(panelButton, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
-							.addComponent(lblNewLabel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(lblPleaseUploadCv, GroupLayout.PREFERRED_SIZE, 917, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap(35, Short.MAX_VALUE))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblNewLabel_1)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblPleaseUploadCv, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(tabPanel, GroupLayout.PREFERRED_SIZE, 545, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(107)
-							.addComponent(panelButton, GroupLayout.PREFERRED_SIZE, 332, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(39, Short.MAX_VALUE))
-		);
 		
 		JPanel panelProfile = new JPanel();
 		panelProfile.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -389,6 +358,33 @@ public class CVForm extends JPanel {
 		tableEducation.getColumnModel().getColumn(3).setPreferredWidth(258);
 		spEduation.setViewportView(tableEducation);
 		panelEduExp.setLayout(gl_panelEduExp);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(18)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 917, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblPleaseUploadCv, GroupLayout.PREFERRED_SIZE, 917, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(tabPanel, GroupLayout.PREFERRED_SIZE, 917, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(panelButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(11)
+					.addComponent(lblNewLabel_1)
+					.addGap(6)
+					.addComponent(lblPleaseUploadCv, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(tabPanel, GroupLayout.PREFERRED_SIZE, 545, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(22)
+							.addComponent(panelButton, GroupLayout.PREFERRED_SIZE, 332, GroupLayout.PREFERRED_SIZE))))
+		);
 		panel.setLayout(gl_panel);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
