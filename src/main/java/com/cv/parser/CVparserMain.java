@@ -1,8 +1,20 @@
 package com.cv.parser;
 
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
@@ -14,6 +26,10 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cv.parser.util.ImagePanel;
+import com.cv.parser.util.Message;
+import com.cv.parser.util.JDialogHelper;
+import com.cv.parser.applicant.CVForm;
 import com.cv.parser.applicant.DocumentDetails;
 import com.cv.parser.extract.ExtractFiles;
 import com.cv.parser.extract.MSExtractor;
@@ -24,23 +40,206 @@ import com.cv.parser.read.ValidateRead;
 
 public class CVparserMain {
     static Logger logger = LoggerFactory.getLogger(CVparserMain.class);
-    
+	private static Message message = new Message();
     File resumesStoragePath = new File(CVparserSingleton.getInstance().resumesStoragePath);
     protected Shell shell;
 
+	private static BufferedImage image;
+	private static JFrame mainFrame;
+	protected JDialog parentDialog;
+	
     /**
      * Launch the application.
      * 
      * @param args
      */
-    public static void main(String[] args) {
-	try {
-	    CVparserMain window = new CVparserMain();
-	    window.open();
-	} catch (Exception e) {
-	    logger.error("main", e);
+	public static void main(String[] args) {
+
+		// Schedule a job for the event-dispatching thread: //creating and
+		// Showing this application's GUI.
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				createGUIMenu();
+			}
+		});
 	}
-    }
+    
+	/*
+	 * Create and setup the Frame Windows GUI
+	 */
+	protected static void createGUIMenu() {
+		mainFrame = new javax.swing.JFrame(message.msg("mainTitle")); // Prepare
+																		// a
+																		// blank
+																		// frame
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		JPanel panel = new ImagePanel(); // prepare the JPanel that hosted the
+											// background image
+		mainFrame.add(panel);
+
+		CVparserMain app = new CVparserMain(); // start the quiz menu
+
+		mainFrame.setJMenuBar(app.createMenu()); // Set up the menu bar on the
+													// top of the frame
+
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
+		mainFrame.setSize(screenSize.width, screenSize.height); 
+
+		mainFrame.setVisible(true);
+	}	
+	
+	/**
+	 * Set up the menu bar, on the top of the frame.. Addition: only comments
+	 * March 15 2017 @author RAYMARTHINKPAD This creates the menus in the frame.
+	 * The menu includes items that are event driven on click the action will be
+	 * performed.
+	 */
+	public JMenuBar createMenu() {
+		JMenuBar menuBar = new JMenuBar(); // create the menu bar at the top of
+
+		// Add your testing under the first Menu.. 
+		JMenu fileMenu = new JMenu("Test Parsing using JSON"); // First group will handle master
+		fileMenu.setMnemonic(KeyEvent.VK_F); // The shortcut is ALT + M (Master
+		menuBar.add(fileMenu); // add to the menu bar
+
+		// Thje menu item for your test code is here...
+		JMenuItem parseMenuTest1 = new JMenuItem("Regex JSON style", KeyEvent.VK_D);
+		parseMenuTest1.setToolTipText("Test parsing Document");
+		parseMenuTest1.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				parseMenuTest1MenuItemActionPerformed(evt);
+				// entryUserMenuItemActionPerformed(evt);
+			}
+		});
+		
+		fileMenu.add(parseMenuTest1);
+		
+
+		// Thje menu item for your test code is here...
+		JMenuItem parseMenuTest2 = new JMenuItem("You GUI JPanel here", KeyEvent.VK_D);
+		parseMenuTest2.setToolTipText("Test parsing Document");
+		parseMenuTest2.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				parseMenuTest2MenuItemActionPerformed(evt);
+			}
+		});
+		
+		fileMenu.add(parseMenuTest2);
+
+		
+		
+		
+		/************  This menu is for my menu test  40046196 *************/
+		
+		// Third Menu in Menu Bar is Window About and Exit
+		JMenu menu2 = new JMenu("Parse Doc 2 Test"); 
+		menu2.setMnemonic(KeyEvent.VK_H); // Shortcut is ALT + E
+		menuBar.add(menu2); // add exit menu to menu bar
+
+		// First menu item for windows is About
+		JMenuItem uploadDocumentToForm = new JMenuItem("Parse Doc to Form", KeyEvent.VK_A);
+		uploadDocumentToForm.setToolTipText("Parse Doc to Form");
+		uploadDocumentToForm.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				uploadDocumentToFormActionPerformed(evt);
+			}
+		});
+
+		menu2.add(uploadDocumentToForm); // add about menu item to exit MEnu
+
+
+		return menuBar;
+	}	
+	
+	/**
+	 * The events when user click UserForm
+	 * Note from me:  
+	 *  Should porting the forms in JPanel like previous projects, manageable control form Tree Menu Structure. 
+	 * Also using JPanel, would learn how to advance the use of  JTable, position,  etc. 
+	 *  For now the menu only call your design procedure directly.. 
+	 * 
+	 * @param evt
+	 */
+	private void parseMenuTest1MenuItemActionPerformed(java.awt.event.ActionEvent evt) {
+
+		try {
+			this.open();
+		} catch (Exception e) {
+			logger.error("main", e);
+		}
+		
+		
+//		UserForm userForm = new UserForm(); // create instance UserForm
+//		JDialog dialog = new JDialog(this.mainFrame, message.msg("userFormTitle"), true); 
+//
+//		dialog.add(userForm);
+//		dialog.pack();
+//
+//		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
+//		Dimension dialogSize = dialog.getSize(); // get your frame size
+//		dialog.setLocation(new Point((screenSize.width - dialogSize.width) / 2, 
+//				(screenSize.height - dialogSize.height) / 2)); // to the center
+//																// of screen
+//		dialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+//		JDialogHelper.setJDialogTree(dialog, null, null);
+//		dialog.setVisible(true); // When setVisible this program waiting, until
+//									// you close the dialog.
+//		dialog.dispose();
+
+	}	
+	
+	private void parseMenuTest2MenuItemActionPerformed(java.awt.event.ActionEvent evt) {
+
+		com.cv.parser.About cvForm = new com.cv.parser.About(); // create instance UserForm
+		JDialog dialog = new JDialog(this.mainFrame, "CV Form", true); 
+
+		dialog.add(cvForm);
+		dialog.pack();
+
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
+		Dimension dialogSize = dialog.getSize(); // get your frame size
+		dialog.setLocation(new Point((screenSize.width - dialogSize.width) / 2, 
+				(screenSize.height - dialogSize.height) / 2)); // to the center
+																// of screen
+		dialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		JDialogHelper.setJDialogTree(dialog, null, null);
+		dialog.setVisible(true); // When setVisible this program waiting, until
+									// you close the dialog.
+		dialog.dispose();
+
+	}	
+	
+	private void uploadDocumentToFormActionPerformed(java.awt.event.ActionEvent evt) {
+
+		com.cv.parser.applicant.CVForm cvForm = new com.cv.parser.applicant.CVForm(); // create instance UserForm
+		JDialog dialog = new JDialog(this.mainFrame, "CV Form" , true); 
+
+		dialog.add(cvForm);
+		dialog.pack();
+
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
+		Dimension dialogSize = dialog.getSize(); // get your frame size
+		dialog.setLocation(new Point((screenSize.width - dialogSize.width) / 2, 
+				(screenSize.height - dialogSize.height) / 2)); // to the center
+																// of screen
+		dialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		JDialogHelper.setJDialogTree(dialog, null, null);
+		dialog.setVisible(true); // When setVisible this program waiting, until
+									// you close the dialog.
+		dialog.dispose();
+
+	}		
+	
+    
+//    public static void main(String[] args) {
+//	try {
+//	    CVparserMain window = new CVparserMain();
+//	    window.open();
+//	} catch (Exception e) {
+//	    logger.error("main", e);
+//	}
+//    }
 
     /**
      * Open the window.
