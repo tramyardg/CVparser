@@ -46,10 +46,33 @@ public class ParseApplicantExperience {
 
     private WorkExperienceHelper[] findWorkExperience(int id, String line) {
 	ParserHelper parser = new ParserHelper();
-	logger.info(id + ": section indexes of this resume => "+parser.getIndexesOfSection(line).toString());
-	logger.info(id + ": index of experience section in this =>"+parser.getIndexOfThisSection(RegEx.EXPERIENCE, line));
-	// copy texts starting from experience section index to the following section index
-	// experience index < following section index
+	
+	//logger.info(id + ": section indexes of this resume => "+parser.getIndexesOfSection(line).toString());
+	//logger.info(id + ": index of experience section in this =>"+parser.getIndexOfThisSection(RegEx.EXPERIENCE, line));
+	
+	/* 
+	 * copy texts starting from experience section index to the following section index
+	 * experience index is LESS THAN the following section index, therefore
+	 * 
+	 * Example:
+	 *  section indexes [24, 355, 534, 669]
+	 *  index of experience section = 355
+	 *  therefore, the following section index would be 534
+	 *  we can get the texts that encompasses experience section
+	 *  by substring => (indexOfExperience, beginIndexOfFollowingSection)
+	 *  
+	 */
+	int indexOfExperience = parser.getIndexOfThisSection(RegEx.EXPERIENCE, line);
+	int nextSectionIndex = 0; // index that follows experience section
+	for (int index = 0; index < parser.getIndexesOfSection(line).size(); index++) {
+	    if (parser.getIndexesOfSection(line).get(index) == indexOfExperience) {
+		nextSectionIndex = parser.getIndexesOfSection(line).get(index + 1);
+		break;
+	    }
+	}	
+	
+	logger.info(line.substring(indexOfExperience, nextSectionIndex));
+	
 	return null;
     }
 
