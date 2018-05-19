@@ -2,6 +2,8 @@ package com.cv.parser.applicant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +15,7 @@ import com.cv.parser.helper.ParserHelper;
 import com.cv.parser.helper.WorkExperienceHelper;
 
 /**
- * Fetches data to be stored in {@link ApplicantExperience} 
+ * Fetches data to be stored in {@link ApplicantExperience}
  * 
  * @author RAYMARTHINKPAD
  *
@@ -33,8 +35,7 @@ public class ParseApplicantExperience {
 	for (ApplicantDocument ad : appDocList) {
 	    ApplicantExperience ae = new ApplicantExperience();
 	    ae.setId(ad.getId());
-	    ae.setExperience(findWorkExperience(ad.getLine()));
-
+	    ae.setExperience(findWorkExperience(ad.getId(), ad.getLine()));
 	    this.applicantExperience.add(ae);
 	}
     }
@@ -43,11 +44,13 @@ public class ParseApplicantExperience {
 	return applicantExperience;
     }
 
-    private WorkExperienceHelper[] findWorkExperience(String line) {
-	WorkExperienceHelper[] experiences = null;
+    private WorkExperienceHelper[] findWorkExperience(int id, String line) {
 	ParserHelper parser = new ParserHelper();
-	logger.info(parser.getIndexOfThisSection(RegEx.EXPERIENCE, line)+"");
-	return experiences;
+	logger.info(id + ": section indexes of this resume => "+parser.getIndexesOfSection(line).toString());
+	logger.info(id + ": index of experience section in this =>"+parser.getIndexOfThisSection(RegEx.EXPERIENCE, line));
+	// copy texts starting from experience section index to the following section index
+	// experience index < following section index
+	return null;
     }
-    
+
 }
