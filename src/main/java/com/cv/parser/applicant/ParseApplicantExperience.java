@@ -42,14 +42,10 @@ public class ParseApplicantExperience {
 
     public List<ApplicantExperience> getApplicantExperience() {
 	return applicantExperience;
-    }
+    }	
 
-    private WorkExperienceHelper[] findWorkExperience(int id, String line) {
-	ParserHelper parser = new ParserHelper();
-	
-	//logger.info(id + ": section indexes of this resume => "+parser.getIndexesOfSection(line).toString());
-	//logger.info(id + ": index of experience section in this =>"+parser.getIndexOfThisSection(RegEx.EXPERIENCE, line));
-	
+    private String findWorkExperience(int id, String line) {
+	ParserHelper parser = new ParserHelper();	
 	/* 
 	 * copy texts starting from experience section index to the following section index
 	 * experience index is LESS THAN the following section index, therefore
@@ -70,10 +66,10 @@ public class ParseApplicantExperience {
 		break;
 	    }
 	}	
-	
-	logger.info(line.substring(indexOfExperience, nextSectionIndex));
-	
-	return null;
+	// logger.info(line.substring(indexOfExperience, nextSectionIndex));
+	String experienceText = line.replaceFirst(RegEx.EXPERIENCE.toString(), "");
+	// TODO call WorkExperienceHelper and parse the line
+	return experienceText.substring(indexOfExperience, nextSectionIndex);
     }
 
 }
