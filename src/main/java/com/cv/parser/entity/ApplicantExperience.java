@@ -7,7 +7,6 @@ public class ApplicantExperience {
     }
     
     private int id;
-    //private WorkExperienceHelper[] experience; // an applicant may have more than one experience
     private String experience; // store it as string for now
     // change to List<WorkExperienceHelper> only if managed to parse and store in WorkExperienceHelper
         

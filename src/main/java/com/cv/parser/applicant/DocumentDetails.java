@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.cv.parser.entity.Applicant;
 import com.cv.parser.entity.ApplicantDocument;
+import com.cv.parser.entity.ApplicantEducation;
 import com.cv.parser.entity.ApplicantExperience;
 
 public class DocumentDetails {
@@ -42,16 +43,19 @@ public class DocumentDetails {
 
 		////////////////////////////////////
 		
-		ParseApplicantExperience applicantExperience = new ParseApplicantExperience(appDocList);
-		applicantExperience.setApplicantExperience();
-		for (ApplicantExperience ae : applicantExperience.getApplicantExperience()) {
-		    logger.info(ae.toString());
+		ParseApplicantExperience parseApplicantExperience = new ParseApplicantExperience(appDocList);
+		parseApplicantExperience.setApplicantExperience();
+		for (ApplicantExperience applicantExperience : parseApplicantExperience.getApplicantExperience()) {
+		    logger.info(applicantExperience.toString());
 		}
 		
+		ParseApplicantEducation parseApplicantEducation = new ParseApplicantEducation(appDocList);
+		parseApplicantEducation.setApplicantEducation();
+		for (ApplicantEducation applicantEducation : parseApplicantEducation.getApplicantEducation()) {
+		    logger.info(applicantEducation.toString());
+		}
 		
-		//FetchApplicantExperience applicationExperience = new FetchApplicantExperience(appDocList);
 		//FetchApplicantSkill applicantSkill = new FetchApplicantSkill(appDocList);
-		
 		// insert application + applicationEducation + applicationExperience + applicantSkill in the database
 		
 	    }

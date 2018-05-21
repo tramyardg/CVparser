@@ -2,7 +2,6 @@ package com.cv.parser.extract;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,8 +51,6 @@ public class TXTExtractor implements IExtractor {
 		}
 		this.contents.add(String.join(" ", content));
 		br.close();
-	    } catch (FileNotFoundException e) {
-		logger.error(e.getMessage());
 	    } catch (IOException e) {
 		logger.error(e.getMessage());
 	    }

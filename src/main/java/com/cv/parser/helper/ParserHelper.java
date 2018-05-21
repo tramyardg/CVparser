@@ -94,7 +94,7 @@ public class ParserHelper {
 	Collections.sort(indexesOfSection);
 	return indexesOfSection;
     }
-
+    
     /**
      * Read JSON file in resources folder and return it as a Map
      * 

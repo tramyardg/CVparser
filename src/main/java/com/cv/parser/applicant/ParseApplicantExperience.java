@@ -2,9 +2,6 @@ package com.cv.parser.applicant;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +9,6 @@ import com.cv.parser.RegEx;
 import com.cv.parser.entity.ApplicantDocument;
 import com.cv.parser.entity.ApplicantExperience;
 import com.cv.parser.helper.ParserHelper;
-import com.cv.parser.helper.WorkExperienceHelper;
 
 /**
  * Fetches data to be stored in {@link ApplicantExperience}
@@ -66,10 +62,9 @@ public class ParseApplicantExperience {
 		break;
 	    }
 	}	
-	// logger.info(line.substring(indexOfExperience, nextSectionIndex));
 	String experienceText = line.replaceFirst(RegEx.EXPERIENCE.toString(), "");
-	// TODO call WorkExperienceHelper and parse the line
 	return experienceText.substring(indexOfExperience, nextSectionIndex);
     }
-
+    
+    
 }
