@@ -20,27 +20,27 @@ public class ParseApplicantExperience {
 
     Logger logger = LoggerFactory.getLogger(ParseApplicantExperience.class);
 
-    List<ApplicantDocument> appDocList = new ArrayList<ApplicantDocument>();
-    List<ApplicantExperience> applicantExperience = new ArrayList<ApplicantExperience>();
+    List<ApplicantDocument> applicantDocument = new ArrayList<>();
+    List<ApplicantExperience> applicantExperienceList = new ArrayList<>();
 
-    public ParseApplicantExperience(List<ApplicantDocument> appDocList) {
-	this.appDocList = appDocList;
+    public ParseApplicantExperience(List<ApplicantDocument> applicantDocument) {
+	this.applicantDocument = applicantDocument;
     }
 
     public void setApplicantExperience() {
-	for (ApplicantDocument ad : appDocList) {
-	    ApplicantExperience ae = new ApplicantExperience();
-	    ae.setId(ad.getId());
-	    ae.setExperience(findWorkExperience(ad.getId(), ad.getLine()));
-	    this.applicantExperience.add(ae);
+	for (ApplicantDocument ad : applicantDocument) {
+	    ApplicantExperience applicantExperience = new ApplicantExperience();
+	    applicantExperience.setId(ad.getId());
+	    applicantExperience.setExperience(findWorkExperiences(ad.getId(), ad.getLine()));
+	    this.applicantExperienceList.add(applicantExperience);
 	}
     }
 
     public List<ApplicantExperience> getApplicantExperience() {
-	return applicantExperience;
+	return applicantExperienceList;
     }	
 
-    private String findWorkExperience(int id, String line) {
+    private String findWorkExperiences(int id, String line) {
 	ParserHelper parser = new ParserHelper();	
 	/* 
 	 * copy texts starting from experience section index to the following section index
@@ -62,9 +62,7 @@ public class ParseApplicantExperience {
 		break;
 	    }
 	}	
-	String experienceText = line.replaceFirst(RegEx.EXPERIENCE.toString(), "");
-	return experienceText.substring(indexOfExperience, nextSectionIndex);
+	String experiencesText = line.replaceFirst(RegEx.EXPERIENCE.toString(), "");
+	return experiencesText.substring(indexOfExperience, nextSectionIndex);
     }
-    
-    
 }
