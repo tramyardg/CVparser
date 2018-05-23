@@ -28,7 +28,7 @@ public class ParseApplicantEducation {
 	this.applicantDocument = applicantDocument;
     }
 
-    public void setApplicantEducation() {
+    public void setApplicantEducations() {
 	for (ApplicantDocument ad : applicantDocument) {
 	    ApplicantEducation applicantEducation = new ApplicantEducation();
 	    applicantEducation.setId(ad.getId());
@@ -45,20 +45,24 @@ public class ParseApplicantEducation {
 	ParserHelper parser = new ParserHelper();
 	// just like findWorkExperiences
 	int indexOfEducation = parser.getIndexOfThisSection(RegEx.EDUCATION, line);
-	int nextSectionIndex = 0;
-	List<Integer> listOfSectionIndexes = parser.getIndexesOfSection(line);
-	String educationsText = line.replaceFirst(RegEx.EDUCATION.toString(), "");
-	for (int index = 0; index < listOfSectionIndexes.size(); index++) {
-	    if (listOfSectionIndexes.get(index) == indexOfEducation) {
-		// if education is the last section, then there is no nextSectionIndex
-		if (index == listOfSectionIndexes.size() - 1) {
-		    return educationsText.substring(listOfSectionIndexes.get(index));
-		} else {
-		    nextSectionIndex = listOfSectionIndexes.get(index + 1);
-		    break;
+	if (indexOfEducation != -1) {
+	    int nextSectionIndex = 0;
+	    List<Integer> listOfSectionIndexes = parser.getIndexesOfSection(line);
+	    String educationsText = line.replaceFirst(RegEx.EDUCATION.toString(), "");
+	    for (int index = 0; index < listOfSectionIndexes.size(); index++) {
+		if (listOfSectionIndexes.get(index) == indexOfEducation) {
+		    // if education is the last section, then there is no
+		    // nextSectionIndex
+		    if (index == listOfSectionIndexes.size() - 1) {
+			return educationsText.substring(indexOfEducation);
+		    } else {
+			nextSectionIndex = listOfSectionIndexes.get(index + 1);
+			break;
+		    }
 		}
 	    }
+	    return educationsText.substring(indexOfEducation, nextSectionIndex);
 	}
-	return educationsText.substring(indexOfEducation, nextSectionIndex);
+	return null;
     }   
 }
