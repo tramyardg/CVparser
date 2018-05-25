@@ -20,51 +20,57 @@ public class ParseApplicantExperience {
 
     Logger logger = LoggerFactory.getLogger(ParseApplicantExperience.class);
 
-    List<ApplicantDocument> appDocList = new ArrayList<ApplicantDocument>();
-    List<ApplicantExperience> applicantExperience = new ArrayList<ApplicantExperience>();
+    List<ApplicantDocument> applicantDocument = new ArrayList<>();
+    List<ApplicantExperience> applicantExperienceList = new ArrayList<>();
 
-    public ParseApplicantExperience(List<ApplicantDocument> appDocList) {
-	this.appDocList = appDocList;
+    public ParseApplicantExperience(List<ApplicantDocument> applicantDocument) {
+	this.applicantDocument = applicantDocument;
     }
 
-    public void setApplicantExperience() {
-	for (ApplicantDocument ad : appDocList) {
-	    ApplicantExperience ae = new ApplicantExperience();
-	    ae.setId(ad.getId());
-	    ae.setExperience(findWorkExperience(ad.getId(), ad.getLine()));
-	    this.applicantExperience.add(ae);
+    public void setApplicantExperiences() {
+	for (ApplicantDocument ad : applicantDocument) {
+	    ApplicantExperience applicantExperience = new ApplicantExperience();
+	    applicantExperience.setId(ad.getId());
+	    applicantExperience.setExperience(findWorkExperiences(ad.getId(), ad.getLine()));
+	    this.applicantExperienceList.add(applicantExperience);
 	}
     }
 
     public List<ApplicantExperience> getApplicantExperience() {
-	return applicantExperience;
-    }	
+	return applicantExperienceList;
+    }
 
-    private String findWorkExperience(int id, String line) {
-	ParserHelper parser = new ParserHelper();	
-	/* 
-	 * copy texts starting from experience section index to the following section index
-	 * experience index is LESS THAN the following section index, therefore
+    private String findWorkExperiences(int id, String line) {
+	ParserHelper parser = new ParserHelper();
+	/*
+	 * copy texts starting from experience section index to the following
+	 * section index experience index is LESS THAN the following section
+	 * index, therefore
 	 * 
-	 * Example:
-	 *  section indexes [24, 355, 534, 669]
-	 *  index of experience section = 355
-	 *  therefore, the following section index would be 534
-	 *  we can get the texts that encompasses experience section
-	 *  by substring => (indexOfExperience, beginIndexOfFollowingSection)
-	 *  
+	 * Example: section indexes [24, 355, 534, 669] index of experience
+	 * section = 355 therefore, the following section index would be 534 we
+	 * can get the texts that encompasses experience section by substring =>
+	 * (indexOfExperience, beginIndexOfFollowingSection)
+	 * 
 	 */
 	int indexOfExperience = parser.getIndexOfThisSection(RegEx.EXPERIENCE, line);
-	int nextSectionIndex = 0; // index that follows experience section
-	for (int index = 0; index < parser.getIndexesOfSection(line).size(); index++) {
-	    if (parser.getIndexesOfSection(line).get(index) == indexOfExperience) {
-		nextSectionIndex = parser.getIndexesOfSection(line).get(index + 1);
-		break;
+	if (indexOfExperience != -1) {
+	    int nextSectionIndex = 0; // index that follows experience section
+	    String experiencesText = line.replaceFirst(RegEx.EXPERIENCE.toString(), "");
+	    for (int index = 0; index < parser.getIndexesOfSection(line).size(); index++) {
+		if (parser.getIndexesOfSection(line).get(index) == indexOfExperience) {
+		    // experience section is not always in the middle
+		    // rarely they may appear as the last section
+		    if (index == parser.getIndexesOfSection(line).size() - 1) {
+			return experiencesText.substring(indexOfExperience);
+		    } else {
+			nextSectionIndex = parser.getIndexesOfSection(line).get(index + 1);
+			break;
+		    }
+		}
 	    }
-	}	
-	String experienceText = line.replaceFirst(RegEx.EXPERIENCE.toString(), "");
-	return experienceText.substring(indexOfExperience, nextSectionIndex);
+	    return experiencesText.substring(indexOfExperience, nextSectionIndex);
+	}
+	return null;
     }
-    
-    
 }
