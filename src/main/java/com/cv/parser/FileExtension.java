@@ -7,7 +7,7 @@ public class FileExtension {
     }
 
     public enum Ext {
-	PDF, DOC, DOCX, TXT, RTF
+	PDF, DOC, DOCX, TXT, RTF, DOT, DOTX
     }
 
     public String get(Ext ext) {
@@ -22,6 +22,10 @@ public class FileExtension {
 	    return ".txt";
 	case RTF:
 	    return ".rtf";
+	case DOT:
+	    return ".dot";
+	case DOTX:
+	    return ".dotx";
 	}
 	return null;
     }

@@ -2,12 +2,10 @@ package com.cv.parser.extract;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
@@ -33,7 +31,7 @@ public class MSExtractor implements IExtractor {
 
     private File[] docxFiles;
     private File[] docFiles;
-    private List<String> contents = new ArrayList<String>();
+    private List<String> contents = new ArrayList<>();
 
     public void main() {
 	setFiles();
@@ -41,6 +39,7 @@ public class MSExtractor implements IExtractor {
     }
 
     public void setFiles() {
+	// TODO use array utils to combine .docx with .dotx, .doc with .dot
 	this.docxFiles = fileFinderByExt.finder(fileExtension.get(Ext.DOCX));
 	this.docFiles = fileFinderByExt.finder(fileExtension.get(Ext.DOC));
     }
