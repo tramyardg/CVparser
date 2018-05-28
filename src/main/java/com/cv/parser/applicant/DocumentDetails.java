@@ -12,15 +12,17 @@ import org.slf4j.LoggerFactory;
 
 import com.cv.parser.entity.Applicant;
 import com.cv.parser.entity.ApplicantDocument;
+import com.cv.parser.entity.ApplicantEducation;
 import com.cv.parser.entity.ApplicantExperience;
+import com.cv.parser.entity.ApplicantSkill;
 
 public class DocumentDetails {
     Logger logger = LoggerFactory.getLogger(DocumentDetails.class);
     
     // toString(): ApplicantDocument [id={number}, details={resume details......}]
-    List<ApplicantDocument> appDocList = new ArrayList<ApplicantDocument>();
+    List<ApplicantDocument> applicantDocumentList = new ArrayList<>();
     
-    List<String> superList = new ArrayList<String>();
+    List<String> superList = new ArrayList<>();
     Button btnSaveDocumentsToDb;
     
     public DocumentDetails(Button btnSaveDocumentsToDb, List<String> superList) {
@@ -34,7 +36,7 @@ public class DocumentDetails {
 		
 		storeDocumentAsString();
 		
-		ParseApplicant application = new ParseApplicant(appDocList);
+		ParseApplicant application = new ParseApplicant(applicantDocumentList);
 		application.setApplicantInfo();
 		for (Applicant a : application.getApplicants()) {
 		    logger.info(a.toString());
@@ -42,17 +44,23 @@ public class DocumentDetails {
 
 		////////////////////////////////////
 		
-		ParseApplicantExperience applicantExperience = new ParseApplicantExperience(appDocList);
-		applicantExperience.setApplicantExperience();
-		for (ApplicantExperience ae : applicantExperience.getApplicantExperience()) {
-		    logger.info(ae.toString());
+		ParseApplicantExperience parseApplicantExperience = new ParseApplicantExperience(applicantDocumentList);
+		parseApplicantExperience.setApplicantExperiences();
+		for (ApplicantExperience applicantExperience : parseApplicantExperience.getApplicantExperience()) {
+		    logger.info(applicantExperience.toString());
 		}
 		
+		ParseApplicantEducation parseApplicantEducation = new ParseApplicantEducation(applicantDocumentList);
+		parseApplicantEducation.setApplicantEducations();
+		for (ApplicantEducation applicantEducation : parseApplicantEducation.getApplicantEducation()) {
+		    logger.info(applicantEducation.toString());
+		}
 		
-		//FetchApplicantExperience applicationExperience = new FetchApplicantExperience(appDocList);
-		//FetchApplicantSkill applicantSkill = new FetchApplicantSkill(appDocList);
-		
-		// insert application + applicationEducation + applicationExperience + applicantSkill in the database
+		ParseApplicantSkill parseApplicantSkill = new ParseApplicantSkill(applicantDocumentList);
+		parseApplicantSkill.setApplicantSkills();
+		for (ApplicantSkill applicantSkill : parseApplicantSkill.getApplicantSkillList()) {
+		    logger.info(applicantSkill.toString());
+		}
 		
 	    }
 	});
@@ -63,7 +71,7 @@ public class DocumentDetails {
 	for (int index = 0; index < superList.size(); index++) {
 	    String details = superList.get(index);
 	    String normalize = StringUtils.normalizeSpace(details); // i.e. hello     world -> hello world
-	    this.appDocList.add(new ApplicantDocument((index + 1), normalize));
+	    this.applicantDocumentList.add(new ApplicantDocument((index + 1), normalize));
 	}
     }
 

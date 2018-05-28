@@ -1,9 +1,5 @@
 package com.cv.parser.entity;
 
-import java.util.Arrays;
-
-import com.cv.parser.helper.WorkExperienceHelper;
-
 public class ApplicantExperience {
 
     public ApplicantExperience() {
@@ -11,7 +7,8 @@ public class ApplicantExperience {
     }
     
     private int id;
-    private WorkExperienceHelper[] experience; // an applicant may have more than one experience
+    private String experience; // store it as string for now
+    // change to List<WorkExperienceHelper> only if managed to parse and store in WorkExperienceHelper
         
     public int getId() {
         return id;
@@ -21,16 +18,19 @@ public class ApplicantExperience {
         this.id = id;
     }
 
-    public WorkExperienceHelper[] getExperience() {
+    public String getExperience() {
         return experience;
     }
 
-    public void setExperience(WorkExperienceHelper[] experience) {
-        this.experience = experience;
+    public void setExperience(String experienceData) {
+	// WorkExperienceHelper[] experienceArr;
+	// parse experience from experienceData
+	// store them in 
+        this.experience = experienceData;
     }
 
     @Override
     public String toString() {
-	return "ApplicantExperience [id=" + id + ", experience=" + Arrays.toString(experience) + "]";
+	return "ApplicantExperience [id=" + id + ", experience=" + experience + "]";
     }
 }

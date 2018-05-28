@@ -32,7 +32,8 @@ public class ParserHelper {
     }
 
     public int getIndexOfThisSection(RegEx regEx, String line) {
-	RegEx[] sectionRegex = { RegEx.OBJECTIVE, RegEx.EDUCATION, RegEx.EXPERIENCE };
+	RegEx[] sectionRegex = { RegEx.OBJECTIVE, RegEx.EDUCATION, RegEx.EXPERIENCE, RegEx.SKILLS, RegEx.LANGUAGE,
+		RegEx.INTEREST, RegEx.MEMBERSHIP, RegEx.ADDITIONAL };
 	List<Integer> indexOfThisSection = new ArrayList<Integer>();
 	for (RegEx r : sectionRegex) {
 	    if (r.equals(regEx)) {
@@ -56,7 +57,8 @@ public class ParserHelper {
      * @return index of each section
      */
     public List<Integer> getIndexesOfSection(String line) {
-	RegEx[] sectionRegex = { RegEx.OBJECTIVE, RegEx.EDUCATION, RegEx.EXPERIENCE };
+	RegEx[] sectionRegex = { RegEx.OBJECTIVE, RegEx.EDUCATION, RegEx.EXPERIENCE, RegEx.SKILLS, RegEx.LANGUAGE,
+		RegEx.INTEREST, RegEx.MEMBERSHIP, RegEx.ADDITIONAL };
 	List<Integer> indexesOfSection = new ArrayList<Integer>();
 	for (RegEx r : sectionRegex) {
 	    Pattern pattern = Pattern.compile(r.toString(), Pattern.MULTILINE | Pattern.DOTALL);
@@ -77,7 +79,8 @@ public class ParserHelper {
      * @return indexes that follows regEx section
      */
     public List<Integer> getIndexesOfSection(RegEx regEx, String line) {
-	RegEx[] sectionRegex = { RegEx.OBJECTIVE, RegEx.EDUCATION, RegEx.EXPERIENCE };
+	RegEx[] sectionRegex = { RegEx.OBJECTIVE, RegEx.EDUCATION, RegEx.EXPERIENCE, RegEx.SKILLS, RegEx.LANGUAGE,
+		RegEx.INTEREST, RegEx.MEMBERSHIP, RegEx.ADDITIONAL };
 	List<Integer> indexesOfSection = new ArrayList<Integer>();
 	for (RegEx r : sectionRegex) {
 	    if (!r.equals(regEx)) {
@@ -91,7 +94,7 @@ public class ParserHelper {
 	Collections.sort(indexesOfSection);
 	return indexesOfSection;
     }
-
+    
     /**
      * Read JSON file in resources folder and return it as a Map
      * 

@@ -2,7 +2,6 @@ package com.cv.parser.extract;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,9 +64,7 @@ public class MSExtractor implements IExtractor {
 		msDoc = new XWPFDocument(fs);
 		we = new XWPFWordExtractor(msDoc);
 		this.contents.add(we.getText());
-	    } catch (FileNotFoundException e) {
-		logger.error(e.getMessage());
-	    } catch (IOException e) {
+	    } catch (IOException | NullPointerException e) {
 		logger.error(e.getMessage());
 	    } finally {
 		try {
