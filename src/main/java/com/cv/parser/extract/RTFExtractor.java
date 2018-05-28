@@ -49,4 +49,8 @@ public class RTFExtractor implements IExtractor {
 	    }
 	}
     }
+
+    public List<String> getContents() {
+	return contents;
+    }
 }

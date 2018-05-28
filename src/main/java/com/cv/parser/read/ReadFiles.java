@@ -48,9 +48,9 @@ public class ReadFiles {
 	    if (filesInPublicDir[i].isFile()) {
 		String fileName = filesInPublicDir[i].getName();
 		String ext = fileName.substring(fileName.indexOf('.'));
-
 		TableItem item = new TableItem(tableDirContent, SWT.NONE);
-		String[] fExts = { fe.get(Ext.PDF), fe.get(Ext.DOC), fe.get(Ext.DOCX), fe.get(Ext.TXT) };
+		String[] fExts = { fe.get(Ext.PDF), fe.get(Ext.DOC), fe.get(Ext.DOCX), fe.get(Ext.TXT), 
+			fe.get(Ext.RTF), fe.get(Ext.DOT), fe.get(Ext.DOTX) };
 		if (Arrays.asList(fExts).contains(ext)) {
 		    item.setText(new String[] { (i + 1) + "", ext, fileName });
 		} else {

@@ -18,6 +18,7 @@ import com.cv.parser.applicant.DocumentDetails;
 import com.cv.parser.extract.ExtractFiles;
 import com.cv.parser.extract.MSExtractor;
 import com.cv.parser.extract.PDFExtractor;
+import com.cv.parser.extract.RTFExtractor;
 import com.cv.parser.extract.TXTExtractor;
 import com.cv.parser.read.ReadFiles;
 import com.cv.parser.read.ValidateRead;
@@ -140,6 +141,10 @@ public class CVparserMain {
 	TXTExtractor txt = new TXTExtractor();
 	txt.main();
 	superList.addAll(txt.getContents());
+	
+	RTFExtractor rtf = new RTFExtractor();
+	rtf.main();
+	superList.addAll(rtf.getContents());
 	
 	// display extracted documents in table
 	new ExtractFiles(btnExtractContents, superList, tableExtractedContent).handleButtonClick();
