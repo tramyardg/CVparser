@@ -20,14 +20,8 @@ public class TXTExtractor implements IExtractor {
     private FileExtension fe = new FileExtension();
     private FileFinderByExt find = new FileFinderByExt();
 
-    File[] txtFiles;
-    List<String> contents = new ArrayList<String>();
-
-    File[] filesInPublicDir;
-    
-    public TXTExtractor(File[] filesInPublicDir) {
-	this.filesInPublicDir = filesInPublicDir;
-    }
+    private File[] txtFiles;
+    private List<String> contents = new ArrayList<String>();
 
     public void main() {
 	setFiles();

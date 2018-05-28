@@ -2,11 +2,14 @@ package com.cv.parser.extract;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.slf4j.Logger;
@@ -17,7 +20,7 @@ import com.cv.parser.FileExtension.Ext;
 import com.cv.parser.FileFinderByExt;
 
 /**
- * Supports MS Word 2004+.
+ * Supports MS Word 2004+ file extension .doc and .docx.
  * 
  * @author RAYMARTHINKPAD
  *
@@ -25,17 +28,12 @@ import com.cv.parser.FileFinderByExt;
 public class MSExtractor implements IExtractor {
     Logger logger = LoggerFactory.getLogger(MSExtractor.class);
 
-    FileExtension fe = new FileExtension();
-    FileFinderByExt find = new FileFinderByExt();
+    private FileExtension fileExtension = new FileExtension();
+    private FileFinderByExt fileFinderByExt = new FileFinderByExt();
 
-    File[] msDocs;
-    List<String> contents = new ArrayList<String>();
-
-    File[] filesInPublicDir;
-    
-    public MSExtractor(File[] filesInPublicDir) {
-	this.filesInPublicDir = filesInPublicDir;
-    }
+    private File[] docxFiles;
+    private File[] docFiles;
+    private List<String> contents = new ArrayList<String>();
 
     public void main() {
 	setFiles();
@@ -43,19 +41,17 @@ public class MSExtractor implements IExtractor {
     }
 
     public void setFiles() {
-	File[] doc = find.finder(fe.get(Ext.DOC));
-	File[] docx = find.finder(fe.get(Ext.DOCX));
-	if (doc.length != 0 && docx.length != 0) {
-	    this.msDocs = ArrayUtils.addAll(doc, docx);
-	} else if (doc.length != 0) {
-	    this.msDocs = doc;
-	} else if (docx.length != 0) {
-	    this.msDocs = docx;
-	}
+	this.docxFiles = fileFinderByExt.finder(fileExtension.get(Ext.DOCX));
+	this.docFiles = fileFinderByExt.finder(fileExtension.get(Ext.DOC));
     }
 
     public void extractFiles() {
-	for (File file : msDocs) {
+	extractDocxFiles();
+	extractDocFiles();
+    }
+
+    public void extractDocxFiles() {
+	for (File file : docxFiles) {
 	    FileInputStream fs = null;
 	    XWPFDocument msDoc = null;
 	    XWPFWordExtractor we = null;
@@ -77,7 +73,22 @@ public class MSExtractor implements IExtractor {
 	    }
 	}
     }
-    
+
+    public void extractDocFiles() {
+	for (File file : docFiles) {
+	    HWPFDocument hwpfdoc;
+	    WordExtractor extractor;
+	    try {
+		hwpfdoc = new HWPFDocument(new FileInputStream(file));
+		extractor = new WordExtractor(hwpfdoc);
+		this.contents.add(extractor.getText());
+		extractor.close();
+	    } catch (IOException e) {
+		logger.info(e.getMessage());
+	    }
+	}
+    }
+
     public List<String> getContents() {
 	return contents;
     }

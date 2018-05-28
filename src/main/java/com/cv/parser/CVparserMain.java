@@ -133,11 +133,11 @@ public class CVparserMain {
 	pdf.main();
 	superList.addAll(pdf.getContents());
 	
-	MSExtractor ms = new MSExtractor(filesInPublicDir);
+	MSExtractor ms = new MSExtractor();
 	ms.main();
 	superList.addAll(ms.getContents());
 	
-	TXTExtractor txt = new TXTExtractor(filesInPublicDir);
+	TXTExtractor txt = new TXTExtractor();
 	txt.main();
 	superList.addAll(txt.getContents());
 	
