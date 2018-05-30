@@ -4,8 +4,8 @@ public enum RegEx {
     LINK ("(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)"), 
     EMAIL ("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+"), 
     PHONE ("\\(?([0-9]{3})\\)?[-. ]([0-9]{3})[-. ]?[-. ]?([0-9]{4})"), 
-    OBJECTIVE ("\\b(Objective(s?)|OBJECTIVE(S?)|Summary|SUMMARY)([^-!@#$%^&*()+.,?])\\b"), // summary included here
-    EDUCATION ("\\b(Education(s?)|EDUCATION(S?))\\b"),
+    OBJECTIVE ("\\b(Objective(s?)|OBJECTIVE(S?)|Summary|SUMMARY|Profile Summary)([^-!@#$%^&*()+.,?])\\b"), // summary included here
+    EDUCATION ("\\b(Education(s?)|EDUCATION(S?)|Diploma(s?)|DIPLOMA(S?))\\b"),
     EXPERIENCE ("\\b(Experience(s?)|EXPERIENCE(S?))\\b"),
     SKILLS ("\\b(Skill(s?) & Expertise(s?)|Tool(s?) & Technolog(y?|ies?)|Skill(s?)|SKILL(S?))\\b"),
     LANGUAGE ("\\b(Language(s?)|LANGUAGE(S?))\\b"),

@@ -76,14 +76,19 @@ public class MSExtractor implements IExtractor {
     public void extractDocFiles() {
 	for (File file : docFiles) {
 	    HWPFDocument hwpfdoc;
-	    WordExtractor extractor;
+	    WordExtractor extractor = null;
 	    try {
 		hwpfdoc = new HWPFDocument(new FileInputStream(file));
 		extractor = new WordExtractor(hwpfdoc);
 		this.contents.add(extractor.getText());
-		extractor.close();
 	    } catch (IOException e) {
 		logger.info(e.getMessage());
+	    } finally {
+		try {
+		    extractor.close();
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
 	    }
 	}
     }

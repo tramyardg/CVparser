@@ -8,6 +8,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -39,7 +40,14 @@ public class CVparserMain {
 	    CVparserMain window = new CVparserMain();
 	    window.open();
 	} catch (Exception e) {
-	    logger.error("main", e);
+	    logger.error("CVparserMain:main(...)", e);
+	    MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_ERROR);
+	    messageBox.setText("Error");
+	    messageBox.setMessage("Please close any word document files opened.");
+	    int buttonID = messageBox.open();
+	    if (buttonID == SWT.OK) {
+		logger.error("Word document(s) file opened!");
+	    }
 	}
     }
 
@@ -48,7 +56,6 @@ public class CVparserMain {
      */
     public void open() {
 	Display display = Display.getDefault();
-
 	createContents();
 	shell.open();
 	shell.layout();
@@ -141,10 +148,10 @@ public class CVparserMain {
 	TXTExtractor txt = new TXTExtractor();
 	txt.main();
 	superList.addAll(txt.getContents());
-	
-	RTFExtractor rtf = new RTFExtractor();
-	rtf.main();
-	superList.addAll(rtf.getContents());
+
+//	RTFExtractor rtf = new RTFExtractor();
+//	rtf.main();
+//	superList.addAll(rtf.getContents());
 	
 	// display extracted documents in table
 	new ExtractFiles(btnExtractContents, superList, tableExtractedContent).handleButtonClick();
