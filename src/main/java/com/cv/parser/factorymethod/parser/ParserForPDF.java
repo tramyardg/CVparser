@@ -18,9 +18,7 @@ import com.cv.parser.factorymethod.ParserInterface;
 public class ParserForPDF implements ParserInterface {
     
     private final Logger logger = LoggerFactory.getLogger(ParserForPDF.class.getName());
-    
     private FileFinderByExt find = new FileFinderByExt();
-    
     
     private File[] pdfFiles;
     private List<String> contents = new ArrayList<>();
@@ -44,10 +42,9 @@ public class ParserForPDF implements ParserInterface {
 	    }
 	}
     }
-
+    
     @Override
     public List<String> getContents() {
 	return contents;
     }
-
 }

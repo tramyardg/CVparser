@@ -17,12 +17,6 @@ import org.slf4j.LoggerFactory;
 
 import com.cv.parser.applicant.DocumentDetails;
 import com.cv.parser.extract.ExtractFiles;
-import com.cv.parser.extract.MSExtractor;
-import com.cv.parser.extract.PDFExtractor;
-import com.cv.parser.extract.TXTExtractor;
-import com.cv.parser.factorymethod.ParserFactory;
-import com.cv.parser.factorymethod.ParserInterface;
-import com.cv.parser.factorymethod.UnsupportedFileExtension;
 import com.cv.parser.read.ReadFiles;
 import com.cv.parser.read.ValidateRead;
 
@@ -138,32 +132,6 @@ public class CVparserMain {
 	
 	/*** extract file content from directory START ***/
 	List<String> superList = new ArrayList<>();
-	
-//	PDFExtractor pdf = new PDFExtractor();
-//	pdf.main();
-//	superList.addAll(pdf.getContents());
-//	
-//	MSExtractor ms = new MSExtractor();
-//	ms.main();
-//	superList.addAll(ms.getContents());
-//	
-//	TXTExtractor txt = new TXTExtractor();
-//	txt.main();
-//	superList.addAll(txt.getContents());
-	
-	// Using Factory Method design pattern
-//	ParserFactory parserFactory = new ParserFactory();
-//	try {
-//	    ParserInterface pdfParser = parserFactory.getContent("pdf");
-//	    pdfParser.setFiles();
-//	    pdfParser.extractFiles();
-////	    superList.addAll(pdfParser.getContents());
-//	    
-//	} catch (UnsupportedFileExtension e) {
-//	    logger.error(e.getMessage());
-//	}
-	
-	// display extracted documents in table
 	new ExtractFiles(btnExtractContents, superList, tableExtractedContent).handleButtonClick();
 	/*** extracting END ***/
 	

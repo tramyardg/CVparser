@@ -39,7 +39,6 @@ public class MSExtractor implements IExtractor {
     }
 
     public void setFiles() {
-	// TODO use array utils to combine .docx with .dotx, .doc with .dot
 	this.docxFiles = fileFinderByExt.finder(fileExtension.get(Ext.DOCX));
 	this.docFiles = fileFinderByExt.finder(fileExtension.get(Ext.DOC));
     }
