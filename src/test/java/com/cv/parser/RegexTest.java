@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cv.parser.helper.ParserHelper;
+import com.cv.parser.applicant.ParserHelper;
 import com.github.javafaker.Faker;
 
 import junit.framework.TestCase;

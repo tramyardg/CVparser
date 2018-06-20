@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import com.cv.parser.RegEx;
 import com.cv.parser.entity.ApplicantDocument;
 import com.cv.parser.entity.ApplicantExperience;
-import com.cv.parser.helper.ParserHelper;
 
 /**
  * Fetches data to be stored in {@link ApplicantExperience}
