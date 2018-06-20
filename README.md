@@ -8,4 +8,4 @@
 ![UML class diagram - Factory Method](https://github.com/tramyardg/CVparser/blob/master/img_cvparser_uml_factory_method.jpg)
 
 ### Screenshot
-![GUI](https://github.com/tramyardg/CVparser/blob/optimization-dp/GUI_1.PNG)
+![GUI](https://github.com/tramyardg/CVparser/blob/master/GUI_1.PNG)
