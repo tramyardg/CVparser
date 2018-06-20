@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.cv.parser.applicant.DocumentDetails;
-import com.cv.parser.extract.ExtractFiles;
+import com.cv.parser.factorymethod.ExtractFiles;
 import com.cv.parser.read.ReadFiles;
 import com.cv.parser.read.ValidateRead;
 

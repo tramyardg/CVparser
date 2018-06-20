@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import com.cv.parser.RegEx;
 import com.cv.parser.entity.Applicant;
 import com.cv.parser.entity.ApplicantDocument;
-import com.cv.parser.helper.ParserHelper;
 
 /**
  * This is for storing data in {@link} Applicant model;

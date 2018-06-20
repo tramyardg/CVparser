@@ -1,4 +1,4 @@
-package com.cv.parser.extract;
+package com.cv.parser.factorymethod;
 
 import java.util.List;
 
@@ -9,10 +9,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.cv.parser.factorymethod.ParserFactory;
-import com.cv.parser.factorymethod.ParserInterface;
-import com.cv.parser.factorymethod.UnsupportedFileExtension;
 
 public class ExtractFiles {
     Logger logger = LoggerFactory.getLogger(ExtractFiles.class);

@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import com.cv.parser.RegEx;
 import com.cv.parser.entity.ApplicantDocument;
 import com.cv.parser.entity.ApplicantSkill;
-import com.cv.parser.helper.ParserHelper;
 
 public class ParseApplicantSkill {
 
