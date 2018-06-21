@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.cv.parser.CVparserSingleton;
-import com.cv.parser.FileExtension;
-import com.cv.parser.FileExtension.Ext;
+import com.cv.parser.factorymethod.ExtensionSingleton;
+import com.cv.parser.factorymethod.ExtensionSingleton.Ext;
 
 public class ReadFiles {
     Logger logger = LoggerFactory.getLogger(ReadFiles.class);
@@ -22,8 +22,6 @@ public class ReadFiles {
     private Button btnReadDir;
     private File[] filesInPublicDir;
     private Table tableDirContent;
-
-    private FileExtension fe = new FileExtension();
 
     public ReadFiles(Button btnReadDir, File[] filesInPublicDir, Table tableDirContent) {
 	this.btnReadDir = btnReadDir;
@@ -49,8 +47,14 @@ public class ReadFiles {
 		String fileName = filesInPublicDir[i].getName();
 		String ext = fileName.substring(fileName.indexOf('.'));
 		TableItem item = new TableItem(tableDirContent, SWT.NONE);
-		String[] fExts = { fe.get(Ext.PDF), fe.get(Ext.DOC), fe.get(Ext.DOCX), fe.get(Ext.TXT), 
-			fe.get(Ext.RTF), fe.get(Ext.DOT), fe.get(Ext.DOTX) };
+		
+		String[] fExts = {
+			ExtensionSingleton.getInstance().get(Ext.TXT),
+			ExtensionSingleton.getInstance().get(Ext.PDF),
+			ExtensionSingleton.getInstance().get(Ext.DOCX),
+			ExtensionSingleton.getInstance().get(Ext.DOC)
+		};
+		
 		if (Arrays.asList(fExts).contains(ext)) {
 		    item.setText(new String[] { (i + 1) + "", ext, fileName });
 		} else {

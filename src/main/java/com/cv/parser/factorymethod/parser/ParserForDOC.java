@@ -22,6 +22,7 @@ public class ParserForDOC implements ParserInterface {
     private FileFinderByExt find = new FileFinderByExt();
 
     private File[] docFiles;
+    // temporary storage for doc files
     private List<String> contents = new ArrayList<>();
 
     @Override

@@ -75,8 +75,13 @@ public class ExtractFiles {
     }
     
     private void doParse(ParserInterface parserInterface) {
+	// based on the given file type
+	// get all the files of that type
+	// then save it to a temporary list
 	parserInterface.setFiles();
 	parserInterface.extractFiles();
+	
+	// superList is a super List that contain all
 	superList.addAll(parserInterface.getContents());
     }
 

@@ -4,7 +4,8 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Arrays;
 
-import com.cv.parser.FileExtension.Ext;
+import com.cv.parser.factorymethod.ExtensionSingleton;
+import com.cv.parser.factorymethod.ExtensionSingleton.Ext;
 
 public class FileFinderByExt {
 
@@ -31,9 +32,10 @@ public class FileFinderByExt {
      * @return total
      */
     public int countAcceptableFiles() {
-	FileExtension fe = new FileExtension();
-	int[] counts = { finder(fe.get(Ext.TXT)).length, finder(fe.get(Ext.PDF)).length,
-		finder(fe.get(Ext.DOCX)).length, finder(fe.get(Ext.DOC)).length };
+	int[] counts = { finder(ExtensionSingleton.getInstance().get(Ext.TXT)).length,
+		finder(ExtensionSingleton.getInstance().get(Ext.PDF)).length,
+		finder(ExtensionSingleton.getInstance().get(Ext.DOCX)).length,
+		finder(ExtensionSingleton.getInstance().get(Ext.DOC)).length };
 	return Arrays.stream(counts).sum();
     }
 }
