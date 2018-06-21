@@ -48,17 +48,23 @@ public class DocumentDetails {
 		ParseApplicantSkill skills = new ParseApplicantSkill(applicantDocumentList);
 		skills.setApplicantSkills();
 
-		ResumeBuilder builder = new ResumeViewer(applicant.getApplicants(),
-			experiences.getApplicantExperience(), education.getApplicantEducation(),
-			skills.getApplicantSkillList());
+		// builder pattern in action
+		ResumeBuilder builder = new ResumeViewer(
+			applicant.getApplicants(),
+			experiences.getApplicantExperience(), 
+			education.getApplicantEducation(),
+			skills.getApplicantSkillList()
+		);
 		ResumeDirector director = new ResumeDirector(builder);
+		
+		// to get all, this can be used for resume table viewer GUI
+		/* director.construct().toString(); */
 		
 		logger.info(director.construct().getApplicant().toString());
 		logger.info(director.construct().getExperiences().toString());
 		logger.info(director.construct().getEducation().toString());
 		// returns List of ApplicantSkill (is a List, get(index) can be used)
 		logger.info(director.construct().getSkills().toString());
-
 	    }
 	});
 
