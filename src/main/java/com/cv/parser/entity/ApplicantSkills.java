@@ -1,8 +1,8 @@
 package com.cv.parser.entity;
 
-public class ApplicantSkill {
+public class ApplicantSkills {
 
-    public ApplicantSkill() {
+    public ApplicantSkills() {
 
     }
 
@@ -27,7 +27,7 @@ public class ApplicantSkill {
 
     @Override
     public String toString() {
-	return "ApplicantSkill [id=" + id + ", skills=" + skills + "]";
+	return "ApplicantSkills [id=" + id + ", skills=" + skills + "]";
     }
 
 }

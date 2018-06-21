@@ -12,8 +12,16 @@ import com.cv.parser.entity.ApplicantEducation;
 
 /**
  * This is for storing data in {@link} ApplicantEducation object|entity;
+ * The result would be a list of ApplicantEducation. For instance,
+ * if you have more than one applicants. You'll get:
  * 
- * @author RAYMARTHINKPAD
+ * ApplicantEducationObject = {
+ *  ApplicantEducation [id=1, education=...],
+ *  ApplicantEducation [id=2, education=...],
+ *  ApplicantEducation [id=3, education=...]
+ * }
+ * 
+ * @author tramyardg
  *
  */
 public class ParseApplicantEducation {

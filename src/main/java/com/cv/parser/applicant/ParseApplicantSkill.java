@@ -8,26 +8,40 @@ import org.slf4j.LoggerFactory;
 
 import com.cv.parser.RegEx;
 import com.cv.parser.entity.ApplicantDocument;
-import com.cv.parser.entity.ApplicantSkill;
+import com.cv.parser.entity.ApplicantSkills;
 
+/**
+ * Fetches data to be stored in {@link ApplicantSkills}
+ * The result would be a list of ApplicantSkills. For instance,
+ * if you have more than one applicants. You'll get:
+ * 
+ * ApplicantExperiencesObject = {
+ *  ApplicantSkills [id=1, skills=...],
+ *  ApplicantSkills [id=2, skills=...],
+ *  ApplicantSkills [id=3, skills=...]
+ * }
+ * 
+ * @author tramyardg
+ *
+ */
 public class ParseApplicantSkill {
 
     Logger logger = LoggerFactory.getLogger(ParseApplicantSkill.class);
 
     List<ApplicantDocument> applicantDocumentList = new ArrayList<>();
-    List<ApplicantSkill> applicantSkillList = new ArrayList<>();
+    List<ApplicantSkills> applicantSkillList = new ArrayList<>();
 
     public ParseApplicantSkill(List<ApplicantDocument> applicantDocumentList) {
 	this.applicantDocumentList = applicantDocumentList;
     }
 
-    public List<ApplicantSkill> getApplicantSkillList() {
+    public List<ApplicantSkills> getApplicantSkillList() {
 	return applicantSkillList;
     }
 
     public void setApplicantSkills() {
 	for (ApplicantDocument applicantDocument : applicantDocumentList) {
-	    ApplicantSkill applicantSkill = new ApplicantSkill();
+	    ApplicantSkills applicantSkill = new ApplicantSkills();
 	    applicantSkill.setId(applicantDocument.getId());
 	    applicantSkill.setSkills(findApplicantSkills(applicantDocument.getLine()));
 	    this.applicantSkillList.add(applicantSkill);

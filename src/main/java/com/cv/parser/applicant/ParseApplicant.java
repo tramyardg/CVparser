@@ -14,15 +14,23 @@ import com.cv.parser.entity.ApplicantDocument;
 
 /**
  * This is for storing data in {@link} Applicant model;
+ * The result would be a list of Applicant. For instance,
+ * if you have more than one applicants. You'll get:
  * 
- * @author RAYMARTHINKPAD
+ * ApplicantObject = {
+ *  Applicant [id=1, ...],
+ *  Applicant [id=2, ...],
+ *  Applicant [id=3, ...]
+ * }
+ * 
+ * @author tramyardg
  *
  */
 public class ParseApplicant {
     Logger logger = LoggerFactory.getLogger(ParseApplicant.class);
 
-    List<ApplicantDocument> appDocList = new ArrayList<ApplicantDocument>();
-    List<Applicant> applicants = new ArrayList<Applicant>();
+    List<ApplicantDocument> appDocList = new ArrayList<>();
+    List<Applicant> applicants = new ArrayList<>();
 
     public ParseApplicant(List<ApplicantDocument> appDocList) {
 	this.appDocList = appDocList;

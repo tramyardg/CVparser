@@ -7,12 +7,20 @@ import org.slf4j.LoggerFactory;
 
 import com.cv.parser.RegEx;
 import com.cv.parser.entity.ApplicantDocument;
-import com.cv.parser.entity.ApplicantExperience;
+import com.cv.parser.entity.ApplicantExperiences;
 
 /**
- * Fetches data to be stored in {@link ApplicantExperience}
+ * Fetches data to be stored in {@link ApplicantExperiences}
+ * The result would be a list of ApplicantExperiences. For instance,
+ * if you have more than one applicants. You'll get:
  * 
- * @author RAYMARTHINKPAD
+ * ApplicantExperiencesObject = {
+ *  ApplicantExperiences [id=1, experience=...],
+ *  ApplicantExperiences [id=2, experience=...],
+ *  ApplicantExperiences [id=3, experience=...]
+ * }
+ * 
+ * @author tramyardg
  *
  */
 public class ParseApplicantExperience {
@@ -20,7 +28,7 @@ public class ParseApplicantExperience {
     Logger logger = LoggerFactory.getLogger(ParseApplicantExperience.class);
 
     List<ApplicantDocument> applicantDocument = new ArrayList<>();
-    List<ApplicantExperience> applicantExperienceList = new ArrayList<>();
+    List<ApplicantExperiences> applicantExperienceList = new ArrayList<>();
 
     public ParseApplicantExperience(List<ApplicantDocument> applicantDocument) {
 	this.applicantDocument = applicantDocument;
@@ -28,14 +36,14 @@ public class ParseApplicantExperience {
 
     public void setApplicantExperiences() {
 	for (ApplicantDocument ad : applicantDocument) {
-	    ApplicantExperience applicantExperience = new ApplicantExperience();
+	    ApplicantExperiences applicantExperience = new ApplicantExperiences();
 	    applicantExperience.setId(ad.getId());
 	    applicantExperience.setExperience(findWorkExperiences(ad.getId(), ad.getLine()));
 	    this.applicantExperienceList.add(applicantExperience);
 	}
     }
 
-    public List<ApplicantExperience> getApplicantExperience() {
+    public List<ApplicantExperiences> getApplicantExperience() {
 	return applicantExperienceList;
     }
 
