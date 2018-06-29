@@ -57,6 +57,17 @@ public class ExtractFiles {
     public List<String> getAllDocuments() {
 	return superList;
     }
+    
+    private void doParse(ParserInterface parserInterface) {
+	// based on the given file type
+	// get all the files of that type
+	// then save it to a temporary list
+	parserInterface.setFiles();
+	parserInterface.extractFiles();
+	
+	// superList is a super List that contain all
+	superList.addAll(parserInterface.getContents());
+    }
 
     private void parsePDF(ParserFactory factory) throws UnsupportedFileExtension {
 	doParse(factory.getContent("pdf"));
@@ -73,16 +84,4 @@ public class ExtractFiles {
     private void parseTXT(ParserFactory factory) throws UnsupportedFileExtension {
 	doParse(factory.getContent("txt"));
     }
-    
-    private void doParse(ParserInterface parserInterface) {
-	// based on the given file type
-	// get all the files of that type
-	// then save it to a temporary list
-	parserInterface.setFiles();
-	parserInterface.extractFiles();
-	
-	// superList is a super List that contain all
-	superList.addAll(parserInterface.getContents());
-    }
-
 }
