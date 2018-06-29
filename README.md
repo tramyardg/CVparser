@@ -79,7 +79,7 @@ try {
 	logger.info(director.construct().getEducation().toString());
 	logger.info(director.construct().getSkills().toString());
 
-	// returns a specific part of a CV of a single candidates (if more than one candidates)
+	// returns a specific part of a CV of a single candidate (if more than one candidates)
 	logger.info(director.construct().getSkills().get(0).toString());
 		
 ```
