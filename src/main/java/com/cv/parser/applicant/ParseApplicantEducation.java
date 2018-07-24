@@ -25,7 +25,6 @@ import com.cv.parser.entity.ApplicantEducation;
  *
  */
 public class ParseApplicantEducation {
-
     Logger logger = LoggerFactory.getLogger(ParseApplicantEducation.class);
     
     List<ApplicantDocument> applicantDocument = new ArrayList<>();
@@ -33,15 +32,6 @@ public class ParseApplicantEducation {
 
     public ParseApplicantEducation(List<ApplicantDocument> applicantDocument) {
 	this.applicantDocument = applicantDocument;
-    }
-
-    public void setApplicantEducations() {
-	for (ApplicantDocument ad : applicantDocument) {
-	    ApplicantEducation applicantEducation = new ApplicantEducation();
-	    applicantEducation.setId(ad.getId());
-	    applicantEducation.setEducation(findEducations(ad.getLine()));
-	    this.applicantEducationList.add(applicantEducation);
-	}
     }
     
     public List<ApplicantEducation> getApplicantEducation() {
@@ -54,7 +44,7 @@ public class ParseApplicantEducation {
 	int indexOfEducation = parser.getIndexOfThisSection(RegEx.EDUCATION, line);
 	if (indexOfEducation != -1) {
 	    int nextSectionIndex = 0;
-	    List<Integer> listOfSectionIndexes = parser.getIndexesOfSection(line);
+	    List<Integer> listOfSectionIndexes = parser.getAllSectionIndexes(line);
 	    String educationsText = line.replaceFirst(RegEx.EDUCATION.toString(), "");
 	    for (int index = 0; index < listOfSectionIndexes.size(); index++) {
 		if (listOfSectionIndexes.get(index) == indexOfEducation) {
@@ -63,6 +53,8 @@ public class ParseApplicantEducation {
 		    if (index == listOfSectionIndexes.size() - 1) {
 			return educationsText.substring(indexOfEducation);
 		    } else {
+			// index + 1: where index is the index of education section heading, +1 
+			// the index of the next section heading
 			nextSectionIndex = listOfSectionIndexes.get(index + 1);
 			break;
 		    }
@@ -71,5 +63,14 @@ public class ParseApplicantEducation {
 	    return educationsText.substring(indexOfEducation, nextSectionIndex);
 	}
 	return null;
-    }   
+    }
+    
+    public void setApplicantEducations() {
+	for (ApplicantDocument ad : applicantDocument) {
+	    ApplicantEducation applicantEducation = new ApplicantEducation();
+	    applicantEducation.setId(ad.getId());
+	    applicantEducation.setEducation(findEducations(ad.getLine()));
+	    this.applicantEducationList.add(applicantEducation);
+	}
+    }
 }

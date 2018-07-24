@@ -4,6 +4,9 @@
 - Apache POI: for reading Microsoft Word files
 - SWT: graphical widget toolkit used for building GUI
 
+### Screenshot
+![GUI](https://github.com/tramyardg/CVparser/blob/master/GUI_1.PNG)
+
 ### UML class diagram
 ##### Factory Method implemented for parsing
 ![UML class diagram - Factory Method](https://github.com/tramyardg/CVparser/blob/master/src/main/java/com/cv/parser/factorymethod/img_factory_method_uml.jpg)
@@ -83,5 +86,3 @@ try {
 	logger.info(director.construct().getSkills().get(0).toString());
 		
 ```
-### Screenshot
-![GUI](https://github.com/tramyardg/CVparser/blob/master/GUI_1.PNG)

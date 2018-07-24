@@ -35,7 +35,7 @@ public class RegexTest extends TestCase {
 	ParserHelper helper = new ParserHelper();
 	RegEx regEx = RegEx.OBJECTIVE;
 	int objIndex = helper.getIndexOfThisSection(regEx, line);
-	int indexOfFollowingSection = helper.getIndexesOfSection(regEx, line).get(0);
+	int indexOfFollowingSection = helper.getSectionIndexesExcludeOne(regEx, line).get(0);
 	logger.info("object index {}", objIndex);
 	logger.info("index of following section {}", indexOfFollowingSection);
 	String objective = line.substring(objIndex, indexOfFollowingSection);

@@ -13,15 +13,12 @@ import com.cv.parser.entity.Applicant;
 import com.cv.parser.entity.ApplicantDocument;
 
 /**
- * This is for storing data in {@link} Applicant model;
- * The result would be a list of Applicant. For instance,
- * if you have more than one applicants. You'll get:
+ * This is for storing data in {@link} Applicant model; The result would be a
+ * list of Applicant. For instance, if you have more than one applicants. You'll
+ * get:
  * 
- * ApplicantObject = {
- *  Applicant [id=1, ...],
- *  Applicant [id=2, ...],
- *  Applicant [id=3, ...]
- * }
+ * ApplicantObject = { Applicant [id=1, ...], Applicant [id=2, ...], Applicant
+ * [id=3, ...] }
  * 
  * @author tramyardg
  *
@@ -37,7 +34,7 @@ public class ParseApplicant {
     }
 
     private String findEmail(String details) {
-	List<String> emailList = new ArrayList<String>();
+	List<String> emailList = new ArrayList<>();
 	Pattern pattern = Pattern.compile(RegEx.EMAIL.toString(), Pattern.MULTILINE);
 	Matcher matcher = pattern.matcher(details);
 	while (matcher.find()) {
@@ -53,7 +50,7 @@ public class ParseApplicant {
      * @return
      */
     private String findLinks(String line) {
-	List<String> links = new ArrayList<String>();
+	List<String> links = new ArrayList<>();
 	Pattern pattern = Pattern.compile(RegEx.LINK.toString(),
 		Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 	Matcher matcher = pattern.matcher(line);
@@ -71,7 +68,7 @@ public class ParseApplicant {
     private String findProfile(String line) {
 	// copies everything up to the next section
 	ParserHelper helper = new ParserHelper();
-	List<Integer> indexes = helper.getIndexesOfSection(line);
+	List<Integer> indexes = helper.getAllSectionIndexes(line);
 	int beginIndex = 0;
 	int endIndex = indexes.get(0);
 	return line.substring(beginIndex, endIndex);
@@ -85,7 +82,7 @@ public class ParseApplicant {
      * @return phone numbers found from resume
      */
     private String findPhoneNumber(String line) {
-	List<String> phoneNumbers = new ArrayList<String>();
+	List<String> phoneNumbers = new ArrayList<>();
 	Pattern pattern = Pattern.compile(RegEx.PHONE.toString(), Pattern.MULTILINE | Pattern.DOTALL);
 	Matcher matcher = pattern.matcher(line);
 	while (matcher.find()) {
@@ -98,11 +95,16 @@ public class ParseApplicant {
 	RegEx obj = RegEx.OBJECTIVE;
 	ParserHelper helper = new ParserHelper();
 	int beginIndex = helper.getIndexOfThisSection(obj, line);
-	String objective = line.replaceFirst(RegEx.OBJECTIVE.toString(), ""); // section heading is removed
-	int endIndex = helper.getIndexesOfSection(obj, objective).get(0);
+	String objective = line.replaceFirst(RegEx.OBJECTIVE.toString(), "");
+	// get(0) which ensures objective heading is excluded
+	int endIndex = helper.getSectionIndexesExcludeOne(obj, objective).get(0);
 	return objective.substring(beginIndex, endIndex);
     }
 
+    /**
+     * Gathers basic applicant info such as phone number, email, links, profile
+     * (introduction), and objective. These information are saved in a list of Applicant object.
+     */
     public void setApplicantInfo() {
 	for (ApplicantDocument ad : appDocList) {
 	    Applicant applicant = new Applicant();
@@ -111,14 +113,13 @@ public class ParseApplicant {
 	    applicant.setEmail(findEmail(ad.getLine()));
 	    applicant.setLinks(findLinks(ad.getLine()));
 	    applicant.setProfile(findProfile(ad.getLine()));
-	    
+
 	    // test if objective section exists in the first place
-	    if (new ParserHelper().getIndexOfThisSection(RegEx.OBJECTIVE, ad.getLine())  != -1) {
+	    if (new ParserHelper().getIndexOfThisSection(RegEx.OBJECTIVE, ad.getLine()) != -1) {
 		applicant.setObjective(findObjective(ad.getLine()));
 	    } else {
 		applicant.setObjective(null);
 	    }
-	    
 	    this.applicants.add(applicant);
 	}
     }

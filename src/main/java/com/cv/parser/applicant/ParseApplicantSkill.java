@@ -39,21 +39,12 @@ public class ParseApplicantSkill {
 	return applicantSkillList;
     }
 
-    public void setApplicantSkills() {
-	for (ApplicantDocument applicantDocument : applicantDocumentList) {
-	    ApplicantSkills applicantSkill = new ApplicantSkills();
-	    applicantSkill.setId(applicantDocument.getId());
-	    applicantSkill.setSkills(findApplicantSkills(applicantDocument.getLine()));
-	    this.applicantSkillList.add(applicantSkill);
-	}
-    }
-
     private String findApplicantSkills(String line) {
 	ParserHelper parser = new ParserHelper();
 	int indexOfSkillsSection = parser.getIndexOfThisSection(RegEx.SKILLS, line);
 
 	if (indexOfSkillsSection != -1) {
-	    List<Integer> sectionIndexes = parser.getIndexesOfSection(line);
+	    List<Integer> sectionIndexes = parser.getAllSectionIndexes(line);
 	    String skillsText = line.replaceFirst(RegEx.SKILLS.toString(), "");
 	    int nextSectionIndex = 0;
 	    for (int index = 0; index < sectionIndexes.size(); index++) {
@@ -69,6 +60,15 @@ public class ParseApplicantSkill {
 	    return skillsText.substring(indexOfSkillsSection, nextSectionIndex);
 	}
 	return null;
+    }
+    
+    public void setApplicantSkills() {
+	for (ApplicantDocument applicantDocument : applicantDocumentList) {
+	    ApplicantSkills applicantSkill = new ApplicantSkills();
+	    applicantSkill.setId(applicantDocument.getId());
+	    applicantSkill.setSkills(findApplicantSkills(applicantDocument.getLine()));
+	    this.applicantSkillList.add(applicantSkill);
+	}
     }
 
 }

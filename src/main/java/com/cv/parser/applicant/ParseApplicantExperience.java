@@ -24,7 +24,7 @@ import com.cv.parser.entity.ApplicantExperiences;
  *
  */
 public class ParseApplicantExperience {
-
+    
     Logger logger = LoggerFactory.getLogger(ParseApplicantExperience.class);
 
     List<ApplicantDocument> applicantDocument = new ArrayList<>();
@@ -34,15 +34,6 @@ public class ParseApplicantExperience {
 	this.applicantDocument = applicantDocument;
     }
 
-    public void setApplicantExperiences() {
-	for (ApplicantDocument ad : applicantDocument) {
-	    ApplicantExperiences applicantExperience = new ApplicantExperiences();
-	    applicantExperience.setId(ad.getId());
-	    applicantExperience.setExperience(findWorkExperiences(ad.getId(), ad.getLine()));
-	    this.applicantExperienceList.add(applicantExperience);
-	}
-    }
-
     public List<ApplicantExperiences> getApplicantExperience() {
 	return applicantExperienceList;
     }
@@ -50,6 +41,7 @@ public class ParseApplicantExperience {
     private String findWorkExperiences(int id, String line) {
 	ParserHelper parser = new ParserHelper();
 	/*
+	 * Algorithm:
 	 * copy texts starting from experience section index to the following
 	 * section index experience index is LESS THAN the following section
 	 * index, therefore
@@ -64,14 +56,14 @@ public class ParseApplicantExperience {
 	if (indexOfExperience != -1) {
 	    int nextSectionIndex = 0; // index that follows experience section
 	    String experiencesText = line.replaceFirst(RegEx.EXPERIENCE.toString(), "");
-	    for (int index = 0; index < parser.getIndexesOfSection(line).size(); index++) {
-		if (parser.getIndexesOfSection(line).get(index) == indexOfExperience) {
+	    for (int index = 0; index < parser.getAllSectionIndexes(line).size(); index++) {
+		if (parser.getAllSectionIndexes(line).get(index) == indexOfExperience) {
 		    // experience section is not always in the middle
 		    // rarely they may appear as the last section
-		    if (index == parser.getIndexesOfSection(line).size() - 1) {
+		    if (index == parser.getAllSectionIndexes(line).size() - 1) {
 			return experiencesText.substring(indexOfExperience);
 		    } else {
-			nextSectionIndex = parser.getIndexesOfSection(line).get(index + 1);
+			nextSectionIndex = parser.getAllSectionIndexes(line).get(index + 1);
 			break;
 		    }
 		}
@@ -79,5 +71,14 @@ public class ParseApplicantExperience {
 	    return experiencesText.substring(indexOfExperience, nextSectionIndex);
 	}
 	return null;
+    }
+    
+    public void setApplicantExperiences() {
+	for (ApplicantDocument ad : applicantDocument) {
+	    ApplicantExperiences applicantExperience = new ApplicantExperiences();
+	    applicantExperience.setId(ad.getId());
+	    applicantExperience.setExperience(findWorkExperiences(ad.getId(), ad.getLine()));
+	    this.applicantExperienceList.add(applicantExperience);
+	}
     }
 }
