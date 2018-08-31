@@ -10,6 +10,7 @@
 
 ## Screenshots
 ![GUI](https://github.com/tramyardg/CVparser/blob/master/GUI_1.PNG)
+### toString output
 ![toString output](https://github.com/tramyardg/CVparser/blob/master/toStringOutput.PNG)
 
 ## UML Class Diagram
