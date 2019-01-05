@@ -24,6 +24,7 @@ public class CVparserMain {
     static Logger logger = LoggerFactory.getLogger(CVparserMain.class);
 
     File resumesStoragePath = new File(CVparserSingleton.getInstance().resumesStoragePath);
+    protected Display display;
     protected Shell shell;
     protected Button btnReadDir;
     protected Button btnExtractContents;
@@ -37,7 +38,7 @@ public class CVparserMain {
     public static void main(String[] args) {
 	try {
 	    CVparserMain window = new CVparserMain();
-	    window.open();
+	    window.open();	
 	} catch (Exception e) {
 	    logger.error("CVparserMain:main(...)", e);
 	    MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_ERROR);
@@ -54,7 +55,7 @@ public class CVparserMain {
      * Open the window.
      */
     public void open() {
-	Display display = Display.getDefault();
+	display = Display.getDefault();
 	createContents();
 	shell.open();
 	shell.layout();
@@ -101,7 +102,7 @@ public class CVparserMain {
 	TableColumn tblclmnFileName = new TableColumn(tableDirContent, SWT.NONE);
 	tblclmnFileName.setWidth(535);
 	tblclmnFileName.setText("File name");
-	
+
 	Table tableExtractedContent = new Table(shell, SWT.BORDER | SWT.FULL_SELECTION);
 	tableExtractedContent.setBounds(10, 180, 705, 128);
 	tableExtractedContent.setHeaderVisible(true);
@@ -110,7 +111,7 @@ public class CVparserMain {
 	TableColumn tblclmnContents = new TableColumn(tableExtractedContent, SWT.NONE);
 	tblclmnContents.setWidth(664);
 	tblclmnContents.setText("Contents");
-	
+
 	btnExtractContents = new Button(shell, SWT.NONE);
 	btnExtractContents.setBounds(10, 149, 705, 25);
 	btnExtractContents.setText("Extract contents");
@@ -120,15 +121,17 @@ public class CVparserMain {
 	btnSaveDocumentsToDb.setBounds(10, 314, 705, 25);
 	btnSaveDocumentsToDb.setText("Save documents to database");
 	btnSaveDocumentsToDb.setEnabled(false);
-	
+
 	/** read files in public directory START **/
 	new ReadFiles(btnReadDir, filesInPublicDir, tableDirContent, btnExtractContents).handleButtonClick();
 	/** reading END **/
 
 	////////////////////////////////////////
+	
 	/*** extract file content from directory START ***/
 	List<String> superList = new ArrayList<>();
-	new ExtractFiles(btnExtractContents, superList, tableExtractedContent, btnSaveDocumentsToDb).handleButtonClick();
+	new ExtractFiles(shell, btnExtractContents, superList, tableExtractedContent, btnSaveDocumentsToDb)
+		.handleButtonClick();
 	/*** extracting END ***/
 
 	//////////////////////////////////////
