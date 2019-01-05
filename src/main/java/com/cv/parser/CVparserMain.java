@@ -22,9 +22,12 @@ import com.cv.parser.read.ValidateRead;
 
 public class CVparserMain {
     static Logger logger = LoggerFactory.getLogger(CVparserMain.class);
-    
+
     File resumesStoragePath = new File(CVparserSingleton.getInstance().resumesStoragePath);
     protected Shell shell;
+    protected Button btnReadDir;
+    protected Button btnExtractContents;
+    protected Button btnSaveDocumentsToDb;
 
     /**
      * Launch the application.
@@ -74,7 +77,7 @@ public class CVparserMain {
 
 	File[] filesInPublicDir = this.resumesStoragePath.listFiles();
 
-	Button btnReadDir = new Button(shell, SWT.NONE);
+	btnReadDir = new Button(shell, SWT.NONE);
 	btnReadDir.setBounds(10, 10, 127, 25);
 	btnReadDir.setText("Read files from public");
 
@@ -98,52 +101,41 @@ public class CVparserMain {
 	TableColumn tblclmnFileName = new TableColumn(tableDirContent, SWT.NONE);
 	tblclmnFileName.setWidth(535);
 	tblclmnFileName.setText("File name");
-
-	Label lblTotalFiles = new Label(shell, SWT.NONE);
-	lblTotalFiles.setToolTipText("total number of files ");
-	lblTotalFiles.setBounds(10, 149, 152, 15);
-	lblTotalFiles.setText("Total number of files: " + filesInPublicDir.length);
-	lblTotalFiles.setVisible(false);
-
-	Label lblNumAcceptableFiles = new Label(shell, SWT.NONE);
-	lblNumAcceptableFiles.setBounds(426, 149, 289, 15);
-	lblNumAcceptableFiles
-		.setText("Number of .pdf, .doc, .docx, .txt files: " + new FileFinderByExt().countAcceptableFiles());
-	lblNumAcceptableFiles.setVisible(false);
-
-	Button btnExtractContents = new Button(shell, SWT.NONE);
-	btnExtractContents.setBounds(10, 170, 705, 25);
-	btnExtractContents.setText("Extract contents");
-
-	/** read files in public directory START **/
-	new ReadFiles(btnReadDir, filesInPublicDir, tableDirContent).handleButtonClick();
-
+	
 	Table tableExtractedContent = new Table(shell, SWT.BORDER | SWT.FULL_SELECTION);
-	tableExtractedContent.setBounds(10, 201, 705, 107);
+	tableExtractedContent.setBounds(10, 180, 705, 128);
 	tableExtractedContent.setHeaderVisible(true);
 	tableExtractedContent.setLinesVisible(true);
 
 	TableColumn tblclmnContents = new TableColumn(tableExtractedContent, SWT.NONE);
 	tblclmnContents.setWidth(664);
 	tblclmnContents.setText("Contents");
-	/** reading END **/
 	
-	////////////////////////////////////////
-	
-	/*** extract file content from directory START ***/
-	List<String> superList = new ArrayList<>();
-	new ExtractFiles(btnExtractContents, superList, tableExtractedContent).handleButtonClick();
-	/*** extracting END ***/
-	
-	//////////////////////////////////////
-	
-	/**** saving to database START ****/
-	Button btnSaveDocumentsToDb = new Button(shell, SWT.NONE);
+	btnExtractContents = new Button(shell, SWT.NONE);
+	btnExtractContents.setBounds(10, 149, 705, 25);
+	btnExtractContents.setText("Extract contents");
+	btnExtractContents.setEnabled(false);
+
+	btnSaveDocumentsToDb = new Button(shell, SWT.NONE);
 	btnSaveDocumentsToDb.setBounds(10, 314, 705, 25);
 	btnSaveDocumentsToDb.setText("Save documents to database");
+	btnSaveDocumentsToDb.setEnabled(false);
 	
+	/** read files in public directory START **/
+	new ReadFiles(btnReadDir, filesInPublicDir, tableDirContent, btnExtractContents).handleButtonClick();
+	/** reading END **/
+
+	////////////////////////////////////////
+	/*** extract file content from directory START ***/
+	List<String> superList = new ArrayList<>();
+	new ExtractFiles(btnExtractContents, superList, tableExtractedContent, btnSaveDocumentsToDb).handleButtonClick();
+	/*** extracting END ***/
+
+	//////////////////////////////////////
+
+	/**** saving contents START ****/
 	DocumentDetails dd = new DocumentDetails(btnSaveDocumentsToDb, superList);
 	dd.handleButtonClick();
-	/**** saving to database END ****/
+	/**** saving contents END ****/
     }
 }

@@ -5,7 +5,6 @@ import java.util.Arrays;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
@@ -22,21 +21,22 @@ public class ReadFiles {
     private Button btnReadDir;
     private File[] filesInPublicDir;
     private Table tableDirContent;
+    
+    private Button extractBtn;
 
-    public ReadFiles(Button btnReadDir, File[] filesInPublicDir, Table tableDirContent) {
+    public ReadFiles(Button btnReadDir, File[] filesInPublicDir, Table tableDirContent, Button btnExtractContents) {
 	this.btnReadDir = btnReadDir;
 	this.filesInPublicDir = filesInPublicDir;
 	this.tableDirContent = tableDirContent;
+	this.extractBtn = btnExtractContents;
     }
 
     public void handleButtonClick() {
-	setEnabledExtractButton(false);
 	btnReadDir.addListener(SWT.Selection, new Listener() {
 	    public void handleEvent(org.eclipse.swt.widgets.Event arg0) {
 		setFiles();
-		showHiddenLables();
 		btnReadDir.setEnabled(false);
-		setEnabledExtractButton(true);
+		extractBtn.setEnabled(true);
 	    }
 	});
     }
@@ -65,22 +65,5 @@ public class ReadFiles {
 	}
     }
     
-    protected void showHiddenLables() {
-	Control[] controls = btnReadDir.getParent().getChildren();
-	for (Control c : controls) {
-	    if (!c.getVisible()) {
-		c.setVisible(true);
-	    }
-	}
-    }
-    
-    protected void setEnabledExtractButton(boolean isEnabled) {
-	Control[] controls = btnReadDir.getParent().getChildren();
-	for (Control c : controls) {
-	    if (c.toString().equals("Button {Extract contents}")) {
-		c.setEnabled(isEnabled);
-	    }
-	}
-    }
 }
 

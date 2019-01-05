@@ -1,15 +1,17 @@
 
 
 ### Table of Contents
-- [Usage](#usage)
+- [Features](#features)
 - [Regular expression](#regular-expression)
 - [Dependencies](#dependencies)
 - [Screenshots](#screenshots)
 - [UML Class Diagram](#uml-class-diagram)
 
-## Usage
-1. Extract each resume information from the public folder.
-2. Saving the data as objects.
+## Features
+1. Support PDF, MS word, and text files.
+2. Extract important information i.e skills, education, etc, email, phone number, etc.
+3. Process multiple files at the same time.
+2. Saving the data as JSON objects or CSV (in progress).
 
 ### Regular expression
 Regular expression was used to extract a section of a resume. This is because an experience section might 

@@ -16,13 +16,15 @@ public class ExtractFiles {
     Button btnExtractContents;
     List<String> superList;
     Table tableExtractedContent;
+    Button btnSaveContents;
 
     private ParserFactory parserFactory = new ParserFactory();
 	
-    public ExtractFiles(Button btnExtractContents, List<String> superList, Table tableExtractedContent) {
+    public ExtractFiles(Button btnExtractContents, List<String> superList, Table tableExtractedContent, Button btnSaveDocumentsToDb) {
 	this.btnExtractContents = btnExtractContents;
 	this.superList = superList;
 	this.tableExtractedContent = tableExtractedContent;
+	this.btnSaveContents = btnSaveDocumentsToDb;
     }
 
     public void handleButtonClick() {
@@ -42,6 +44,7 @@ public class ExtractFiles {
 		displayDocumentsInTable();
 
 		btnExtractContents.setEnabled(false);
+		btnSaveContents.setEnabled(true);
 	    }
 	    
 	    // display extracted documents in table

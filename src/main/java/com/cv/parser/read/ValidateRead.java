@@ -24,7 +24,7 @@ public class ValidateRead {
 	if (this.resumesStoragePath.listFiles().length == 0) {
 	    MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING);
 	    messageBox.setText("Warning");
-	    messageBox.setMessage("No resume files found in public directory.");
+	    messageBox.setMessage("No resume found in public directory.");
 
 	    int buttonID = messageBox.open();
 	    if (buttonID == SWT.OK) {
