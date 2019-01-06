@@ -33,7 +33,6 @@ public class CandidateJSON {
 	    writer = new FileWriter(jsonFile);
 	    writer.write(data);
 	    writer.close();
-	    logger.debug("Write to JSON file success!");
 	} catch (IOException e) {
 	    logger.error("Exception found!", e);
 	}
