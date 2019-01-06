@@ -26,8 +26,12 @@ public class ApplicantEducation {
 	this.education = education;
     }
 
+    public String oldToString() {
+	return "ApplicantEducation [id=" + id + ", education=" + education + "]";
+    }
+    
     @Override
     public String toString() {
-	return "ApplicantEducation [id=" + id + ", education=" + education + "]";
+	return education;
     }
 }

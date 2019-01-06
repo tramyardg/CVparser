@@ -28,7 +28,8 @@ public class CVparserMain {
     protected Shell shell;
     protected Button btnReadDir;
     protected Button btnExtractContents;
-    protected Button btnSaveDocumentsToDb;
+    protected Button btnSaveAsJSON;
+    protected Button btnSaveInCsv;
 
     /**
      * Launch the application.
@@ -117,10 +118,10 @@ public class CVparserMain {
 	btnExtractContents.setText("Extract contents");
 	btnExtractContents.setEnabled(false);
 
-	btnSaveDocumentsToDb = new Button(shell, SWT.NONE);
-	btnSaveDocumentsToDb.setBounds(10, 314, 705, 25);
-	btnSaveDocumentsToDb.setText("Save documents to database");
-	btnSaveDocumentsToDb.setEnabled(false);
+	btnSaveAsJSON = new Button(shell, SWT.NONE);
+	btnSaveAsJSON.setBounds(10, 314, 705, 25);
+	btnSaveAsJSON.setText("Save in JSON file");
+	btnSaveAsJSON.setEnabled(false);
 
 	/** read files in public directory START **/
 	new ReadFiles(btnReadDir, filesInPublicDir, tableDirContent, btnExtractContents).handleButtonClick();
@@ -130,15 +131,19 @@ public class CVparserMain {
 	
 	/*** extract file content from directory START ***/
 	List<String> superList = new ArrayList<>();
-	new ExtractFiles(shell, btnExtractContents, superList, tableExtractedContent, btnSaveDocumentsToDb)
+	new ExtractFiles(shell, btnExtractContents, superList, tableExtractedContent, btnSaveAsJSON)
 		.handleButtonClick();
 	/*** extracting END ***/
 
 	//////////////////////////////////////
 
 	/**** saving contents START ****/
-	DocumentDetails dd = new DocumentDetails(btnSaveDocumentsToDb, superList);
+	DocumentDetails dd = new DocumentDetails(btnSaveAsJSON, superList);
 	dd.handleButtonClick();
+	
+	btnSaveInCsv = new Button(shell, SWT.NONE);
+	btnSaveInCsv.setBounds(10, 345, 705, 25);
+	btnSaveInCsv.setText("Save in CSV file");
 	/**** saving contents END ****/
     }
 }

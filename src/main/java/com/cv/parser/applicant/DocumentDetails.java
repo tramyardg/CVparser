@@ -1,19 +1,21 @@
 package com.cv.parser.applicant;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Listener;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cv.parser.builder.ResumeBuilder;
-import com.cv.parser.builder.ResumeDirector;
-import com.cv.parser.builder.ResumeViewer;
 import com.cv.parser.entity.ApplicantDocument;
+import com.cv.parser.saveas.CandidateBean;
+import com.cv.parser.saveas.CandidateJSON;
 
 public class DocumentDetails {
     Logger logger = LoggerFactory.getLogger(DocumentDetails.class);
@@ -48,23 +50,23 @@ public class DocumentDetails {
 		ParseApplicantSkill skills = new ParseApplicantSkill(applicantDocumentList);
 		skills.setApplicantSkills();
 
-		// builder pattern in action
-		ResumeBuilder builder = new ResumeViewer(
-			applicant.getApplicants(),
-			experiences.getApplicantExperience(), 
-			education.getApplicantEducation(),
-			skills.getApplicantSkillList()
-		);
-		ResumeDirector director = new ResumeDirector(builder);
+		List<CandidateBean> candidates = new ArrayList<>();
+		for (int i = 0; i < applicant.getApplicants().size(); i++) {
+		    CandidateBean bean = new CandidateBean();
+		    bean.setProfile(applicant.getApplicants().get(i).toString());
+		    bean.setEducation(education.getApplicantEducation().get(i).toString());
+		    bean.setExperiences(experiences.getApplicantExperience().get(i).toString());
+		    bean.setSkills(skills.getApplicantSkillList().get(i).toString());
+		    candidates.add(i, bean);
+		}
+
+		CandidateJSON cJSON = new CandidateJSON();
+		Map<String, List<CandidateBean>> map = new HashMap<>();
+		map.put("candidates", candidates);
+		cJSON.setMap(map);
+		cJSON.writeToJSONfile((new JSONObject(map)).toString());
+		logger.debug("Write to JSON file success!");
 		
-		// to get all, this can be used for resume table viewer GUI
-		/* director.construct().toString(); */
-		
-		logger.info(director.construct().getApplicant().toString());
-		logger.info(director.construct().getExperiences().toString());
-		logger.info(director.construct().getEducation().toString());
-		// returns List of ApplicantSkill (is a List, get(index) can be used)
-		logger.info(director.construct().getSkills().toString());
 	    }
 	});
 

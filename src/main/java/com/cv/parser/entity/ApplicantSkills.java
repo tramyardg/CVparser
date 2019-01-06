@@ -25,9 +25,13 @@ public class ApplicantSkills {
 	this.skills = skills;
     }
 
+    public String oldToString() {
+	return "ApplicantSkills [id=" + id + ", skills=" + skills + "]";
+    }
+    
     @Override
     public String toString() {
-	return "ApplicantSkills [id=" + id + ", skills=" + skills + "]";
+	return skills;
     }
 
 }

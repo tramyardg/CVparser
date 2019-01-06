@@ -25,8 +25,12 @@ public class ApplicantExperiences {
         this.experiences = experienceData;
     }
 
+    public String oldToString() {
+	return "ApplicantExperiences [id=" + id + ", experiences=" + experiences + "]";
+    }
+    
     @Override
     public String toString() {
-	return "ApplicantExperiences [id=" + id + ", experiences=" + experiences + "]";
+	return experiences;
     }
 }

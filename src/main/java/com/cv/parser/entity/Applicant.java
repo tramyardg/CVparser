@@ -67,9 +67,14 @@ public class Applicant {
 	this.objective = objective;
     }
 
+    public String oldToString() {
+	return "Applicant [id=" + id + ", profile=" + profile + ", email=" + email + ", phoneNumber=" + phoneNumber
+		+ ", links=" + links + ", objective=" + objective + "]";
+    }
+    
     @Override
     public String toString() {
-	return "Applicant [id=" + id + ", profile=" + profile + ", email=" + email + ", phoneNumber=" + phoneNumber
+	return profile + ", email=" + email + ", phoneNumber=" + phoneNumber
 		+ ", links=" + links + ", objective=" + objective + "]";
     }
 }
