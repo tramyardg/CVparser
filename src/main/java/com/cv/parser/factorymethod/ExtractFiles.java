@@ -21,7 +21,8 @@ public class ExtractFiles {
     Button btnExtractContents;
     List<String> superList;
     Table tableExtractedContent;
-    Button btnSaveContents;
+    Button btnSaveInJSONfile;
+    Button btnSaveInCSVfile;
 
     Shell mainShell;
     Label status;
@@ -29,12 +30,13 @@ public class ExtractFiles {
     private ParserFactory parserFactory = new ParserFactory();
 
     public ExtractFiles(Shell shell, Button btnExtractContents, List<String> superList, Table tableExtractedContent,
-	    Button btnSaveDocumentsToDb) {
+	    Button btnSaveInJSONfile, Button btnSaveInCSVfile) {
 	this.mainShell = shell;
 	this.btnExtractContents = btnExtractContents;
 	this.superList = superList;
 	this.tableExtractedContent = tableExtractedContent;
-	this.btnSaveContents = btnSaveDocumentsToDb;
+	this.btnSaveInJSONfile = btnSaveInJSONfile;
+	this.btnSaveInCSVfile = btnSaveInCSVfile;
     }
 
     public void handleButtonClick() {
@@ -66,7 +68,8 @@ public class ExtractFiles {
 		status.setText("Finished!");
 
 		btnExtractContents.setEnabled(false);
-		btnSaveContents.setEnabled(true);
+		btnSaveInJSONfile.setEnabled(true);
+		btnSaveInCSVfile.setEnabled(true);
 
 		doneShell.pack();
 		doneShell.open();

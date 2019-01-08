@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -25,51 +26,13 @@ public class DocumentDetails {
     List<ApplicantDocument> applicantDocumentList = new ArrayList<>();
 
     List<String> superList = new ArrayList<>();
-    Button btnSaveDocumentsToDb;
+    Button btnSaveInJSONfile;
+    Button btnSaveInCSVfile;
 
-    public DocumentDetails(Button btnSaveDocumentsToDb, List<String> superList) {
-	this.btnSaveDocumentsToDb = btnSaveDocumentsToDb;
+    public DocumentDetails(Button btnSaveDocumentsToDb, Button btnSaveInCsv, List<String> superList) {
+	this.btnSaveInJSONfile = btnSaveDocumentsToDb;
+	this.btnSaveInCSVfile = btnSaveInCsv;
 	this.superList = superList;
-    }
-
-    public void handleButtonClick() {
-	btnSaveDocumentsToDb.addListener(SWT.Selection, new Listener() {
-	    public void handleEvent(org.eclipse.swt.widgets.Event arg0) {
-
-		storeDocumentAsString();
-
-		ParseApplicant applicant = new ParseApplicant(applicantDocumentList);
-		applicant.setApplicantInfo();
-
-		ParseApplicantExperience experiences = new ParseApplicantExperience(applicantDocumentList);
-		experiences.setApplicantExperiences();
-
-		ParseApplicantEducation education = new ParseApplicantEducation(applicantDocumentList);
-		education.setApplicantEducations();
-
-		ParseApplicantSkill skills = new ParseApplicantSkill(applicantDocumentList);
-		skills.setApplicantSkills();
-
-		List<CandidateBean> candidates = new ArrayList<>();
-		for (int i = 0; i < applicant.getApplicants().size(); i++) {
-		    CandidateBean bean = new CandidateBean();
-		    bean.setProfile(applicant.getApplicants().get(i).toString());
-		    bean.setEducation(education.getApplicantEducation().get(i).toString());
-		    bean.setExperiences(experiences.getApplicantExperience().get(i).toString());
-		    bean.setSkills(skills.getApplicantSkillList().get(i).toString());
-		    candidates.add(i, bean);
-		}
-
-		CandidateJSON cJSON = new CandidateJSON();
-		Map<String, List<CandidateBean>> map = new HashMap<>();
-		map.put("candidates", candidates);
-		cJSON.setMap(map);
-		cJSON.writeToJSONfile((new JSONObject(map)).toString());
-		logger.debug("Write to JSON file success!");
-		
-	    }
-	});
-
     }
 
     private void storeDocumentAsString() {
@@ -78,6 +41,60 @@ public class DocumentDetails {
 	    String normalize = StringUtils.normalizeSpace(details);
 	    this.applicantDocumentList.add(new ApplicantDocument((index + 1), normalize));
 	}
+    }
+
+    private List<CandidateBean> getProcessedCandidates() {
+	ParseApplicant applicant = new ParseApplicant(applicantDocumentList);
+	applicant.setApplicantInfo();
+
+	ParseApplicantExperience experiences = new ParseApplicantExperience(applicantDocumentList);
+	experiences.setApplicantExperiences();
+
+	ParseApplicantEducation education = new ParseApplicantEducation(applicantDocumentList);
+	education.setApplicantEducations();
+
+	ParseApplicantSkill skills = new ParseApplicantSkill(applicantDocumentList);
+	skills.setApplicantSkills();
+
+	List<CandidateBean> candidates = new ArrayList<>();
+	for (int i = 0; i < applicantDocumentList.size(); i++) {
+	    CandidateBean bean = new CandidateBean();
+	    bean.setProfile(applicant.getApplicants().get(i).toString());
+	    bean.setEducation(education.getApplicantEducation().get(i).toString());
+	    bean.setExperiences(experiences.getApplicantExperience().get(i).toString());
+	    bean.setSkills(skills.getApplicantSkillList().get(i).toString());
+	    candidates.add(i, bean);
+	}
+	return candidates;
+    }
+
+    public void handleButtonSaveInJSONfile() {
+	btnSaveInJSONfile.addListener(SWT.Selection, new Listener() {
+	    public void handleEvent(org.eclipse.swt.widgets.Event arg0) {
+
+		storeDocumentAsString();
+
+		CandidateJSON cJSON = new CandidateJSON();
+		Map<String, List<CandidateBean>> map = new HashMap<>();
+		map.put("candidates", getProcessedCandidates());
+		cJSON.setMap(map);
+		cJSON.writeToJSONfile((new JSONObject(map)).toString());
+		logger.debug("Write to JSON file success!");
+
+	    }
+	});
+
+    }
+
+    public void handleButtonSaveInCSVfile() {
+	btnSaveInCSVfile.addListener(SWT.Selection, new Listener() {
+
+	    @Override
+	    public void handleEvent(Event arg0) {
+		storeDocumentAsString();
+		//getProcessedCandidates() to be saved in csv
+	    }
+	});
     }
 
 }

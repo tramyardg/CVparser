@@ -1,5 +1,8 @@
 package com.cv.parser.saveas;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CandidateBean {
 
     private String profile;

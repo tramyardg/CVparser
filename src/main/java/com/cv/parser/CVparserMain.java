@@ -39,7 +39,7 @@ public class CVparserMain {
     public static void main(String[] args) {
 	try {
 	    CVparserMain window = new CVparserMain();
-	    window.open();	
+	    window.open();
 	} catch (Exception e) {
 	    logger.error("CVparserMain:main(...)", e);
 	    MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_ERROR);
@@ -123,27 +123,29 @@ public class CVparserMain {
 	btnSaveAsJSON.setText("Save in JSON file");
 	btnSaveAsJSON.setEnabled(false);
 
+	btnSaveInCsv = new Button(shell, SWT.NONE);
+	btnSaveInCsv.setBounds(10, 345, 705, 25);
+	btnSaveInCsv.setText("Save in CSV file");
+	btnSaveInCsv.setEnabled(false);
+
 	/** read files in public directory START **/
 	new ReadFiles(btnReadDir, filesInPublicDir, tableDirContent, btnExtractContents).handleButtonClick();
 	/** reading END **/
 
 	////////////////////////////////////////
-	
+
 	/*** extract file content from directory START ***/
 	List<String> superList = new ArrayList<>();
-	new ExtractFiles(shell, btnExtractContents, superList, tableExtractedContent, btnSaveAsJSON)
+	new ExtractFiles(shell, btnExtractContents, superList, tableExtractedContent, btnSaveAsJSON, btnSaveInCsv)
 		.handleButtonClick();
 	/*** extracting END ***/
 
 	//////////////////////////////////////
 
 	/**** saving contents START ****/
-	DocumentDetails dd = new DocumentDetails(btnSaveAsJSON, superList);
-	dd.handleButtonClick();
-	
-	btnSaveInCsv = new Button(shell, SWT.NONE);
-	btnSaveInCsv.setBounds(10, 345, 705, 25);
-	btnSaveInCsv.setText("Save in CSV file");
+	DocumentDetails dd = new DocumentDetails(btnSaveAsJSON, btnSaveInCsv, superList);
+	dd.handleButtonSaveInJSONfile();
+	dd.handleButtonSaveInCSVfile();
 	/**** saving contents END ****/
     }
 }
