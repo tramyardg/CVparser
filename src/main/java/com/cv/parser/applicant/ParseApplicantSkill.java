@@ -3,9 +3,6 @@ package com.cv.parser.applicant;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.cv.parser.RegEx;
 import com.cv.parser.entity.ApplicantDocument;
 import com.cv.parser.entity.ApplicantSkills;
@@ -25,9 +22,6 @@ import com.cv.parser.entity.ApplicantSkills;
  *
  */
 public class ParseApplicantSkill {
-
-    Logger logger = LoggerFactory.getLogger(ParseApplicantSkill.class);
-
     List<ApplicantDocument> applicantDocumentList = new ArrayList<>();
     List<ApplicantSkills> applicantSkillList = new ArrayList<>();
 

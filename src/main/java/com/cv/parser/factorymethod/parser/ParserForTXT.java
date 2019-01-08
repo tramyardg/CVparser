@@ -42,6 +42,7 @@ public class ParserForTXT implements ParserInterface {
 		}
 		this.contents.add(String.join(" ", content));
 		br.close();
+		fileReader.close();
 	    } catch (IOException e) {
 		logger.error(e.getMessage());
 	    }

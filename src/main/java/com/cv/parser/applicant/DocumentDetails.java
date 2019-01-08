@@ -20,7 +20,7 @@ import com.cv.parser.saveas.CandidateCSV;
 import com.cv.parser.saveas.CandidateJSON;
 
 public class DocumentDetails {
-    Logger logger = LoggerFactory.getLogger(DocumentDetails.class);
+    private static final Logger logger = LoggerFactory.getLogger(DocumentDetails.class);
 
     // toString(): ApplicantDocument [id={number}, details={resume
     // details......}]

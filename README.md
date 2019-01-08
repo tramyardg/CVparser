@@ -12,7 +12,7 @@
 2. Extract important information such as skills, education, experiences, email, phone number, etc.
 3. Process multiple files at the same time.
 4. Saving the data in [JSON file](https://github.com/tramyardg/CVparser/blob/master/public/candidates.json).
-5. Saving the date in CSV file (in progress).
+5. Saving the date in [CSV file](https://github.com/tramyardg/CVparser/blob/master/public/candidates.csv).
 
 ### Regular expression
 Regular expression was used to extract a section of a resume. This is because an experience section might 
@@ -38,5 +38,6 @@ This excluded lowercase experience or experiences. The same notion applies to ot
 - Apache PDFBox: for reading PDF files
 - Apache POI: for reading Microsoft Word files
 - JSON-java: library also known as org.json
+- OpenCSV: for writing/reading CSV files
 - JavaFaker: for unit testing
 - SLF4J: for logging

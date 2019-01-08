@@ -8,20 +8,15 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.cv.parser.CVparserSingleton;
 import com.cv.parser.factorymethod.ExtensionSingleton;
 import com.cv.parser.factorymethod.ExtensionSingleton.Ext;
 
 public class ReadFiles {
-    Logger logger = LoggerFactory.getLogger(ReadFiles.class);
-
     private Button btnReadDir;
     private File[] filesInPublicDir;
     private Table tableDirContent;
-    
+
     private Button extractBtn;
 
     public ReadFiles(Button btnReadDir, File[] filesInPublicDir, Table tableDirContent, Button btnExtractContents) {
@@ -47,14 +42,9 @@ public class ReadFiles {
 		String fileName = filesInPublicDir[i].getName();
 		String ext = fileName.substring(fileName.indexOf('.'));
 		TableItem item = new TableItem(tableDirContent, SWT.NONE);
-		
-		String[] fExts = {
-			ExtensionSingleton.getInstance().get(Ext.TXT),
-			ExtensionSingleton.getInstance().get(Ext.PDF),
-			ExtensionSingleton.getInstance().get(Ext.DOCX),
-			ExtensionSingleton.getInstance().get(Ext.DOC)
-		};
-		
+		String[] fExts = { ExtensionSingleton.getInstance().get(Ext.TXT),
+			ExtensionSingleton.getInstance().get(Ext.PDF), ExtensionSingleton.getInstance().get(Ext.DOCX),
+			ExtensionSingleton.getInstance().get(Ext.DOC) };
 		if (Arrays.asList(fExts).contains(ext)) {
 		    item.setText(new String[] { (i + 1) + "", ext, fileName });
 		} else {
@@ -64,6 +54,5 @@ public class ReadFiles {
 	    }
 	}
     }
-    
-}
 
+}

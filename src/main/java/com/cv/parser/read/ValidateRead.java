@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import com.cv.parser.CVparserSingleton;
 
 public class ValidateRead {
-    Logger logger = LoggerFactory.getLogger(ValidateRead.class);
+    private static final Logger logger = LoggerFactory.getLogger(ValidateRead.class);
     
     File resumesStoragePath = new File(CVparserSingleton.getInstance().resumesStoragePath);
     Shell shell;

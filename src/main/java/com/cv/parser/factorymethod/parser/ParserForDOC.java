@@ -45,7 +45,7 @@ public class ParserForDOC implements ParserInterface {
 		try {
 		    extractor.close();
 		} catch (IOException e) {
-		    e.printStackTrace();
+		    logger.warn(e.getMessage());
 		}
 	    }
 	}

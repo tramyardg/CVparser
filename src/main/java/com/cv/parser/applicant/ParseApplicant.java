@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.cv.parser.RegEx;
 import com.cv.parser.entity.Applicant;
 import com.cv.parser.entity.ApplicantDocument;
@@ -24,8 +21,6 @@ import com.cv.parser.entity.ApplicantDocument;
  *
  */
 public class ParseApplicant {
-    Logger logger = LoggerFactory.getLogger(ParseApplicant.class);
-
     List<ApplicantDocument> appDocList = new ArrayList<>();
     List<Applicant> applicants = new ArrayList<>();
 
@@ -113,7 +108,6 @@ public class ParseApplicant {
 	    applicant.setEmail(findEmail(ad.getLine()));
 	    applicant.setLinks(findLinks(ad.getLine()));
 	    applicant.setProfile(findProfile(ad.getLine()));
-
 	    // test if objective section exists in the first place
 	    if (new ParserHelper().getIndexOfThisSection(RegEx.OBJECTIVE, ad.getLine()) != -1) {
 		applicant.setObjective(findObjective(ad.getLine()));
