@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import com.cv.parser.entity.ApplicantDocument;
 import com.cv.parser.saveas.CandidateBean;
+import com.cv.parser.saveas.CandidateCSV;
 import com.cv.parser.saveas.CandidateJSON;
 
 public class DocumentDetails {
@@ -83,7 +84,6 @@ public class DocumentDetails {
 
 	    }
 	});
-
     }
 
     public void handleButtonSaveInCSVfile() {
@@ -92,7 +92,9 @@ public class DocumentDetails {
 	    @Override
 	    public void handleEvent(Event arg0) {
 		storeDocumentAsString();
-		//getProcessedCandidates() to be saved in csv
+		CandidateCSV csv = new CandidateCSV();
+		csv.saveDataInCSVfile(getProcessedCandidates());
+		logger.info("Write to CSV file success!");
 	    }
 	});
     }
