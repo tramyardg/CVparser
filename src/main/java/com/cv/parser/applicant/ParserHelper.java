@@ -21,7 +21,7 @@ public class ParserHelper {
                 RegEx.MEMBERSHIP,
                 RegEx.ADDITIONAL
         };
-        List<Integer> indexOfThisSection = new ArrayList<Integer>();
+        List<Integer> indexOfThisSection = new ArrayList<>();
         for (RegEx r : sectionRegex) {
             if (r.equals(regEx)) {
                 storeSectionIndexes(fileContent, indexOfThisSection, r);
@@ -52,7 +52,7 @@ public class ParserHelper {
                 RegEx.MEMBERSHIP,
                 RegEx.ADDITIONAL
         };
-        List<Integer> indexesOfSection = new ArrayList<Integer>();
+        List<Integer> indexesOfSection = new ArrayList<>();
         for (RegEx r : sectionRegex) {
             storeSectionIndexes(content, indexesOfSection, r);
         }
@@ -71,7 +71,7 @@ public class ParserHelper {
                 RegEx.MEMBERSHIP,
                 RegEx.ADDITIONAL
         };
-        List<Integer> indexesOfSection = new ArrayList<Integer>();
+        List<Integer> indexesOfSection = new ArrayList<>();
         for (RegEx r : sectionRegex) {
             if (!r.equals(regEx)) {
                 storeSectionIndexes(line, indexesOfSection, r);

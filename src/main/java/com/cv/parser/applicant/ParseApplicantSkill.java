@@ -22,7 +22,7 @@ import java.util.List;
  */
 class ParseApplicantSkill {
     private List<ApplicantDocument> applicantDocumentList;
-    private List<ApplicantSkills> applicantSkillList = new ArrayList<ApplicantSkills>();
+    private List<ApplicantSkills> applicantSkillList = new ArrayList<>();
     private ParserHelper helper = new ParserHelper();
 
     ParseApplicantSkill(List<ApplicantDocument> applicantDocumentList) {

@@ -22,7 +22,7 @@ import java.util.List;
  */
 class ParseApplicantEducation {
     private List<ApplicantDocument> applicantDocument;
-    private List<ApplicantEducation> applicantEducationList = new ArrayList<ApplicantEducation>();
+    private List<ApplicantEducation> applicantEducationList = new ArrayList<>();
     private ParserHelper helper = new ParserHelper();
 
     ParseApplicantEducation(List<ApplicantDocument> applicantDocument) {
