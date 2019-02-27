@@ -1,90 +1,98 @@
 package com.cv.parser.applicant;
 
+import com.cv.parser.RegEx;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.cv.parser.RegEx;
-
-/**
- * Helper class for {@link} FetchApplicant, {@link} FetchApplicantEducation, and
- * {@link} FetchApplicantExperience
- * 
- * @author RAYMARTHINKPAD
- *
- */
 public class ParserHelper {
-    /**
-     * Fetch the index of a single section heading.
-     * 
-     * @param regEx
-     * @param line
-     * @return index of given regEx (section)
-     */
-    public int getIndexOfThisSection(RegEx regEx, String line) {
-	RegEx[] sectionRegex = { RegEx.OBJECTIVE, RegEx.EDUCATION, RegEx.EXPERIENCE, RegEx.SKILLS, RegEx.LANGUAGE,
-		RegEx.INTEREST, RegEx.MEMBERSHIP, RegEx.ADDITIONAL };
-	List<Integer> indexOfThisSection = new ArrayList<>();
-	for (RegEx r : sectionRegex) {
-	    if (r.equals(regEx)) {
-		Pattern pattern = Pattern.compile(r.toString(), Pattern.MULTILINE | Pattern.DOTALL);
-		Matcher matcher = pattern.matcher(line);
-		while (matcher.find()) {
-		    indexOfThisSection.add(matcher.start());
-		}
-	    }
-	}
-	if (!indexOfThisSection.isEmpty()) {
-	    return indexOfThisSection.get(0);
-	}
-	return -1;
+
+    public int getIndexOfThisSection(RegEx regEx, String fileContent) {
+        RegEx[] sectionRegex = {
+                RegEx.OBJECTIVE,
+                RegEx.EDUCATION,
+                RegEx.EXPERIENCE,
+                RegEx.SKILLS,
+                RegEx.LANGUAGE,
+                RegEx.INTEREST,
+                RegEx.MEMBERSHIP,
+                RegEx.ADDITIONAL
+        };
+        List<Integer> indexOfThisSection = new ArrayList<Integer>();
+        for (RegEx r : sectionRegex) {
+            if (r.equals(regEx)) {
+                storeSectionIndexes(fileContent, indexOfThisSection, r);
+            }
+        }
+        if (!indexOfThisSection.isEmpty()) {
+            return indexOfThisSection.get(0);
+        }
+        return -1;
     }
 
-    /**
-     * Gel indexes of all sections from resume.
-     * 
-     * @param line
-     * @return index of each section
-     */
-    public List<Integer> getAllSectionIndexes(String line) {
-	RegEx[] sectionRegex = { RegEx.OBJECTIVE, RegEx.EDUCATION, RegEx.EXPERIENCE, RegEx.SKILLS, RegEx.LANGUAGE,
-		RegEx.INTEREST, RegEx.MEMBERSHIP, RegEx.ADDITIONAL };
-	List<Integer> indexesOfSection = new ArrayList<>();
-	for (RegEx r : sectionRegex) {
-	    Pattern pattern = Pattern.compile(r.toString(), Pattern.MULTILINE | Pattern.DOTALL);
-	    Matcher matcher = pattern.matcher(line);
-	    while (matcher.find()) {
-		indexesOfSection.add(matcher.start());
-	    }
-	}
-	Collections.sort(indexesOfSection);
-	return indexesOfSection;
+    private void storeSectionIndexes(String line, List<Integer> indexOfThisSection, RegEx r) {
+        Pattern pattern = Pattern.compile(r.toString(), Pattern.MULTILINE | Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(line);
+        while (matcher.find()) {
+            indexOfThisSection.add(matcher.start());
+        }
     }
 
-    /**
-     * @param regEx
-     *            get section indexes but not regEx, the regEx to be excluded
-     * @param line
-     *            the string to parse for
-     * @return indexes that follows regEx section
-     */
+    List<Integer> getAllSectionIndexes(String content) {
+        RegEx[] sectionRegex = {
+                RegEx.OBJECTIVE,
+                RegEx.EDUCATION,
+                RegEx.EXPERIENCE,
+                RegEx.SKILLS,
+                RegEx.LANGUAGE,
+                RegEx.INTEREST,
+                RegEx.MEMBERSHIP,
+                RegEx.ADDITIONAL
+        };
+        List<Integer> indexesOfSection = new ArrayList<Integer>();
+        for (RegEx r : sectionRegex) {
+            storeSectionIndexes(content, indexesOfSection, r);
+        }
+        Collections.sort(indexesOfSection);
+        return indexesOfSection;
+    }
+
     public List<Integer> getSectionIndexesExcludeOne(RegEx regEx, String line) {
-	RegEx[] sectionRegex = { RegEx.OBJECTIVE, RegEx.EDUCATION, RegEx.EXPERIENCE, RegEx.SKILLS, RegEx.LANGUAGE,
-		RegEx.INTEREST, RegEx.MEMBERSHIP, RegEx.ADDITIONAL };
-	List<Integer> indexesOfSection = new ArrayList<>();
-	for (RegEx r : sectionRegex) {
-	    if (!r.equals(regEx)) {
-		Pattern pattern = Pattern.compile(r.toString(), Pattern.MULTILINE | Pattern.DOTALL);
-		Matcher matcher = pattern.matcher(line);
-		while (matcher.find()) {
-		    indexesOfSection.add(matcher.start());
-		}
-	    }
-	}
-	Collections.sort(indexesOfSection);
-	return indexesOfSection;
+        RegEx[] sectionRegex = {
+                RegEx.OBJECTIVE,
+                RegEx.EDUCATION,
+                RegEx.EXPERIENCE,
+                RegEx.SKILLS,
+                RegEx.LANGUAGE,
+                RegEx.INTEREST,
+                RegEx.MEMBERSHIP,
+                RegEx.ADDITIONAL
+        };
+        List<Integer> indexesOfSection = new ArrayList<Integer>();
+        for (RegEx r : sectionRegex) {
+            if (!r.equals(regEx)) {
+                storeSectionIndexes(line, indexesOfSection, r);
+            }
+        }
+        Collections.sort(indexesOfSection);
+        return indexesOfSection;
+    }
+
+    String getSectionContent(int sectionIndex, List<Integer> sectionIndexes, String content, int nextSectionIndex) {
+        for (int index = 0; index < sectionIndexes.size(); index++) {
+            if (sectionIndexes.get(index) == sectionIndex) {
+                if (index == sectionIndexes.size() - 1) {
+                    return content.substring(sectionIndex);
+                } else {
+                    nextSectionIndex = sectionIndexes.get(index + 1);
+                    break;
+                }
+            }
+        }
+        return content.substring(sectionIndex, nextSectionIndex);
     }
 
 }
