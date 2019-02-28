@@ -21,6 +21,7 @@ import java.util.List;
 class ParseApplicantExperience {
     private List<ApplicantDocument> applicantDocument;
     private List<ApplicantExperiences> applicantExperienceList = new ArrayList<>();
+    private ParserHelper helper = new ParserHelper();
 
     ParseApplicantExperience(List<ApplicantDocument> applicantDocument) {
         this.applicantDocument = applicantDocument;
@@ -46,20 +47,9 @@ class ParseApplicantExperience {
         int indexOfExperience = parser.getIndexOfThisSection(RegEx.EXPERIENCE, line);
         if (indexOfExperience != -1) {
             int nextSectionIndex = 0; // index that follows experience section
+            List<Integer> listOfSectionIndexes = parser.getAllSectionIndexes(line);
             String experiencesText = line.replaceFirst(RegEx.EXPERIENCE.toString(), "");
-            for (int index = 0; index < parser.getAllSectionIndexes(line).size(); index++) {
-                if (parser.getAllSectionIndexes(line).get(index) == indexOfExperience) {
-                    // experience section is not always in the middle
-                    // rarely they may appear as the last section
-                    if (index == parser.getAllSectionIndexes(line).size() - 1) {
-                        return experiencesText.substring(indexOfExperience);
-                    } else {
-                        nextSectionIndex = parser.getAllSectionIndexes(line).get(index + 1);
-                        break;
-                    }
-                }
-            }
-            return experiencesText.substring(indexOfExperience, nextSectionIndex);
+            return helper.getSectionContent(indexOfExperience, listOfSectionIndexes, experiencesText, nextSectionIndex);
         }
         return null;
     }

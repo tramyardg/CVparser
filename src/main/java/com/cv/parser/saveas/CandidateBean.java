@@ -7,7 +7,7 @@ public class CandidateBean {
     private String experiences;
     private String skills;
 
-    String getProfile() {
+    public String getProfile() {
         return profile;
     }
 
@@ -23,7 +23,7 @@ public class CandidateBean {
         this.education = education;
     }
 
-    String getExperiences() {
+    public String getExperiences() {
         return experiences;
     }
 
@@ -31,7 +31,7 @@ public class CandidateBean {
         this.experiences = experiences;
     }
 
-    String getSkills() {
+    public String getSkills() {
         return skills;
     }
 
@@ -41,8 +41,8 @@ public class CandidateBean {
 
     @Override
     public String toString() {
-        return "CandidateBean [profile=" + profile + ", education=" + education + ", experiences=" + experiences
-                + ", skills=" + skills + "]";
+        return "CandidateBean [\nprofile=" + profile + ", \neducation=" + education + ", \nexperiences=" + experiences
+                + ", \nskills=" + skills + "]";
     }
 
 }

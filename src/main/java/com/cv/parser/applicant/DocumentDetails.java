@@ -71,10 +71,13 @@ public class DocumentDetails {
 
             storeDocumentAsString();
 
+            // For debugging print processed output
+            // System.out.println("***" + getProcessedCandidates().toString());
+
             CandidateJSON cJSON = new CandidateJSON();
             Map<String, List<CandidateBean>> map = new HashMap<>();
             map.put("candidates", getProcessedCandidates());
-            cJSON.setMap(map);
+
             cJSON.writeToJSONfile((new JSONObject(map)).toString());
             logger.debug("Write to JSON file success!");
 
