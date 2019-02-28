@@ -13,23 +13,18 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CVparserMain {
-    private static Logger logger = LoggerFactory.getLogger(CVparserMain.class);
+public class CVParserMain {
+    private final static Logger logger = LoggerFactory.getLogger(CVParserMain.class);
 
-    private File resumesStoragePath = new File(CVparserSingleton.getInstance().resumesStoragePath);
-    private Display display;
+    private File resumesStoragePath = new File(CVParserSingleton.getInstance().resumesStoragePath);
     private Shell shell;
-    private Button btnReadDir;
-    private Button btnExtractContents;
-    private Button btnSaveAsJSON;
-    private Button btnSaveInCsv;
 
     public static void main(String[] args) {
         try {
-            CVparserMain window = new CVparserMain();
+            CVParserMain window = new CVParserMain();
             window.open();
         } catch (Exception e) {
-            logger.error("CVparserMain:main(...)", e);
+            logger.error("CVParserMain:main(...)", e);
             MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_ERROR);
             messageBox.setText("Error");
             messageBox.setMessage("Please close any word document files opened.");
@@ -41,7 +36,7 @@ public class CVparserMain {
     }
 
     private void open() {
-        display = Display.getDefault();
+        Display display = Display.getDefault();
         createContents();
         shell.open();
         shell.layout();
@@ -61,7 +56,7 @@ public class CVparserMain {
 
         File[] filesInPublicDir = this.resumesStoragePath.listFiles();
 
-        btnReadDir = new Button(shell, SWT.NONE);
+        Button btnReadDir = new Button(shell, SWT.NONE);
         btnReadDir.setBounds(10, 10, 127, 25);
         btnReadDir.setText("Read files from public");
 
@@ -74,38 +69,38 @@ public class CVparserMain {
         tableDirContent.setHeaderVisible(true);
         tableDirContent.setLinesVisible(true);
 
-        TableColumn tblclmnFileCount = new TableColumn(tableDirContent, SWT.NONE);
-        tblclmnFileCount.setWidth(57);
-        tblclmnFileCount.setText("#");
+        TableColumn tableColumnFileCount = new TableColumn(tableDirContent, SWT.NONE);
+        tableColumnFileCount.setWidth(57);
+        tableColumnFileCount.setText("#");
 
-        TableColumn tblclmnFileType = new TableColumn(tableDirContent, SWT.NONE);
-        tblclmnFileType.setWidth(72);
-        tblclmnFileType.setText("Extension");
+        TableColumn tableColumnFileType = new TableColumn(tableDirContent, SWT.NONE);
+        tableColumnFileType.setWidth(72);
+        tableColumnFileType.setText("Extension");
 
-        TableColumn tblclmnFileName = new TableColumn(tableDirContent, SWT.NONE);
-        tblclmnFileName.setWidth(535);
-        tblclmnFileName.setText("File name");
+        TableColumn tableColumnFileName = new TableColumn(tableDirContent, SWT.NONE);
+        tableColumnFileName.setWidth(535);
+        tableColumnFileName.setText("File name");
 
         Table tableExtractedContent = new Table(shell, SWT.BORDER | SWT.FULL_SELECTION);
         tableExtractedContent.setBounds(10, 180, 705, 128);
         tableExtractedContent.setHeaderVisible(true);
         tableExtractedContent.setLinesVisible(true);
 
-        TableColumn tblclmnContents = new TableColumn(tableExtractedContent, SWT.NONE);
-        tblclmnContents.setWidth(664);
-        tblclmnContents.setText("Contents");
+        TableColumn tableColumnContents = new TableColumn(tableExtractedContent, SWT.NONE);
+        tableColumnContents.setWidth(664);
+        tableColumnContents.setText("Contents");
 
-        btnExtractContents = new Button(shell, SWT.NONE);
+        Button btnExtractContents = new Button(shell, SWT.NONE);
         btnExtractContents.setBounds(10, 149, 705, 25);
         btnExtractContents.setText("Extract contents");
         btnExtractContents.setEnabled(false);
 
-        btnSaveAsJSON = new Button(shell, SWT.NONE);
+        Button btnSaveAsJSON = new Button(shell, SWT.NONE);
         btnSaveAsJSON.setBounds(10, 314, 705, 25);
         btnSaveAsJSON.setText("Save in JSON file");
         btnSaveAsJSON.setEnabled(false);
 
-        btnSaveInCsv = new Button(shell, SWT.NONE);
+        Button btnSaveInCsv = new Button(shell, SWT.NONE);
         btnSaveInCsv.setBounds(10, 345, 705, 25);
         btnSaveInCsv.setText("Save in CSV file");
         btnSaveInCsv.setEnabled(false);
@@ -126,8 +121,10 @@ public class CVparserMain {
 
         /* saving contents START */
         DocumentDetails dd = new DocumentDetails(btnSaveAsJSON, btnSaveInCsv, superList);
-        dd.handleButtonSaveInJSONfile();
-        dd.handleButtonSaveInCSVfile();
+        dd.handleButtonSaveInJSON();
+        dd.handleButtonSaveInCSV();
         /* saving contents END */
     }
+
+
 }

@@ -2,8 +2,7 @@ package com.cv.parser.applicant;
 
 import com.cv.parser.entity.ApplicantDocument;
 import com.cv.parser.saveas.CandidateBean;
-import com.cv.parser.saveas.CandidateCSV;
-import com.cv.parser.saveas.CandidateJSON;
+import com.cv.parser.saveas.WriteToFile;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
@@ -24,12 +23,12 @@ public class DocumentDetails {
     private List<ApplicantDocument> applicantDocumentList = new ArrayList<>();
 
     private List<String> superList;
-    private Button btnSaveInJSONfile;
-    private Button btnSaveInCSVfile;
+    private Button btnSaveInJSON;
+    private Button btnSaveInCSV;
 
     public DocumentDetails(Button btnSaveDocumentsToDb, Button btnSaveInCsv, List<String> superList) {
-        this.btnSaveInJSONfile = btnSaveDocumentsToDb;
-        this.btnSaveInCSVfile = btnSaveInCsv;
+        this.btnSaveInJSON = btnSaveDocumentsToDb;
+        this.btnSaveInCSV = btnSaveInCsv;
         this.superList = superList;
     }
 
@@ -66,31 +65,34 @@ public class DocumentDetails {
         return candidates;
     }
 
-    public void handleButtonSaveInJSONfile() {
-        btnSaveInJSONfile.addListener(SWT.Selection, arg0 -> {
-
+    public void handleButtonSaveInJSON() {
+        btnSaveInJSON.addListener(SWT.Selection, arg0 -> {
             storeDocumentAsString();
 
             // For debugging print processed output
             // System.out.println("***" + getProcessedCandidates().toString());
 
-            CandidateJSON cJSON = new CandidateJSON();
             Map<String, List<CandidateBean>> map = new HashMap<>();
             map.put("candidates", getProcessedCandidates());
 
-            cJSON.writeToJSONfile((new JSONObject(map)).toString());
-            logger.debug("Write to JSON file success!");
-
+            WriteToFile writeToFile = new WriteToFile();
+            writeToFile.writeToJSON((new JSONObject(map)).toString());
+            if (writeToFile.isHasUpdated()) {
+                btnSaveInJSON.setEnabled(false);
+                logger.debug("Write to JSON file success!");
+            }
         });
     }
 
-    public void handleButtonSaveInCSVfile() {
-        btnSaveInCSVfile.addListener(SWT.Selection, arg0 -> {
+    public void handleButtonSaveInCSV() {
+        btnSaveInCSV.addListener(SWT.Selection, arg0 -> {
             storeDocumentAsString();
-            CandidateCSV csv = new CandidateCSV();
-            csv.saveDataInCSVfile(getProcessedCandidates());
-            logger.info("Write to CSV file success!");
+            WriteToFile writeToFile = new WriteToFile();
+            writeToFile.writeToCSV(getProcessedCandidates());
+            if (writeToFile.isHasUpdated()) {
+                btnSaveInCSV.setEnabled(false);
+                logger.info("Write to CSV file success!");
+            }
         });
     }
-
 }

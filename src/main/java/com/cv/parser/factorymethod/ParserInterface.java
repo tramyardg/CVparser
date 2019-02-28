@@ -1,5 +1,6 @@
 package com.cv.parser.factorymethod;
 
+import java.io.File;
 import java.util.List;
 
 public interface ParserInterface {
@@ -9,5 +10,7 @@ public interface ParserInterface {
     void extractFiles();
 
     List<String> getContents();
+
+    File[] finder(final String ext);
 
 }

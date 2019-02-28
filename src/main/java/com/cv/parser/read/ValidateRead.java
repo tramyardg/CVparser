@@ -1,6 +1,6 @@
 package com.cv.parser.read;
 
-import com.cv.parser.CVparserSingleton;
+import com.cv.parser.CVParserSingleton;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -12,7 +12,7 @@ import java.io.File;
 public class ValidateRead {
     private static final Logger logger = LoggerFactory.getLogger(ValidateRead.class);
 
-    private File resumesStoragePath = new File(CVparserSingleton.getInstance().resumesStoragePath);
+    private File resumesStoragePath = new File(CVParserSingleton.getInstance().resumesStoragePath);
     private Shell shell;
 
     public ValidateRead(Shell shell) {

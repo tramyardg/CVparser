@@ -41,8 +41,11 @@ public class CandidateBean {
 
     @Override
     public String toString() {
-        return "CandidateBean [\nprofile=" + profile + ", \neducation=" + education + ", \nexperiences=" + experiences
-                + ", \nskills=" + skills + "]";
+        return "CandidateBean [\nprofile=" + profile
+                + ", \neducation=" + education
+                + ", \nexperiences=" + experiences
+                + ", \nskills=" + skills +
+                "]";
     }
 
 }

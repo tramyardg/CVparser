@@ -1,6 +1,6 @@
 package com.cv.parser.read;
 
-import com.cv.parser.CVparserSingleton;
+import com.cv.parser.CVParserSingleton;
 import com.cv.parser.factorymethod.ExtensionSingleton;
 import com.cv.parser.factorymethod.ExtensionSingleton.Ext;
 import org.eclipse.swt.SWT;
@@ -46,7 +46,7 @@ public class ReadFiles {
                     item.setText(new String[]{(i + 1) + "", ext, fileName});
                 } else {
                     item.setText(new String[]{(i + 1) + "", ext, fileName});
-                    item.setBackground(CVparserSingleton.getInstance().yellow);
+                    item.setBackground(CVParserSingleton.getInstance().yellow);
                 }
             }
         }

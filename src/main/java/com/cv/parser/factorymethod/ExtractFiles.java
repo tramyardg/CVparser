@@ -35,56 +35,53 @@ public class ExtractFiles {
     }
 
     public void handleButtonClick() {
-        btnExtractContents.addListener(SWT.Selection, new Listener() {
-            public void handleEvent(org.eclipse.swt.widgets.Event arg0) {
+        btnExtractContents.addListener(SWT.Selection, arg0 -> {
 
-                Shell doneShell = new Shell(mainShell, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-                RowLayout rowLayout = new RowLayout();
-                rowLayout.pack = false;
-                rowLayout.wrap = true;
-                rowLayout.marginLeft = 15;
-                rowLayout.marginTop = 15;
-                rowLayout.marginRight = 55;
-                rowLayout.marginBottom = 15;
-                doneShell.setLayout(rowLayout);
+            Shell doneShell = new Shell(mainShell, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+            RowLayout rowLayout = new RowLayout();
+            rowLayout.pack = false;
+            rowLayout.wrap = true;
+            rowLayout.marginLeft = 15;
+            rowLayout.marginTop = 15;
+            rowLayout.marginRight = 55;
+            rowLayout.marginBottom = 15;
+            doneShell.setLayout(rowLayout);
 
-                status = new Label(doneShell, SWT.NONE);
+            status = new Label(doneShell, SWT.NONE);
 
-                try {
-                    parsePDF(parserFactory);
-                    parseDOC(parserFactory);
-                    parseDOCX(parserFactory);
-                    parseTXT(parserFactory);
-                } catch (UnsupportedFileExtension e) {
-                    logger.error(e.getMessage());
-                }
-
-                displayDocumentsInTable();
-                status.setText("Finished!");
-
-                btnExtractContents.setEnabled(false);
-                btnSaveInJSONfile.setEnabled(true);
-                btnSaveInCSVfile.setEnabled(true);
-
-                doneShell.pack();
-                doneShell.open();
-
-                // Move the dialog to the center of the top level shell.
-                Rectangle shellBounds = mainShell.getBounds();
-                Point dialogSize = doneShell.getSize();
-
-                doneShell.setLocation(shellBounds.x + (shellBounds.width - dialogSize.x) / 2,
-                        shellBounds.y + (shellBounds.height - dialogSize.y) / 2);
+            try {
+                parsePDF(parserFactory);
+                parseDOC(parserFactory);
+                parseDOCX(parserFactory);
+                parseTXT(parserFactory);
+            } catch (UnsupportedFileExtension e) {
+                logger.error(e.getMessage());
             }
 
+            displayDocumentsInTable();
+            status.setText("Finished!");
+
+            btnExtractContents.setEnabled(false);
+            btnSaveInJSONfile.setEnabled(true);
+            btnSaveInCSVfile.setEnabled(true);
+
+            doneShell.pack();
+            doneShell.open();
+
+            // Move the dialog to the center of the top level shell.
+            Rectangle shellBounds = mainShell.getBounds();
+            Point dialogSize = doneShell.getSize();
+
+            doneShell.setLocation(shellBounds.x + (shellBounds.width - dialogSize.x) / 2,
+                    shellBounds.y + (shellBounds.height - dialogSize.y) / 2);
         });
     }
 
     // display extracted documents in table
     private void displayDocumentsInTable() {
-        for (int i = 0; i < superList.size(); i++) {
+        for (String s : superList) {
             TableItem item = new TableItem(tableExtractedContent, SWT.NONE);
-            item.setText(new String[]{superList.get(i)});
+            item.setText(new String[]{s});
         }
     }
 

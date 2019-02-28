@@ -1,6 +1,6 @@
 package com.cv.parser.factorymethod.parser;
 
-import com.cv.parser.FileFinderByExt;
+import com.cv.parser.CVParserSingleton;
 import com.cv.parser.factorymethod.ExtensionSingleton;
 import com.cv.parser.factorymethod.ExtensionSingleton.Ext;
 import com.cv.parser.factorymethod.ParserInterface;
@@ -16,16 +16,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParserForDOC implements ParserInterface {
-
+    private File resumeStorage = new File(CVParserSingleton.getInstance().resumesStoragePath);
     private final Logger logger = LoggerFactory.getLogger(ParserForDOC.class.getName());
-    private FileFinderByExt find = new FileFinderByExt();
 
     private File[] docFiles;
     private List<String> contents = new ArrayList<>();
 
     @Override
     public void setFiles() {
-        this.docFiles = find.finder(ExtensionSingleton.getInstance().get(Ext.DOC));
+        this.docFiles = finder(ExtensionSingleton.getInstance().get(Ext.DOC));
     }
 
     @Override
@@ -52,5 +51,10 @@ public class ParserForDOC implements ParserInterface {
     @Override
     public List<String> getContents() {
         return contents;
+    }
+
+    @Override
+    public File[] finder(String ext) {
+        return resumeStorage.listFiles((dir, filename) -> filename.endsWith(ext));
     }
 }

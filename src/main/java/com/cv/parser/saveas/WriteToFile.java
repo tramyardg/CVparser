@@ -1,6 +1,8 @@
 package com.cv.parser.saveas;
 
 import com.opencsv.CSVWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -10,31 +12,45 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static java.nio.file.StandardOpenOption.CREATE;
 
-public class CandidateCSV {
+public class WriteToFile {
+    public WriteToFile() {
+    }
 
-    private final Logger logger = Logger.getLogger(CandidateCSV.class.getName());
-    private static final String IO_EXCEPTION_FOUND = "IO Exception found!";
+    private static final Logger logger = LoggerFactory.getLogger(WriteToFile.class);
+    private static final String JSON_DATA_PATH = "./public/candidates.json";
     private static final String CSV_DATA_PATH = "./public/candidates.csv";
+    private boolean hasUpdated = false;
+
+    public boolean isHasUpdated() {
+        return hasUpdated;
+    }
+
+    public void writeToJSON(String content) {
+        byte[] data = content.getBytes();
+        Path p = Paths.get(JSON_DATA_PATH);
+        try (OutputStream out = new BufferedOutputStream(Files.newOutputStream(p, CREATE))) {
+            out.write(("").getBytes());
+            out.write(data, 0, data.length);
+            hasUpdated = true;
+        } catch (IOException x) {
+            logger.error("Exception found!", x);
+        }
+    }
 
     private List<String[]> toStringArray(List<CandidateBean> candidateList) {
         List<String[]> records = new ArrayList<>();
-        Iterator<CandidateBean> it = candidateList.iterator();
-        while (it.hasNext()) {
-            CandidateBean candidate = it.next();
+        for (CandidateBean candidate : candidateList) {
             records.add(new String[]{candidate.getProfile(), candidate.getEducation(), candidate.getExperiences(),
                     candidate.getSkills()});
         }
         return records;
     }
 
-    public void saveDataInCSVfile(List<CandidateBean> candidateList) {
+    public void writeToCSV(List<CandidateBean> candidateList) {
         StringWriter writer = new StringWriter();
         try {
             CSVWriter csvWriter = new CSVWriter(writer, ',');
@@ -42,14 +58,16 @@ public class CandidateCSV {
             csvWriter.writeAll(data);
             csvWriter.close();
         } catch (IOException e) {
-            logger.log(Level.WARNING, IO_EXCEPTION_FOUND, e);
+            logger.error(e.getMessage());
         }
         byte[] data = writer.toString().getBytes();
         Path p = Paths.get(CSV_DATA_PATH);
         try (OutputStream out = new BufferedOutputStream(Files.newOutputStream(p, CREATE))) {
             out.write(data, 0, data.length);
+            hasUpdated = true;
         } catch (IOException | NullPointerException x) {
-            logger.log(Level.WARNING, IO_EXCEPTION_FOUND, x);
+            logger.error(x.getMessage());
         }
     }
+
 }

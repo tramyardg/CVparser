@@ -4,15 +4,15 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
 
-public class CVparserSingleton {
-    private static CVparserSingleton instance;
+public class CVParserSingleton {
+    private static CVParserSingleton instance;
 
-    private CVparserSingleton() {
+    private CVParserSingleton() {
     }
 
-    public static CVparserSingleton getInstance() {
+    public static CVParserSingleton getInstance() {
         if (instance == null) {
-            instance = new CVparserSingleton();
+            instance = new CVParserSingleton();
         }
         return instance;
     }

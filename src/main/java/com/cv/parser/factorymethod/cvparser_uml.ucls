@@ -28,7 +28,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="com.cv.parser.CVparserMain" project="CVparser" 
+  <class id="4" language="java" name="com.cv.parser.CVParserMain" project="CVparser"
     file="/CVparser/src/main/java/com/cv/parser/CVparserMain.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="246" y="169"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
