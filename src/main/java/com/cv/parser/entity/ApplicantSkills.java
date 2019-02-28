@@ -10,28 +10,20 @@ public class ApplicantSkills {
     private String skills;
 
     public int getId() {
-	return id;
+        return id;
     }
 
     public void setId(int id) {
-	this.id = id;
-    }
-
-    public String getSkills() {
-	return skills;
+        this.id = id;
     }
 
     public void setSkills(String skills) {
-	this.skills = skills;
+        this.skills = skills;
     }
 
-    public String oldToString() {
-	return "ApplicantSkills [id=" + id + ", skills=" + skills + "]";
-    }
-    
     @Override
     public String toString() {
-	return skills;
+        return skills;
     }
 
 }

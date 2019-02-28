@@ -5,28 +5,24 @@ public class ApplicantDocument {
     private String line;
 
     public ApplicantDocument(int id, String line) {
-	this.id = id;
-	this.line = line;
+        this.id = id;
+        this.line = line;
     }
 
     public int getId() {
-	return id;
+        return id;
     }
 
     public void setId(int id) {
-	this.id = id;
+        this.id = id;
     }
 
     public String getLine() {
-	return line;
-    }
-
-    public void setDetails(String details) {
-	this.line = details;
+        return line;
     }
 
     @Override
     public String toString() {
-	return "ApplicantDocument [id=" + id + ", details=" + line + "]";
+        return "ApplicantDocument [id=" + id + ", details=" + line + "]";
     }
 }
