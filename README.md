@@ -1,4 +1,4 @@
-
+![Maven Compiler Plugin](https://img.shields.io/badge/maven--compiler--plugin-8-blue.svg)
 
 ### Table of Contents
 - [Features](#features)

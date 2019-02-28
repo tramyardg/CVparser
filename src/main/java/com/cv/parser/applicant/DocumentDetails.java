@@ -7,8 +7,6 @@ import com.cv.parser.saveas.CandidateJSON;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,32 +67,26 @@ public class DocumentDetails {
     }
 
     public void handleButtonSaveInJSONfile() {
-        btnSaveInJSONfile.addListener(SWT.Selection, new Listener() {
-            public void handleEvent(org.eclipse.swt.widgets.Event arg0) {
+        btnSaveInJSONfile.addListener(SWT.Selection, arg0 -> {
 
-                storeDocumentAsString();
+            storeDocumentAsString();
 
-                CandidateJSON cJSON = new CandidateJSON();
-                Map<String, List<CandidateBean>> map = new HashMap<>();
-                map.put("candidates", getProcessedCandidates());
-                cJSON.setMap(map);
-                cJSON.writeToJSONfile((new JSONObject(map)).toString());
-                logger.debug("Write to JSON file success!");
+            CandidateJSON cJSON = new CandidateJSON();
+            Map<String, List<CandidateBean>> map = new HashMap<>();
+            map.put("candidates", getProcessedCandidates());
+            cJSON.setMap(map);
+            cJSON.writeToJSONfile((new JSONObject(map)).toString());
+            logger.debug("Write to JSON file success!");
 
-            }
         });
     }
 
     public void handleButtonSaveInCSVfile() {
-        btnSaveInCSVfile.addListener(SWT.Selection, new Listener() {
-
-            @Override
-            public void handleEvent(Event arg0) {
-                storeDocumentAsString();
-                CandidateCSV csv = new CandidateCSV();
-                csv.saveDataInCSVfile(getProcessedCandidates());
-                logger.info("Write to CSV file success!");
-            }
+        btnSaveInCSVfile.addListener(SWT.Selection, arg0 -> {
+            storeDocumentAsString();
+            CandidateCSV csv = new CandidateCSV();
+            csv.saveDataInCSVfile(getProcessedCandidates());
+            logger.info("Write to CSV file success!");
         });
     }
 

@@ -30,7 +30,7 @@ class ParseApplicantExperience {
         return applicantExperienceList;
     }
 
-    private String findWorkExperiences(int id, String line) {
+    private String findWorkExperiences(String line) {
         ParserHelper parser = new ParserHelper();
         /*
          * Algorithm: copy texts starting from experience section index to the
@@ -68,7 +68,7 @@ class ParseApplicantExperience {
         for (ApplicantDocument ad : applicantDocument) {
             ApplicantExperiences applicantExperience = new ApplicantExperiences();
             applicantExperience.setId(ad.getId());
-            applicantExperience.setExperience(findWorkExperiences(ad.getId(), ad.getLine()));
+            applicantExperience.setExperience(findWorkExperiences(ad.getLine()));
             this.applicantExperienceList.add(applicantExperience);
         }
     }
