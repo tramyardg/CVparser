@@ -4,17 +4,18 @@
 - [Features](#features)
 - [Regular expression](#regular-expression)
 - [Extracted Resume Sections](#extracted-resume-sections)
-- [Screenshots](#screenshots)
+- [Screenshots](#screenshot)
 - [Sample Output](#sample-output)
-- [UML Class Diagram](#uml-class-diagram)
 - [Dependencies](#dependencies)
 
 ## Features
 1. Support PDF, MS word, and text files.
 2. Extract important information such as skills, education, experiences, email, phone number, etc.
 3. Process multiple files at the same time.
-4. Saving the data in [JSON file](https://github.com/tramyardg/CVparser/blob/master/public/candidates.json).
-5. Saving the date in [CSV file](https://github.com/tramyardg/CVparser/blob/master/public/candidates.csv).
+4. Saving extracted data in JSON file.
+    - Sample: [candidate.json](https://github.com/tramyardg/CVparser/blob/master/src/main/resources/candidates.json).
+5. Saving extracted date in CSV file.
+    - Sample: [candidate.csv](https://github.com/tramyardg/CVparser/blob/master/src/main/resources/candidates.csv).
 
 ### Regular expression
 Regular expression was used to extract a section of a resume. For instance, an experience section might 
@@ -53,11 +54,6 @@ education= Belarusian University of Informatics and Radioelectronics, BS in Mode
 experiences= Actuate http://www.actuate.com/ Full stack PHP Developer San Manteo, CA. November 2014 - current Implemented web service(API, MVC, Php) Introduced Git to the team BloomSky http://www.bloomsky.com Backend Developer Sunnyvale, CA. October 2014 - November 2014 Integrated APIs (PHP, Python, Django, Nginx) Set up PHPUnit and functional testing Deploy merge DB script (MSSQL>MySQL) Rozumsoft LLC, / Telecontact LLC http://www.telecontact.ru/ Full stack PHP Developer Belarus, Minsk. February 2012 - September 2014 Programming modules of dynamically building statistics for quality control assessment project. Designed and developed project quality control assessment that estimated effective work of operators in callcenters from different regions. Includes modules separation mapping based on more 20 users roles(RBAC), online editors(logs, statistical formulas, projects rules and etc) for more 10k clients. Finalization coding script of internal protection algorithm authorization and validation. Programming API service for quality control assessment. Interact with user interface(AJAX) with fast load up JSON data, audio files and extract large data in excel. API data exchange integrated with data parse, merge, view in table linkage, send emails. Support more 100 source, near 1000 onlineusers, more 10 servers. Codes cross-browsers users interfaces in project quality control assessment, using Javascript, jQuery, JSON, Bootstrap. Developed JavaScript audio player with individual custom design, hardware acceleration, deceleration and the order to play audio files. Designed and developed the company website (http://www.rozumsoft.com/). Implemented 3 domain zones(ru/by/com) algorithm. Codes contents editor for 3 languages Fixed and support custom seo map logic. Developed scripts products to callcenters operators Development of сomplex reports and statistical summaries by Cisco data telephony. Redesigned and reimplemented projects using MVC approach and strong OOP design Designed and conversion of scripts database, extensive SQL query optimization. Real Estate Agency Assistant heals LLC, Full stack PHP Developer Belarus, Minsk, http://www.a-h.by; May 2011 - January 2012 Dynamic website design and programming using PHP, MySQL, HTML, CSS. Setup and administration of web servers and server software. Business consulting of securing/ planning project. Development to online marketing, search engine placement and promotion (http://www.mogu.by; http://www.a-h.by). EDUCATION , 
 skills=null]]
 ```
-
-## UML Class Diagram
-**Factory Method implemented for parsing**
-
-![UML class diagram - Factory Method](https://github.com/tramyardg/CVparser/blob/master/src/main/java/com/cv/parser/factorymethod/img_factory_method_uml.jpg)
 
 ## Dependencies
 - SWT: graphical widget toolkit used for building GUI
