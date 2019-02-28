@@ -1,12 +1,14 @@
 package com.cv.parser.saveas;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class WriteToFileTest extends TestCase {
+public class WriteToFileTest {
 
+    @Test
     public void testWriteToJSON() {
     }
 
+    @Test
     public void testWriteToCSV() {
     }
 }
