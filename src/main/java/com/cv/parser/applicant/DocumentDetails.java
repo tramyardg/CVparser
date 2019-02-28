@@ -4,11 +4,11 @@ import com.cv.parser.entity.ApplicantDocument;
 import com.cv.parser.saveas.CandidateBean;
 import com.cv.parser.saveas.WriteToFile;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DocumentDetails {
-    private static final Logger logger = LoggerFactory.getLogger(DocumentDetails.class);
+    private final static Logger LOG = LogManager.getLogger();
 
     // toString(): ApplicantDocument [id={number}, details={resume
     // details......}]
@@ -79,8 +79,9 @@ public class DocumentDetails {
             writeToFile.writeToJSON((new JSONObject(map)).toString());
             if (writeToFile.isHasUpdated()) {
                 btnSaveInJSON.setEnabled(false);
-                logger.debug("Write to JSON file success!");
+                LOG.info("Write to JSON file success!");
             }
+            this.applicantDocumentList.clear();
         });
     }
 
@@ -91,8 +92,9 @@ public class DocumentDetails {
             writeToFile.writeToCSV(getProcessedCandidates());
             if (writeToFile.isHasUpdated()) {
                 btnSaveInCSV.setEnabled(false);
-                logger.info("Write to CSV file success!");
+                LOG.info("Write to CSV file success!");
             }
+            this.applicantDocumentList.clear();
         });
     }
 }

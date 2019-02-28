@@ -1,8 +1,8 @@
 package com.cv.parser.read;
 
 import com.cv.parser.CVParserSingleton;
-import com.cv.parser.factorymethod.ExtensionSingleton;
-import com.cv.parser.factorymethod.ExtensionSingleton.Ext;
+import com.cv.parser.extract.ExtensionSingleton;
+import com.cv.parser.extract.ExtensionSingleton.Ext;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Table;

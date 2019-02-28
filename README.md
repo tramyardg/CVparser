@@ -33,8 +33,8 @@ section.
 - Education: candidate education
 - Skills: candidate skills and/or expertise
 
-## Screenshots
-![GUI](https://github.com/tramyardg/CVparser/blob/master/GUI_1.PNG)
+## Screenshot
+![image](https://user-images.githubusercontent.com/5623994/53571858-e30c8780-3b37-11e9-89c6-e0cc7aca0031.png)
 
 ## Sample Output
 Unformatted output of three candidates. 
@@ -66,4 +66,4 @@ skills=null]]
 - JSON-java: library also known as org.json
 - OpenCSV: for writing/reading CSV files
 - JavaFaker: for unit testing
-- SLF4J: for logging
+- Log4j: for logging

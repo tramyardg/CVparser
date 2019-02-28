@@ -3,8 +3,8 @@ package com.cv.parser;
 import com.cv.parser.applicant.ParserHelper;
 import com.github.javafaker.Faker;
 import junit.framework.TestCase;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegexTest extends TestCase {
-    private Logger logger = LoggerFactory.getLogger(RegexTest.class);
+    private final static Logger LOG = LogManager.getLogger();
 
     public void testEmail() {
         String email = "hello@world.com";
@@ -29,15 +29,15 @@ public class RegexTest extends TestCase {
         // goal is to extract ONLY the objective of the applicant
         // this means the next section would be getIndexesOfSection(RegEx.OBJECTIVE, line).get(0);
         String line = goodResumeFormat();
-        logger.info(line);
+        LOG.info(line);
         ParserHelper helper = new ParserHelper();
         RegEx regEx = RegEx.OBJECTIVE;
         int objIndex = helper.getIndexOfThisSection(regEx, line);
         int indexOfFollowingSection = helper.getSectionIndexesExcludeOne(regEx, line).get(0);
-        logger.info("object index {}", objIndex);
-        logger.info("index of following section {}", indexOfFollowingSection);
+        LOG.info("object index {}", objIndex);
+        LOG.info("index of following section {}", indexOfFollowingSection);
         String objective = line.substring(objIndex, indexOfFollowingSection);
-        logger.info(objective);
+        LOG.info(objective);
     }
 
     /**

@@ -1,13 +1,11 @@
-package com.cv.parser.factorymethod.parser;
+package com.cv.parser.extract;
 
 import com.cv.parser.CVParserSingleton;
-import com.cv.parser.factorymethod.ExtensionSingleton;
-import com.cv.parser.factorymethod.ExtensionSingleton.Ext;
-import com.cv.parser.factorymethod.ParserInterface;
+import com.cv.parser.extract.ExtensionSingleton.Ext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParserForDOCX implements ParserInterface {
+    private final static Logger LOG = LogManager.getLogger();
     private File resumeStorage = new File(CVParserSingleton.getInstance().resumesStoragePath);
-    private final Logger logger = LoggerFactory.getLogger(ParserForDOCX.class.getName());
 
     private File[] docxFiles;
     private List<String> contents = new ArrayList<>();
@@ -39,14 +37,14 @@ public class ParserForDOCX implements ParserInterface {
                 we = new XWPFWordExtractor(msDoc);
                 this.contents.add(we.getText());
             } catch (IOException | NullPointerException e) {
-                logger.error(e.getMessage());
+                LOG.error(e.getMessage());
             } finally {
                 try {
                     we.close();
                     msDoc.close();
                     fs.close();
                 } catch (IOException e) {
-                    logger.error(e.getMessage());
+                    LOG.error(e.getMessage());
                 }
             }
         }

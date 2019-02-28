@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.2" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="com.cv.parser.factorymethod.ParserFactory" project="CVparser" 
+  <class id="1" language="java" name="com.cv.parser.extract.ParserFactory" project="CVparser"
     file="/CVparser/src/main/java/com/cv/parser/factorymethod/ParserFactory.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="840" y="171"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -10,7 +10,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="2" language="java" name="com.cv.parser.factorymethod.ParserInterface" project="CVparser" 
+  <interface id="2" language="java" name="com.cv.parser.extract.ParserInterface" project="CVparser"
     file="/CVparser/src/main/java/com/cv/parser/factorymethod/ParserInterface.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="838" y="306"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -19,7 +19,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="3" language="java" name="com.cv.parser.factorymethod.ExtractFiles" project="CVparser" 
+  <class id="3" language="java" name="com.cv.parser.extract.ExtractFiles" project="CVparser"
     file="/CVparser/src/main/java/com/cv/parser/factorymethod/ExtractFiles.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="498" y="171"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -46,7 +46,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="com.cv.parser.factorymethod.parser.ParserForDOC" project="CVparser" 
+  <class id="6" language="java" name="com.cv.parser.extract.ParserForDOC" project="CVparser"
     file="/CVparser/src/main/java/com/cv/parser/factorymethod/parser/ParserForDOC.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="554" y="527"/>    
@@ -56,7 +56,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="com.cv.parser.factorymethod.parser.ParserForDOCX" project="CVparser" 
+  <class id="7" language="java" name="com.cv.parser.extract.ParserForDOCX" project="CVparser"
     file="/CVparser/src/main/java/com/cv/parser/factorymethod/parser/ParserForDOCX.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="757" y="531"/>    
@@ -66,7 +66,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="com.cv.parser.factorymethod.parser.ParserForPDF" project="CVparser" 
+  <class id="8" language="java" name="com.cv.parser.extract.ParserForPDF" project="CVparser"
     file="/CVparser/src/main/java/com/cv/parser/factorymethod/parser/ParserForPDF.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="949" y="531"/>    
@@ -76,7 +76,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="com.cv.parser.factorymethod.parser.ParserForTXT" project="CVparser" 
+  <class id="9" language="java" name="com.cv.parser.extract.ParserForTXT" project="CVparser"
     file="/CVparser/src/main/java/com/cv/parser/factorymethod/parser/ParserForTXT.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1163" y="517"/>    

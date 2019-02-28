@@ -1,8 +1,8 @@
 package com.cv.parser.saveas;
 
 import com.opencsv.CSVWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class WriteToFile {
     public WriteToFile() {
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(WriteToFile.class);
+    private final static Logger LOG = LogManager.getLogger();
     private static final String JSON_DATA_PATH = "./public/candidates.json";
     private static final String CSV_DATA_PATH = "./public/candidates.csv";
     private boolean hasUpdated = false;
@@ -37,7 +37,7 @@ public class WriteToFile {
             out.write(data, 0, data.length);
             hasUpdated = true;
         } catch (IOException x) {
-            logger.error("Exception found!", x);
+            LOG.error("Exception found!", x);
         }
     }
 
@@ -58,7 +58,7 @@ public class WriteToFile {
             csvWriter.writeAll(data);
             csvWriter.close();
         } catch (IOException e) {
-            logger.error(e.getMessage());
+            LOG.error(e.getMessage());
         }
         byte[] data = writer.toString().getBytes();
         Path p = Paths.get(CSV_DATA_PATH);
@@ -66,7 +66,7 @@ public class WriteToFile {
             out.write(data, 0, data.length);
             hasUpdated = true;
         } catch (IOException | NullPointerException x) {
-            logger.error(x.getMessage());
+            LOG.error(x.getMessage());
         }
     }
 

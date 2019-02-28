@@ -1,4 +1,4 @@
-package com.cv.parser.factorymethod;
+package com.cv.parser.extract;
 
 import java.io.File;
 import java.util.List;

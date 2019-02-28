@@ -1,9 +1,4 @@
-package com.cv.parser.factorymethod;
-
-import com.cv.parser.factorymethod.parser.ParserForDOC;
-import com.cv.parser.factorymethod.parser.ParserForDOCX;
-import com.cv.parser.factorymethod.parser.ParserForPDF;
-import com.cv.parser.factorymethod.parser.ParserForTXT;
+package com.cv.parser.extract;
 
 public class ParserFactory {
 

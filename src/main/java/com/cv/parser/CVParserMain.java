@@ -1,20 +1,20 @@
 package com.cv.parser;
 
 import com.cv.parser.applicant.DocumentDetails;
-import com.cv.parser.factorymethod.ExtractFiles;
+import com.cv.parser.extract.ExtractFiles;
 import com.cv.parser.read.ReadFiles;
 import com.cv.parser.read.ValidateRead;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CVParserMain {
-    private final static Logger logger = LoggerFactory.getLogger(CVParserMain.class);
+    private final static Logger LOG = LogManager.getLogger();
 
     private File resumesStoragePath = new File(CVParserSingleton.getInstance().resumesStoragePath);
     private Shell shell;
@@ -24,13 +24,13 @@ public class CVParserMain {
             CVParserMain window = new CVParserMain();
             window.open();
         } catch (Exception e) {
-            logger.error("CVParserMain:main(...)", e);
+            LOG.error("CVParserMain:main(...)", e);
             MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_ERROR);
             messageBox.setText("Error");
             messageBox.setMessage("Please close any word document files opened.");
             int buttonID = messageBox.open();
             if (buttonID == SWT.OK) {
-                logger.error("Word document(s) file opened!");
+                LOG.error("Word document(s) file opened!");
             }
         }
     }

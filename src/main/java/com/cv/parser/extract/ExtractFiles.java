@@ -1,23 +1,24 @@
-package com.cv.parser.factorymethod;
+package com.cv.parser.extract;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class ExtractFiles {
-    private Logger logger = LoggerFactory.getLogger(ExtractFiles.class);
+    private final static Logger LOG = LogManager.getLogger();
+
 
     private Button btnExtractContents;
     private List<String> superList;
     private Table tableExtractedContent;
-    private Button btnSaveInJSONfile;
-    private Button btnSaveInCSVfile;
+    private Button btnSaveInJSON;
+    private Button btnSaveInCSV;
 
     private Shell mainShell;
     private Label status;
@@ -25,13 +26,13 @@ public class ExtractFiles {
     private ParserFactory parserFactory = new ParserFactory();
 
     public ExtractFiles(Shell shell, Button btnExtractContents, List<String> superList, Table tableExtractedContent,
-                        Button btnSaveInJSONfile, Button btnSaveInCSVfile) {
+                        Button btnSaveInJSON, Button btnSaveInCSV) {
         this.mainShell = shell;
         this.btnExtractContents = btnExtractContents;
         this.superList = superList;
         this.tableExtractedContent = tableExtractedContent;
-        this.btnSaveInJSONfile = btnSaveInJSONfile;
-        this.btnSaveInCSVfile = btnSaveInCSVfile;
+        this.btnSaveInJSON = btnSaveInJSON;
+        this.btnSaveInCSV = btnSaveInCSV;
     }
 
     public void handleButtonClick() {
@@ -55,15 +56,15 @@ public class ExtractFiles {
                 parseDOCX(parserFactory);
                 parseTXT(parserFactory);
             } catch (UnsupportedFileExtension e) {
-                logger.error(e.getMessage());
+                LOG.error(e.getMessage());
             }
 
             displayDocumentsInTable();
             status.setText("Finished!");
 
             btnExtractContents.setEnabled(false);
-            btnSaveInJSONfile.setEnabled(true);
-            btnSaveInCSVfile.setEnabled(true);
+            btnSaveInJSON.setEnabled(true);
+            btnSaveInCSV.setEnabled(true);
 
             doneShell.pack();
             doneShell.open();

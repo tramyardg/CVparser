@@ -1,13 +1,11 @@
-package com.cv.parser.factorymethod.parser;
+package com.cv.parser.extract;
 
 import com.cv.parser.CVParserSingleton;
-import com.cv.parser.factorymethod.ExtensionSingleton;
-import com.cv.parser.factorymethod.ExtensionSingleton.Ext;
-import com.cv.parser.factorymethod.ParserInterface;
+import com.cv.parser.extract.ExtensionSingleton.Ext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParserForPDF implements ParserInterface {
+    private final static Logger LOG = LogManager.getLogger();
     private File resumeStorage = new File(CVParserSingleton.getInstance().resumesStoragePath);
-    private final Logger logger = LoggerFactory.getLogger(ParserForPDF.class.getName());
 
     private File[] pdfFiles;
     private List<String> contents = new ArrayList<>();
@@ -36,7 +34,7 @@ public class ParserForPDF implements ParserInterface {
                 this.contents.add(pdfStripper.getText(document).replaceAll(removedPageNumberRegex, ""));
                 document.close();
             } catch (IOException e) {
-                logger.error(e.getMessage());
+                LOG.error(e.getMessage());
             }
         }
     }

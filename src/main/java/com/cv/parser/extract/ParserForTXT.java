@@ -1,11 +1,9 @@
-package com.cv.parser.factorymethod.parser;
+package com.cv.parser.extract;
 
 import com.cv.parser.CVParserSingleton;
-import com.cv.parser.factorymethod.ExtensionSingleton;
-import com.cv.parser.factorymethod.ExtensionSingleton.Ext;
-import com.cv.parser.factorymethod.ParserInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.cv.parser.extract.ExtensionSingleton.Ext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParserForTXT implements ParserInterface {
+    private final static Logger LOG = LogManager.getLogger();
     private File resumeStorage = new File(CVParserSingleton.getInstance().resumesStoragePath);
-    private final Logger logger = LoggerFactory.getLogger(ParserForTXT.class.getName());
 
     private File[] txtFiles;
     private List<String> contents = new ArrayList<>();
@@ -42,7 +40,7 @@ public class ParserForTXT implements ParserInterface {
                 br.close();
                 fileReader.close();
             } catch (IOException e) {
-                logger.error(e.getMessage());
+                LOG.error(e.getMessage());
             }
         }
     }
