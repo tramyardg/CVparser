@@ -7,32 +7,32 @@ import com.cv.parser.factorymethod.parser.ParserForTXT;
 
 public class ParserFactory {
 
-    public ParserInterface getContent(String fileExtension) throws UnsupportedFileExtension {
+    ParserInterface getContent(String fileExtension) throws UnsupportedFileExtension {
 
-	ParserInterface parser = null;
+        ParserInterface parser;
 
-	if (fileExtension == null) {
-	    return null;
-	}
+        if (fileExtension == null) {
+            return null;
+        }
 
-	switch (fileExtension) {
-	case "pdf":
-	    parser = new ParserForPDF();
-	    break;
-	case "doc":
-	    parser = new ParserForDOC();
-	    break;
-	case "docx":
-	    parser = new ParserForDOCX();
-	    break;
-	case "txt":
-	    parser = new ParserForTXT();
-	    break;
-	default:
-	    throw new UnsupportedFileExtension();
-	}
+        switch (fileExtension) {
+            case "pdf":
+                parser = new ParserForPDF();
+                break;
+            case "doc":
+                parser = new ParserForDOC();
+                break;
+            case "docx":
+                parser = new ParserForDOCX();
+                break;
+            case "txt":
+                parser = new ParserForTXT();
+                break;
+            default:
+                throw new UnsupportedFileExtension();
+        }
 
-	return parser;
+        return parser;
     }
 
 }
