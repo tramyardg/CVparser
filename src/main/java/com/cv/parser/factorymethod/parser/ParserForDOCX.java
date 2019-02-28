@@ -1,21 +1,19 @@
 package com.cv.parser.factorymethod.parser;
 
+import com.cv.parser.FileFinderByExt;
+import com.cv.parser.factorymethod.ExtensionSingleton;
+import com.cv.parser.factorymethod.ExtensionSingleton.Ext;
+import com.cv.parser.factorymethod.ParserInterface;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-
-import com.cv.parser.FileFinderByExt;
-import com.cv.parser.factorymethod.ExtensionSingleton;
-import com.cv.parser.factorymethod.ParserInterface;
-import com.cv.parser.factorymethod.ExtensionSingleton.Ext;
 
 public class ParserForDOCX implements ParserInterface {
 
@@ -27,36 +25,36 @@ public class ParserForDOCX implements ParserInterface {
 
     @Override
     public void setFiles() {
-	this.docxFiles = find.finder(ExtensionSingleton.getInstance().get(Ext.DOCX));
+        this.docxFiles = find.finder(ExtensionSingleton.getInstance().get(Ext.DOCX));
     }
 
     @Override
     public void extractFiles() {
-	for (File file : docxFiles) {
-	    FileInputStream fs = null;
-	    XWPFDocument msDoc = null;
-	    XWPFWordExtractor we = null;
-	    try {
-		fs = new FileInputStream(file);
-		msDoc = new XWPFDocument(fs);
-		we = new XWPFWordExtractor(msDoc);
-		this.contents.add(we.getText());
-	    } catch (IOException | NullPointerException e) {
-		logger.error(e.getMessage());
-	    } finally {
-		try {
-		    we.close();
-		    msDoc.close();
-		    fs.close();
-		} catch (IOException e) {
-		    logger.error(e.getMessage());
-		}
-	    }
-	}
+        for (File file : docxFiles) {
+            FileInputStream fs = null;
+            XWPFDocument msDoc = null;
+            XWPFWordExtractor we = null;
+            try {
+                fs = new FileInputStream(file);
+                msDoc = new XWPFDocument(fs);
+                we = new XWPFWordExtractor(msDoc);
+                this.contents.add(we.getText());
+            } catch (IOException | NullPointerException e) {
+                logger.error(e.getMessage());
+            } finally {
+                try {
+                    we.close();
+                    msDoc.close();
+                    fs.close();
+                } catch (IOException e) {
+                    logger.error(e.getMessage());
+                }
+            }
+        }
     }
 
     @Override
     public List<String> getContents() {
-	return contents;
+        return contents;
     }
 }
