@@ -15,7 +15,7 @@ public enum RegEx {
     OBJECTIVE("\\b(Objective(s?)|OBJECTIVE(S?)|Summary|SUMMARY)([^-!@#$%^&*()+.,?])\\b"), // summary included here
     EDUCATION("\\b(Education(s?)|EDUCATION(S?)|Diploma(s?)|DIPLOMA(S?))\\b"),
     EXPERIENCE("\\b(Experience(s?)|EXPERIENCE(S?))\\b"),
-    SKILLS("\\b(Skill(s?) & Expertise(s?)|Tool(s?) & Technolog(y?|ies?)|Skill(s?)|SKILL(S?))\\b"),
+    SKILLS("\\b(Skill(s?) & Expertise(s?)|Tool(s?) & Technolog(y?|ies?)|Skill(s?)|SKILL(S?)|Technical Skills)\\b"),
     LANGUAGE("\\b(Language(s?)|LANGUAGE(S?))\\b"),
     INTEREST("\\b(Interest(s?)|INTEREST(S?)|Activity|Activities|ACTIVITY|ACTIVITIES)\\b"),
     MEMBERSHIP("\\b(Membership(s?)|MEMBERSHIP(S?))\\b"),
