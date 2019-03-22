@@ -9,9 +9,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ParserHelper {
+    private RegEx[] sectionRegex;
 
-    public int getIndexOfThisSection(RegEx regEx, String fileContent) {
-        RegEx[] sectionRegex = {
+    public ParserHelper() {
+        this.sectionRegex = new RegEx[]{
                 RegEx.OBJECTIVE,
                 RegEx.EDUCATION,
                 RegEx.EXPERIENCE,
@@ -21,12 +22,17 @@ public class ParserHelper {
                 RegEx.MEMBERSHIP,
                 RegEx.ADDITIONAL
         };
+    }
+
+    /**
+     * Returns a single index given a regular expression for section heading.
+     * @param regEx one of the regex in sectionRegex
+     * @param texts the texts to match the regex
+     * @return the index of the first occurrence of the matched regex (see matcher.group)
+     */
+    public int getIndexOfThisSection(RegEx regEx, String texts) {
         List<Integer> indexOfThisSection = new ArrayList<>();
-        for (RegEx r : sectionRegex) {
-            if (r.equals(regEx)) {
-                storeSectionIndexes(fileContent, indexOfThisSection, r);
-            }
-        }
+        storeSectionIndexes(texts, indexOfThisSection, regEx);
         if (!indexOfThisSection.isEmpty()) {
             return indexOfThisSection.get(0);
         }
@@ -37,21 +43,12 @@ public class ParserHelper {
         Pattern pattern = Pattern.compile(r.toString(), Pattern.MULTILINE | Pattern.DOTALL);
         Matcher matcher = pattern.matcher(line);
         while (matcher.find()) {
+            // run through each section regex and store its index
             indexOfThisSection.add(matcher.start());
         }
     }
 
     List<Integer> getAllSectionIndexes(String content) {
-        RegEx[] sectionRegex = {
-                RegEx.OBJECTIVE,
-                RegEx.EDUCATION,
-                RegEx.EXPERIENCE,
-                RegEx.SKILLS,
-                RegEx.LANGUAGE,
-                RegEx.INTEREST,
-                RegEx.MEMBERSHIP,
-                RegEx.ADDITIONAL
-        };
         List<Integer> indexesOfSection = new ArrayList<>();
         for (RegEx r : sectionRegex) {
             storeSectionIndexes(content, indexesOfSection, r);
@@ -61,16 +58,6 @@ public class ParserHelper {
     }
 
     public List<Integer> getSectionIndexesExcludeOne(RegEx regEx, String line) {
-        RegEx[] sectionRegex = {
-                RegEx.OBJECTIVE,
-                RegEx.EDUCATION,
-                RegEx.EXPERIENCE,
-                RegEx.SKILLS,
-                RegEx.LANGUAGE,
-                RegEx.INTEREST,
-                RegEx.MEMBERSHIP,
-                RegEx.ADDITIONAL
-        };
         List<Integer> indexesOfSection = new ArrayList<>();
         for (RegEx r : sectionRegex) {
             if (!r.equals(regEx)) {
@@ -81,18 +68,23 @@ public class ParserHelper {
         return indexesOfSection;
     }
 
-    String getSectionContent(int sectionIndex, List<Integer> sectionIndexes, String content, int nextSectionIndex) {
-        for (int index = 0; index < sectionIndexes.size(); index++) {
-            if (sectionIndexes.get(index) == sectionIndex) {
-                if (index == sectionIndexes.size() - 1) {
+    String getSectionContent(int sectionIndex, List<Integer> sectionIndexes, String content) {
+        for (int i = 0; i < sectionIndexes.size(); i++) {
+            // if sectionIndex is the last one, then no need for end index in substring
+            if (sectionIndexes.get(i) == sectionIndex) {
+                if (i == sectionIndexes.size() - 1) {
                     return content.substring(sectionIndex);
                 } else {
-                    nextSectionIndex = sectionIndexes.get(index + 1);
-                    break;
+                    // otherwise, the next index is the index of the following section
+                    // i.e. education starts at index 60
+                    // work experience starts at index 200
+                    // for education content := content.substring(60, 200)
+                    // for work experience content := content.substring(200, {startIndexOfOtherSection})
+                    return content.substring(sectionIndex, sectionIndexes.get(i + 1));
                 }
             }
         }
-        return content.substring(sectionIndex, nextSectionIndex);
+        return null;
     }
 
 }

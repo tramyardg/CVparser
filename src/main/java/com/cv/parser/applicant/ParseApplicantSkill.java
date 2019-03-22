@@ -36,12 +36,10 @@ class ParseApplicantSkill {
     private String findApplicantSkills(String line) {
         ParserHelper parser = new ParserHelper();
         int indexOfSkillsSection = parser.getIndexOfThisSection(RegEx.SKILLS, line);
-
         if (indexOfSkillsSection != -1) {
             List<Integer> sectionIndexes = parser.getAllSectionIndexes(line);
-            String skillsText = line.replaceFirst(RegEx.SKILLS.toString(), "");
-            int nextSectionIndex = 0;
-            return helper.getSectionContent(indexOfSkillsSection, sectionIndexes, skillsText, nextSectionIndex);
+            String texts = line.replaceFirst(RegEx.SKILLS.toString(), "");
+            return helper.getSectionContent(indexOfSkillsSection, sectionIndexes, texts);
         }
         return null;
     }

@@ -1,21 +1,13 @@
 package com.cv.parser;
 
 public enum RegEx {
-    // How RegEx works
-    // These regular expressions must be strictly imposed, this is due to one particular reason:
-    // For instance, an experience section might contain multiple instances of the word experience. 
-    // Therefore, a strict regular expression for section headings must apply.
-    // For experience, the solution was to get the index of the word experience 
-    // which matches exactly to the following
-    // Experience|Experiences|EXPERIENCE|EXPERIENCES. This excluded
-    // experience or experiences to be valid. The same notion applies to other section headings.
     LINK("(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)"),
     EMAIL("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+"),
     PHONE("\\(?([0-9]{3})\\)?[-. ]([0-9]{3})[-. ]?[-. ]?([0-9]{4})"),
-    OBJECTIVE("\\b(Objective(s?)|OBJECTIVE(S?)|Summary|SUMMARY)([^-!@#$%^&*()+.,?])\\b"), // summary included here
+    OBJECTIVE("\\b(Objective(s?)|OBJECTIVE(S?)|Summary|SUMMARY|Statement)([^-!@#$%^&*()+.,?])\\b"), // summary included here
     EDUCATION("\\b(Education(s?)|EDUCATION(S?)|Diploma(s?)|DIPLOMA(S?))\\b"),
-    EXPERIENCE("\\b(Experience(s?)|EXPERIENCE(S?))\\b"),
-    SKILLS("\\b(Skill(s?) & Expertise(s?)|Tool(s?) & Technolog(y?|ies?)|Skill(s?)|SKILL(S?)|Technical Skills)\\b"),
+    EXPERIENCE("\\b(Experience(s?)|EXPERIENCE(S?)|Work Experience|WORK EXPERIENCE|Work History|WORK HISTORY)\\b"),
+    SKILLS("\\b(Skill(s?) & Expertise(s?)|Tool(s?) & Technolog(y?|ies?)|Skill(s?)|SKILL(S?)|Technical Skills|TECHNICAL SKILLS|Computer Skills|COMPUTER SKILLS)\\b"),
     LANGUAGE("\\b(Language(s?)|LANGUAGE(S?))\\b"),
     INTEREST("\\b(Interest(s?)|INTEREST(S?)|Activity|Activities|ACTIVITY|ACTIVITIES)\\b"),
     MEMBERSHIP("\\b(Membership(s?)|MEMBERSHIP(S?))\\b"),
