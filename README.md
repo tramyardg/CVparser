@@ -1,24 +1,19 @@
-![Maven Compiler Plugin](https://img.shields.io/badge/maven--compiler--plugin-8-blue.svg)
-
 ### Table of Contents
 - [Features](#features)
-- [Regular expression](#regular-expression)
+- [Regular Expression](#regular-expression)
 - [Extracted Resume Sections](#extracted-resume-sections)
 - [Screenshots](#screenshot)
 - [Sample Output](#sample-output)
 - [Dependencies](#dependencies)
 
 ## Features
-1. Support PDF, MS word, and text files.
-2. Extract important information such as skills, education, experiences, email, phone number, etc.
-3. Process multiple files at the same time.
-4. Saving extracted data in JSON file.
-    - Sample: [candidate.json](https://github.com/tramyardg/CVparser/blob/master/src/main/resources/candidates.json).
-5. Saving extracted date in CSV file.
-    - Sample: [candidate.csv](https://github.com/tramyardg/CVparser/blob/master/src/main/resources/candidates.csv).
+1. It supports PDF, MS word, and text files.
+2. It extracts important information such as skills, education, experiences, email, phone number, etc.
+3. Can process multiple files at the same time.
+4. Output can be saved in a JSON and CSV file.
 
-### Regular expression
-Regular expression was used to extract a section of a resume. For instance, an experience section might 
+### Regular Expression
+I am using regular expression to extract a section of a resume. For instance, an experience section might 
 contain multiple instances of the word experience. Therefore, a strict regular expression for extracting experience 
 section must be used. The solution was to get the index of the word experience 
 that matches exactly to the following
@@ -61,5 +56,7 @@ skills=null]]
 - Apache POI: for reading Microsoft Word files
 - JSON-java: library also known as org.json
 - OpenCSV: for writing/reading CSV files
-- JavaFaker: for unit testing
+- JavaFaker: for generating fake data for unit testing
 - Log4j: for logging
+
+![Maven Compiler Plugin](https://img.shields.io/badge/maven--compiler--plugin-8-blue.svg)
