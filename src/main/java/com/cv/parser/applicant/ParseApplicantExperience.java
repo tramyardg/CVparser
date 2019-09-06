@@ -19,6 +19,7 @@ import java.util.List;
  * @author tramyardg
  */
 class ParseApplicantExperience {
+
     private List<ApplicantDocument> applicantDocument;
     private List<ApplicantExperiences> applicantExperienceList = new ArrayList<>();
     private ParserHelper helper = new ParserHelper();
@@ -34,22 +35,19 @@ class ParseApplicantExperience {
     private String findWorkExperiences(String line) {
         ParserHelper parser = new ParserHelper();
         /*
-         * Algorithm: copy texts starting from experience section index to the
-         * following section index experience index is LESS THAN the following
-         * section index, therefore
+         * Algorithm: copy texts from starting index of desired section to the index
+         * of the section that follows.
          *
          * Example: section indexes [24, 355, 534, 669] index of experience
-         * section = 355 therefore, the following section index would be 534 we
-         * can get the texts that encompasses experience section by substring =>
-         * (indexOfExperience, beginIndexOfFollowingSection)
+         * section is 355 therefore, the work experience we get starts from 355
+         * and ends with 534. This is where substring becomes useful.
          *
          */
         int indexOfExperience = parser.getIndexOfThisSection(RegEx.EXPERIENCE, line);
         if (indexOfExperience != -1) {
-            int nextSectionIndex = 0; // index that follows experience section
             List<Integer> listOfSectionIndexes = parser.getAllSectionIndexes(line);
-            String experiencesText = line.replaceFirst(RegEx.EXPERIENCE.toString(), "");
-            return helper.getSectionContent(indexOfExperience, listOfSectionIndexes, experiencesText, nextSectionIndex);
+            String texts = line.replaceFirst(RegEx.EXPERIENCE.toString(), "");
+            return helper.getSectionContent(indexOfExperience, listOfSectionIndexes, texts);
         }
         return null;
     }

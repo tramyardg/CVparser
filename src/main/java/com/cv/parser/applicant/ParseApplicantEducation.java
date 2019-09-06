@@ -3,6 +3,8 @@ package com.cv.parser.applicant;
 import com.cv.parser.RegEx;
 import com.cv.parser.entity.ApplicantDocument;
 import com.cv.parser.entity.ApplicantEducation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,8 @@ import java.util.List;
  * @author tramyardg
  */
 class ParseApplicantEducation {
+    private final static Logger LOG = LogManager.getLogger();
+
     private List<ApplicantDocument> applicantDocument;
     private List<ApplicantEducation> applicantEducationList = new ArrayList<>();
     private ParserHelper helper = new ParserHelper();
@@ -37,10 +41,10 @@ class ParseApplicantEducation {
         ParserHelper parser = new ParserHelper();
         int indexOfEducation = parser.getIndexOfThisSection(RegEx.EDUCATION, line);
         if (indexOfEducation != -1) {
-            int nextSectionIndex = 0;
             List<Integer> listOfSectionIndexes = parser.getAllSectionIndexes(line);
-            String educationsText = line.replaceFirst(RegEx.EDUCATION.toString(), "");
-            return helper.getSectionContent(indexOfEducation, listOfSectionIndexes, educationsText, nextSectionIndex);
+            LOG.info("SECTION INDEXES: {}", listOfSectionIndexes);
+            String texts = line.replaceFirst(RegEx.EDUCATION.toString(), "");
+            return helper.getSectionContent(indexOfEducation, listOfSectionIndexes, texts);
         }
         return null;
     }
