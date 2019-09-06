@@ -7,6 +7,7 @@
 - [Screenshots](#screenshot)
 - [Sample Output](#sample-output)
 - [Dependencies](#dependencies)
+- [Usage](#usage)
 
 ## Features
 1. Support PDF, MS word, and text files.
@@ -63,3 +64,16 @@ skills=null]]
 - OpenCSV: for writing/reading CSV files
 - JavaFaker: for unit testing
 - Log4j: for logging
+
+## Usage
+1. Clone or download CVparser repo.
+2. Add a sample resume in public folder.
+3. Make sure you have Maven installed.
+4. Minimum JDK requirement: JavaSE-1.8 (JDK 8).
+5. Update/Install Maven dependencies.
+6. Run the main program located at `CVparser/src/main/java/com/cv/parser/CVParserMain.java`
+7. CVParser window opens up
+  7.a. Click the button `Read from public`
+  7.b. Click the button `Extract contents`
+  7.c. Finally, click the button `Save in JSON file` or `Save in CSV file`.
+8. Extracted cv(s) can be found at `CVparser/public`
