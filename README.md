@@ -73,7 +73,7 @@ skills=null]]
 5. Update/Install Maven dependencies.
 6. Run the main program located at `CVparser/src/main/java/com/cv/parser/CVParserMain.java`
 7. CVParser window opens up
-  7.a. Click the button `Read from public`
-  7.b. Click the button `Extract contents`
-  7.c. Finally, click the button `Save in JSON file` or `Save in CSV file`.
-8. Extracted cv(s) can be found at `CVparser/public`
+- 1) Click the button `Read from public`
+- 2) Click the button `Extract contents`
+- 3) Finally, click the button `Save in JSON file` and/or `Save in CSV file`.
+8. Extracted cv(s) can be found at `CVparser/public` as `candidates.json` and/or `candidates.csv`
