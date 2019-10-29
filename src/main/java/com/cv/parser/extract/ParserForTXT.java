@@ -18,40 +18,54 @@ public class ParserForTXT implements ParserInterface {
 
     private File[] txtFiles;
     private List<String> contents = new ArrayList<>();
+    private File singleFile;
+
+    public ParserForTXT() {
+    }
+
+    public ParserForTXT(File file) {
+	this.singleFile = file;
+    }
 
     @Override
     public void setFiles() {
-        this.txtFiles = finder(ExtensionSingleton.getInstance().get(Ext.TXT));
+	this.txtFiles = finder(ExtensionSingleton.getInstance().get(Ext.TXT));
     }
 
     @Override
     public void extractFiles() {
-        String line;
-        for (File file : txtFiles) {
-            BufferedReader br;
-            try {
-                FileReader fileReader = new FileReader(file);
-                List<String> content = new ArrayList<>();
-                br = new BufferedReader(fileReader);
-                while ((line = br.readLine()) != null) {
-                    content.add(line);
-                }
-                this.contents.add(String.join(" ", content));
-                br.close();
-                fileReader.close();
-            } catch (IOException e) {
-                LOG.error(e.getMessage());
-            }
-        }
+	String line;
+	for (File file : txtFiles) {
+	    BufferedReader br;
+	    try {
+		FileReader fileReader = new FileReader(file);
+		List<String> content = new ArrayList<>();
+		br = new BufferedReader(fileReader);
+		while ((line = br.readLine()) != null) {
+		    content.add(line);
+		}
+		this.contents.add(String.join(" ", content));
+		br.close();
+		fileReader.close();
+	    } catch (IOException e) {
+		LOG.error(e.getMessage());
+	    }
+	}
+    }
+
+    @Override
+    public void extractSingleFile() {
+	// TODO Auto-generated method stub
     }
 
     @Override
     public List<String> getContents() {
-        return contents;
+	return contents;
     }
 
     @Override
     public File[] finder(String ext) {
-        return resumeStorage.listFiles((dir, filename) -> filename.endsWith(ext));
+	return resumeStorage.listFiles((dir, filename) -> filename.endsWith(ext));
     }
+
 }

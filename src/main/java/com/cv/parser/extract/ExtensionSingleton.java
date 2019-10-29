@@ -1,5 +1,7 @@
 package com.cv.parser.extract;
 
+import com.cv.parser.UnsupportedFileExtension;
+
 public class ExtensionSingleton {
 
     private static ExtensionSingleton instance;

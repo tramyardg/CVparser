@@ -1,13 +1,13 @@
-package com.cv.parser.extract;
+package com.cv.parser;
 
-class UnsupportedFileExtension extends Exception {
+public class UnsupportedFileExtension extends Exception {
 
     /**
      *
      */
     private static final long serialVersionUID = -3085892683454858351L;
 
-    UnsupportedFileExtension() {
+    public UnsupportedFileExtension() {
         super("Unsupported file extension!");
     }
 

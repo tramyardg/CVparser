@@ -19,44 +19,57 @@ public class ParserForDOCX implements ParserInterface {
 
     private File[] docxFiles;
     private List<String> contents = new ArrayList<>();
+    private File singleFile;
+
+    public ParserForDOCX() {
+    }
+
+    public ParserForDOCX(File file) {
+	this.singleFile = file;
+    }
 
     @Override
     public void setFiles() {
-        this.docxFiles = finder(ExtensionSingleton.getInstance().get(Ext.DOCX));
+	this.docxFiles = finder(ExtensionSingleton.getInstance().get(Ext.DOCX));
     }
 
     @Override
     public void extractFiles() {
-        for (File file : docxFiles) {
-            FileInputStream fs = null;
-            XWPFDocument msDoc = null;
-            XWPFWordExtractor we = null;
-            try {
-                fs = new FileInputStream(file);
-                msDoc = new XWPFDocument(fs);
-                we = new XWPFWordExtractor(msDoc);
-                this.contents.add(we.getText());
-            } catch (IOException | NullPointerException e) {
-                LOG.error(e.getMessage());
-            } finally {
-                try {
-                    we.close();
-                    msDoc.close();
-                    fs.close();
-                } catch (IOException e) {
-                    LOG.error(e.getMessage());
-                }
-            }
-        }
+	for (File file : docxFiles) {
+	    FileInputStream fs = null;
+	    XWPFDocument msDoc = null;
+	    XWPFWordExtractor we = null;
+	    try {
+		fs = new FileInputStream(file);
+		msDoc = new XWPFDocument(fs);
+		we = new XWPFWordExtractor(msDoc);
+		this.contents.add(we.getText());
+	    } catch (IOException | NullPointerException e) {
+		LOG.error(e.getMessage());
+	    } finally {
+		try {
+		    we.close();
+		    msDoc.close();
+		    fs.close();
+		} catch (IOException e) {
+		    LOG.error(e.getMessage());
+		}
+	    }
+	}
     }
 
     @Override
     public List<String> getContents() {
-        return contents;
+	return contents;
     }
 
     @Override
     public File[] finder(String ext) {
-        return resumeStorage.listFiles((dir, filename) -> filename.endsWith(ext));
+	return resumeStorage.listFiles((dir, filename) -> filename.endsWith(ext));
+    }
+
+    @Override
+    public void extractSingleFile() {
+	// TODO Auto-generated method stub
     }
 }

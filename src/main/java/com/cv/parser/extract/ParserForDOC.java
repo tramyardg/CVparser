@@ -20,39 +20,53 @@ public class ParserForDOC implements ParserInterface {
     private File[] docFiles;
     private List<String> contents = new ArrayList<>();
 
+    private File singleFile;
+
+    public ParserForDOC() {
+    }
+
+    public ParserForDOC(File file) {
+	this.singleFile = file;
+    }
+
     @Override
     public void setFiles() {
-        this.docFiles = finder(ExtensionSingleton.getInstance().get(Ext.DOC));
+	this.docFiles = finder(ExtensionSingleton.getInstance().get(Ext.DOC));
     }
 
     @Override
     public void extractFiles() {
-        for (File file : docFiles) {
-            HWPFDocument hwpfdoc;
-            WordExtractor extractor = null;
-            try {
-                hwpfdoc = new HWPFDocument(new FileInputStream(file));
-                extractor = new WordExtractor(hwpfdoc);
-                this.contents.add(extractor.getText());
-            } catch (IOException e) {
-                LOG.info(e.getMessage());
-            } finally {
-                try {
-                    extractor.close();
-                } catch (IOException e) {
-                    LOG.warn(e.getMessage());
-                }
-            }
-        }
+	for (File file : docFiles) {
+	    HWPFDocument hwpfdoc;
+	    WordExtractor extractor = null;
+	    try {
+		hwpfdoc = new HWPFDocument(new FileInputStream(file));
+		extractor = new WordExtractor(hwpfdoc);
+		this.contents.add(extractor.getText());
+	    } catch (IOException e) {
+		LOG.info(e.getMessage());
+	    } finally {
+		try {
+		    extractor.close();
+		} catch (IOException e) {
+		    LOG.warn(e.getMessage());
+		}
+	    }
+	}
+    }
+
+    @Override
+    public void extractSingleFile() {
+	// TODO Auto-generated method stub
     }
 
     @Override
     public List<String> getContents() {
-        return contents;
+	return contents;
     }
 
     @Override
     public File[] finder(String ext) {
-        return resumeStorage.listFiles((dir, filename) -> filename.endsWith(ext));
+	return resumeStorage.listFiles((dir, filename) -> filename.endsWith(ext));
     }
 }

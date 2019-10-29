@@ -19,33 +19,55 @@ public class ParserForPDF implements ParserInterface {
     private File[] pdfFiles;
     private List<String> contents = new ArrayList<>();
 
+    private File singleFile;
+
+    public ParserForPDF() {
+    }
+
+    public ParserForPDF(File file) {
+	this.singleFile = file;
+    }
+
     @Override
     public void setFiles() {
-        this.pdfFiles = finder(ExtensionSingleton.getInstance().get(Ext.PDF));
+	this.pdfFiles = finder(ExtensionSingleton.getInstance().get(Ext.PDF));
     }
 
     @Override
     public void extractFiles() {
-        for (File file : pdfFiles) {
-            try {
-                PDDocument document = PDDocument.load(file);
-                PDFTextStripper pdfStripper = new PDFTextStripper();
-                String removedPageNumberRegex = "\\bPage\\d\\b";
-                this.contents.add(pdfStripper.getText(document).replaceAll(removedPageNumberRegex, ""));
-                document.close();
-            } catch (IOException e) {
-                LOG.error(e.getMessage());
-            }
-        }
+	for (File file : pdfFiles) {
+	    try {
+		PDDocument document = PDDocument.load(file);
+		PDFTextStripper pdfStripper = new PDFTextStripper();
+		String removedPageNumberRegex = "\\bPage\\d\\b";
+		this.contents.add(pdfStripper.getText(document).replaceAll(removedPageNumberRegex, ""));
+		document.close();
+	    } catch (IOException e) {
+		LOG.error(e.getMessage());
+	    }
+	}
+    }
+
+    @Override
+    public void extractSingleFile() {
+	try {
+	    PDDocument document = PDDocument.load(this.singleFile);
+	    PDFTextStripper pdfStripper = new PDFTextStripper();
+	    String removedPageNumberRegex = "\\bPage\\d\\b";
+	    this.contents.add(pdfStripper.getText(document).replaceAll(removedPageNumberRegex, ""));
+	    document.close();
+	} catch (IOException e) {
+	    LOG.error(e.getMessage());
+	}
     }
 
     @Override
     public List<String> getContents() {
-        return contents;
+	return contents;
     }
 
     @Override
     public File[] finder(String ext) {
-        return resumeStorage.listFiles((dir, filename) -> filename.endsWith(ext));
+	return resumeStorage.listFiles((dir, filename) -> filename.endsWith(ext));
     }
 }

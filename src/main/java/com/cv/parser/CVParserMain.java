@@ -1,7 +1,11 @@
 package com.cv.parser;
 
 import com.cv.parser.applicant.DocumentDetails;
+import com.cv.parser.extract.ExtensionSingleton;
 import com.cv.parser.extract.ExtractFiles;
+import com.cv.parser.extract.ParserFactory;
+import com.cv.parser.extract.ParserInterface;
+import com.cv.parser.extract.ExtensionSingleton.Ext;
 import com.cv.parser.read.ReadFiles;
 import com.cv.parser.read.ValidateRead;
 import org.apache.logging.log4j.LogManager;
@@ -11,6 +15,7 @@ import org.eclipse.swt.widgets.*;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -132,22 +137,30 @@ public class CVParserMain {
 	    @Override
 	    public void widgetSelected(SelectionEvent arg0) {
 		// User has selected to open a single file
-		FileDialog dlg = new FileDialog(shell, SWT.OPEN);
-		String[] filterExt = { "*.txt", "*.doc", ".rtf", "*.*" };
-		dlg.setFilterExtensions(filterExt);
-		String selected = dlg.open();
+		FileDialog fileDialog = new FileDialog(shell, SWT.OPEN);
+		String selected = fileDialog.open();
 
 		if (selected != null) {
 		    File fileSelected = new File(selected);
 		    String fileName = fileSelected.getName();
 		    String ext = fileName.substring(fileName.indexOf('.'));
-
-		    TableItem item = new TableItem(tableDirContent, SWT.NONE);
-		    item.setText(new String[] { (tableDirContent.getItemCount()-1 + 1) + "", ext, fileName });
-		    File f = new File(selected);
-		    System.out.println(f.isFile() + " is file");
-		    System.out.println(f.getName() + " get name");
-		    System.out.println(f.canRead() + " can read");
+		    
+		    String[] fExts = { ExtensionSingleton.getInstance().get(Ext.TXT),
+			    ExtensionSingleton.getInstance().get(Ext.PDF),
+			    ExtensionSingleton.getInstance().get(Ext.DOCX),
+			    ExtensionSingleton.getInstance().get(Ext.DOC) };
+		    if (Arrays.asList(fExts).contains(ext)) {
+			TableItem item = new TableItem(tableDirContent, SWT.NONE);
+			item.setText(new String[] { (tableDirContent.getItemCount() - 1 + 1) + "", ext, fileName });
+			ParserFactory pf = new ParserFactory();
+			try {
+			    ParserInterface pi = pf.getContent(ext.substring(1), fileSelected);
+			    pi.extractSingleFile();
+			    System.out.println(pi.getContents().toString());
+			} catch (UnsupportedFileExtension e) {
+			    LOG.error(e.getMessage());
+			}
+		    }
 		}
 
 		btnOpen.setEnabled(false);

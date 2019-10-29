@@ -12,5 +12,7 @@ public interface ParserInterface {
     List<String> getContents();
 
     File[] finder(final String ext);
-
+        
+    void extractSingleFile();
+    
 }
