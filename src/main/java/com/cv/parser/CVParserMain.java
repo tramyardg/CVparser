@@ -168,5 +168,20 @@ public class CVParserMain {
 	});
 	btnOpen.setBounds(149, 10, 75, 25);
 	btnOpen.setText("Open...");
+	
+	Menu menu = new Menu(shell, SWT.BAR);
+	shell.setMenuBar(menu);
+	
+	MenuItem menuItemFile = new MenuItem(menu, SWT.CASCADE);
+	menuItemFile.setText("File");
+	
+	Menu menuFileHeader = new Menu(menuItemFile);
+	menuItemFile.setMenu(menuFileHeader);
+	
+	MenuItem menuItemReadPublicDir = new MenuItem(menuFileHeader, SWT.NONE);
+	menuItemReadPublicDir.setText("Read from Public Directory");
+	
+	MenuItem menuItemOpenFile = new MenuItem(menuFileHeader, SWT.NONE);
+	menuItemOpenFile.setText("Open File...");
     }
 }
