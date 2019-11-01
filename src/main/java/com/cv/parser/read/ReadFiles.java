@@ -5,6 +5,7 @@ import com.cv.parser.extract.ExtensionSingleton;
 import com.cv.parser.extract.ExtensionSingleton.Ext;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
@@ -12,23 +13,25 @@ import java.io.File;
 import java.util.Arrays;
 
 public class ReadFiles {
-    private Button btnReadDir;
     private File[] filesInPublicDir;
     private Table tableDirContent;
 
     private Button extractBtn;
+    
+    private MenuItem menuItemReadPublicDir;
 
-    public ReadFiles(Button btnReadDir, File[] filesInPublicDir, Table tableDirContent, Button btnExtractContents) {
-        this.btnReadDir = btnReadDir;
-        this.filesInPublicDir = filesInPublicDir;
-        this.tableDirContent = tableDirContent;
-        this.extractBtn = btnExtractContents;
+    public ReadFiles(MenuItem menuItemReadPublicDir, File[] filesInPublicDir, Table tableDirContent,
+	    Button btnExtractContents) {
+	this.menuItemReadPublicDir = menuItemReadPublicDir;
+	this.filesInPublicDir = filesInPublicDir;
+	this.tableDirContent = tableDirContent;
+	this.extractBtn = btnExtractContents;
     }
-
-    public void handleButtonClick() {
-        btnReadDir.addListener(SWT.Selection, arg0 -> {
+    
+    public void handleMenuItemClick() {
+	menuItemReadPublicDir.addListener(SWT.Selection, arg0 -> {
             setFiles();
-            btnReadDir.setEnabled(false);
+            menuItemReadPublicDir.setEnabled(false);
             extractBtn.setEnabled(true);
         });
     }
@@ -43,9 +46,9 @@ public class ReadFiles {
                         ExtensionSingleton.getInstance().get(Ext.PDF), ExtensionSingleton.getInstance().get(Ext.DOCX),
                         ExtensionSingleton.getInstance().get(Ext.DOC)};
                 if (Arrays.asList(fExts).contains(ext)) {
-                    item.setText(new String[]{(i + 1) + "", ext, fileName});
+                    item.setText(new String[]{(i + 1) + "", ext, fileName, ""});
                 } else {
-                    item.setText(new String[]{(i + 1) + "", ext, fileName});
+                    item.setText(new String[]{(i + 1) + "", ext, fileName, "Invalid file extension."});
                     item.setBackground(CVParserSingleton.getInstance().yellow);
                 }
             }

@@ -63,40 +63,69 @@ public class CVParserMain {
 
 	File[] filesInPublicDir = this.resumesStoragePath.listFiles();
 
-	Button btnReadDir = new Button(shell, SWT.NONE);
-	btnReadDir.setBounds(10, 10, 127, 25);
-	btnReadDir.setText("Read files from public");
-
 	Label lblExtensions = new Label(shell, SWT.NONE);
 	lblExtensions.setBounds(426, 15, 289, 15);
 	lblExtensions.setText("Acceptable extensions include .pdf, .doc, .docx");
 
+	// read tables
 	Table tableDirContent = new Table(shell, SWT.BORDER | SWT.FULL_SELECTION);
 	tableDirContent.setBounds(10, 41, 705, 102);
 	tableDirContent.setHeaderVisible(true);
 	tableDirContent.setLinesVisible(true);
-
 	TableColumn tableColumnFileCount = new TableColumn(tableDirContent, SWT.NONE);
 	tableColumnFileCount.setWidth(57);
 	tableColumnFileCount.setText("#");
-
 	TableColumn tableColumnFileType = new TableColumn(tableDirContent, SWT.NONE);
 	tableColumnFileType.setWidth(72);
 	tableColumnFileType.setText("Extension");
-
 	TableColumn tableColumnFileName = new TableColumn(tableDirContent, SWT.NONE);
-	tableColumnFileName.setWidth(535);
+	tableColumnFileName.setWidth(272);
 	tableColumnFileName.setText("File name");
+	TableColumn tblclmnNewColumn = new TableColumn(tableDirContent, SWT.NONE);
+	tblclmnNewColumn.setWidth(255);
+	tblclmnNewColumn.setText("Comment");
 
+	// extracted tables
 	Table tableExtractedContent = new Table(shell, SWT.BORDER | SWT.FULL_SELECTION);
 	tableExtractedContent.setBounds(10, 180, 705, 128);
 	tableExtractedContent.setHeaderVisible(true);
 	tableExtractedContent.setLinesVisible(true);
-
 	TableColumn tableColumnContents = new TableColumn(tableExtractedContent, SWT.NONE);
 	tableColumnContents.setWidth(664);
 	tableColumnContents.setText("Contents");
 
+	//////////////////////////////////////
+	// start menu and menu item
+
+	Menu menu = new Menu(shell, SWT.BAR);
+	shell.setMenuBar(menu);
+	MenuItem menuItemFile = new MenuItem(menu, SWT.CASCADE);
+	menuItemFile.setText("File");
+	Menu menuFileHeader = new Menu(menuItemFile);
+	menuItemFile.setMenu(menuFileHeader);
+	
+	// processed file from public directory
+	MenuItem menuItemReadPublicDir = new MenuItem(menuFileHeader, SWT.NONE);
+	menuItemReadPublicDir.setText("Read from Public Directory");
+	// open single file menu item
+	MenuItem menuItemOpenFile = new MenuItem(menuFileHeader, SWT.NONE);
+	menuItemOpenFile.setText("Open File...");
+	
+	// save as menu item
+	new MenuItem(menuFileHeader, SWT.SEPARATOR);
+	MenuItem menuItemSaveAs = new MenuItem(menuFileHeader, SWT.CASCADE);
+	menuItemSaveAs.setText("Save as...");
+	menuItemSaveAs.setEnabled(false);
+	// save as sub menu item
+	Menu cascadeSaveAsMenuItem = new Menu(menuItemSaveAs);
+	menuItemSaveAs.setMenu(cascadeSaveAsMenuItem);
+	MenuItem menuItemJSON = new MenuItem(cascadeSaveAsMenuItem, SWT.NONE);
+	menuItemJSON.setText("JSON");
+	MenuItem menuItemCSV = new MenuItem(cascadeSaveAsMenuItem, SWT.NONE);
+	menuItemCSV.setText("CSV");
+	
+	//////////////////////////////////////
+	
 	Button btnExtractContents = new Button(shell, SWT.NONE);
 	btnExtractContents.setBounds(10, 149, 705, 25);
 	btnExtractContents.setText("Extract contents");
@@ -113,7 +142,7 @@ public class CVParserMain {
 	btnSaveInCsv.setEnabled(false);
 
 	/* read files in public directory START */
-	new ReadFiles(btnReadDir, filesInPublicDir, tableDirContent, btnExtractContents).handleButtonClick();
+	new ReadFiles(menuItemReadPublicDir, filesInPublicDir, tableDirContent, btnExtractContents).handleMenuItemClick();
 	/* reading END **/
 
 	////////////////////////////////////////
@@ -169,19 +198,5 @@ public class CVParserMain {
 	btnOpen.setBounds(149, 10, 75, 25);
 	btnOpen.setText("Open...");
 	
-	Menu menu = new Menu(shell, SWT.BAR);
-	shell.setMenuBar(menu);
-	
-	MenuItem menuItemFile = new MenuItem(menu, SWT.CASCADE);
-	menuItemFile.setText("File");
-	
-	Menu menuFileHeader = new Menu(menuItemFile);
-	menuItemFile.setMenu(menuFileHeader);
-	
-	MenuItem menuItemReadPublicDir = new MenuItem(menuFileHeader, SWT.NONE);
-	menuItemReadPublicDir.setText("Read from Public Directory");
-	
-	MenuItem menuItemOpenFile = new MenuItem(menuFileHeader, SWT.NONE);
-	menuItemOpenFile.setText("Open File...");
     }
 }
