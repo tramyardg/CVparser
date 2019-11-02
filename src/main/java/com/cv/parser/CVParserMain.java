@@ -63,13 +63,9 @@ public class CVParserMain {
 
 	File[] filesInPublicDir = this.resumesStoragePath.listFiles();
 
-	Label lblExtensions = new Label(shell, SWT.NONE);
-	lblExtensions.setBounds(426, 15, 289, 15);
-	lblExtensions.setText("Acceptable extensions include .pdf, .doc, .docx");
-
 	// read tables
 	Table tableDirContent = new Table(shell, SWT.BORDER | SWT.FULL_SELECTION);
-	tableDirContent.setBounds(10, 41, 705, 102);
+	tableDirContent.setBounds(10, 10, 705, 102);
 	tableDirContent.setHeaderVisible(true);
 	tableDirContent.setLinesVisible(true);
 	TableColumn tableColumnFileCount = new TableColumn(tableDirContent, SWT.NONE);
@@ -123,7 +119,13 @@ public class CVParserMain {
 	menuItemJSON.setText("JSON");
 	MenuItem menuItemCSV = new MenuItem(cascadeSaveAsMenuItem, SWT.NONE);
 	menuItemCSV.setText("CSV");
-	
+	// extract menu item
+	MenuItem mntmExtract = new MenuItem(menu, SWT.CASCADE);
+	mntmExtract.setText("Extract");
+	Menu casecadeExtractMenuItem = new Menu(mntmExtract);
+	mntmExtract.setMenu(casecadeExtractMenuItem);
+	MenuItem mntmExtractPublicDirectory = new MenuItem(casecadeExtractMenuItem, SWT.NONE);
+	mntmExtractPublicDirectory.setText("Extract public directory");
 	//////////////////////////////////////
 	
 	Button btnExtractContents = new Button(shell, SWT.NONE);
@@ -161,14 +163,13 @@ public class CVParserMain {
 	dd.handleButtonSaveInCSV();
 	/* saving contents END */
 
-	Button btnOpen = new Button(shell, SWT.NONE);
-	btnOpen.addSelectionListener(new SelectionAdapter() {
+	menuItemOpenFile.addSelectionListener(new SelectionAdapter() {
 	    @Override
 	    public void widgetSelected(SelectionEvent arg0) {
 		// User has selected to open a single file
 		FileDialog fileDialog = new FileDialog(shell, SWT.OPEN);
 		String selected = fileDialog.open();
-
+		
 		if (selected != null) {
 		    File fileSelected = new File(selected);
 		    String fileName = fileSelected.getName();
@@ -192,11 +193,7 @@ public class CVParserMain {
 		    }
 		}
 
-		btnOpen.setEnabled(false);
 	    }
 	});
-	btnOpen.setBounds(149, 10, 75, 25);
-	btnOpen.setText("Open...");
-	
     }
 }
