@@ -4,7 +4,6 @@ import com.cv.parser.CVParserSingleton;
 import com.cv.parser.extract.ExtensionSingleton;
 import com.cv.parser.extract.ExtensionSingleton.Ext;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
@@ -14,25 +13,23 @@ import java.util.Arrays;
 
 public class ReadFiles {
     private File[] filesInPublicDir;
-    private Table tableDirContent;
-
-    private Button extractBtn;
-    
+    private Table tableDirContent;    
     private MenuItem menuItemReadPublicDir;
+    private MenuItem mntmExtractPublicDirectory;
 
     public ReadFiles(MenuItem menuItemReadPublicDir, File[] filesInPublicDir, Table tableDirContent,
-	    Button btnExtractContents) {
+	    MenuItem mntmExtractPublicDirectory) {
 	this.menuItemReadPublicDir = menuItemReadPublicDir;
 	this.filesInPublicDir = filesInPublicDir;
 	this.tableDirContent = tableDirContent;
-	this.extractBtn = btnExtractContents;
+	this.mntmExtractPublicDirectory = mntmExtractPublicDirectory;
     }
     
     public void handleMenuItemClick() {
 	menuItemReadPublicDir.addListener(SWT.Selection, arg0 -> {
             setFiles();
             menuItemReadPublicDir.setEnabled(false);
-            extractBtn.setEnabled(true);
+            mntmExtractPublicDirectory.setEnabled(true);
         });
     }
 

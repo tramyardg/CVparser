@@ -15,29 +15,29 @@ import java.util.List;
 public class ExtractFiles {
     private final static Logger LOG = LogManager.getLogger();
 
-    private Button btnExtractContents;
     private List<String> superList;
     private Table tableExtractedContent;
     private Button btnSaveInJSON;
     private Button btnSaveInCSV;
+    private MenuItem mntmExtractPublicDirectory;
 
     private Shell mainShell;
     private Label status;
 
     private ParserFactory parserFactory = new ParserFactory();
 
-    public ExtractFiles(Shell shell, Button btnExtractContents, List<String> superList, Table tableExtractedContent,
-	    Button btnSaveInJSON, Button btnSaveInCSV) {
+    public ExtractFiles(Shell shell, MenuItem mntmExtractPublicDirectory, List<String> superList,
+	    Table tableExtractedContent, Button btnSaveInJSON, Button btnSaveInCSV) {
 	this.mainShell = shell;
-	this.btnExtractContents = btnExtractContents;
+	this.mntmExtractPublicDirectory = mntmExtractPublicDirectory;
 	this.superList = superList;
 	this.tableExtractedContent = tableExtractedContent;
 	this.btnSaveInJSON = btnSaveInJSON;
 	this.btnSaveInCSV = btnSaveInCSV;
     }
 
-    public void handleButtonClick() {
-	btnExtractContents.addListener(SWT.Selection, arg0 -> {
+    public void handleMenuItemClick() {
+	mntmExtractPublicDirectory.addListener(SWT.Selection, arg0 -> {
 
 	    Shell doneShell = new Shell(mainShell, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 	    RowLayout rowLayout = new RowLayout();
@@ -59,7 +59,6 @@ public class ExtractFiles {
 	    displayDocumentsInTable();
 	    status.setText("Finished!");
 
-	    btnExtractContents.setEnabled(false);
 	    btnSaveInJSON.setEnabled(true);
 	    btnSaveInCSV.setEnabled(true);
 

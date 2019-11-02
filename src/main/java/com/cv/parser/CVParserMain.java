@@ -126,12 +126,9 @@ public class CVParserMain {
 	mntmExtract.setMenu(casecadeExtractMenuItem);
 	MenuItem mntmExtractPublicDirectory = new MenuItem(casecadeExtractMenuItem, SWT.NONE);
 	mntmExtractPublicDirectory.setText("Extract public directory");
+	mntmExtractPublicDirectory.setEnabled(false);
 	//////////////////////////////////////
-	
-	Button btnExtractContents = new Button(shell, SWT.NONE);
-	btnExtractContents.setBounds(10, 149, 705, 25);
-	btnExtractContents.setText("Extract contents");
-	btnExtractContents.setEnabled(false);
+
 
 	Button btnSaveAsJSON = new Button(shell, SWT.NONE);
 	btnSaveAsJSON.setBounds(10, 314, 705, 25);
@@ -144,15 +141,15 @@ public class CVParserMain {
 	btnSaveInCsv.setEnabled(false);
 
 	/* read files in public directory START */
-	new ReadFiles(menuItemReadPublicDir, filesInPublicDir, tableDirContent, btnExtractContents).handleMenuItemClick();
+	new ReadFiles(menuItemReadPublicDir, filesInPublicDir, tableDirContent, mntmExtractPublicDirectory).handleMenuItemClick();
 	/* reading END **/
 
 	////////////////////////////////////////
 
 	/* extract file content from directory START */
 	List<String> superList = new ArrayList<>();
-	new ExtractFiles(shell, btnExtractContents, superList, tableExtractedContent, btnSaveAsJSON, btnSaveInCsv)
-		.handleButtonClick();
+	new ExtractFiles(shell, mntmExtractPublicDirectory, superList, tableExtractedContent, btnSaveAsJSON, btnSaveInCsv)
+	.handleMenuItemClick();
 	/* extracting END */
 
 	//////////////////////////////////////
