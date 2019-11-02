@@ -135,16 +135,6 @@ public class CVParserMain {
 	//////////////////////////////////////
 
 
-	Button btnSaveAsJSON = new Button(shell, SWT.NONE);
-	btnSaveAsJSON.setBounds(10, 314, 705, 25);
-	btnSaveAsJSON.setText("Save in JSON file");
-	btnSaveAsJSON.setEnabled(false);
-
-	Button btnSaveInCsv = new Button(shell, SWT.NONE);
-	btnSaveInCsv.setBounds(10, 345, 705, 25);
-	btnSaveInCsv.setText("Save in CSV file");
-	btnSaveInCsv.setEnabled(false);
-
 	/* read files in public directory START */
 	new ReadFiles(menuItemReadPublicDir, filesInPublicDir, tableDirContent, mntmExtractPublicDirectory).handleMenuItemClick();
 	/* reading END **/
@@ -153,14 +143,14 @@ public class CVParserMain {
 
 	/* extract file content from directory START */
 	List<String> superList = new ArrayList<>();
-	new ExtractFiles(shell, mntmExtractPublicDirectory, superList, tableExtractedContent, btnSaveAsJSON, btnSaveInCsv)
+	new ExtractFiles(shell, mntmExtractPublicDirectory, superList, tableExtractedContent, menuItemJSON, menuItemCSV)
 	.handleMenuItemClick();
 	/* extracting END */
 
 	//////////////////////////////////////
 
 	/* saving contents START */
-	DocumentDetails dd = new DocumentDetails(btnSaveAsJSON, btnSaveInCsv, superList);
+	DocumentDetails dd = new DocumentDetails(menuItemJSON, menuItemCSV, superList);
 	dd.handleButtonSaveInJSON();
 	dd.handleButtonSaveInCSV();
 	/* saving contents END */

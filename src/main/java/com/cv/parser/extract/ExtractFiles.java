@@ -17,8 +17,8 @@ public class ExtractFiles {
 
     private List<String> superList;
     private Table tableExtractedContent;
-    private Button btnSaveInJSON;
-    private Button btnSaveInCSV;
+    private MenuItem menuItemJSON;
+    private MenuItem menuItemCSV;
     private MenuItem mntmExtractPublicDirectory;
 
     private Shell mainShell;
@@ -27,13 +27,13 @@ public class ExtractFiles {
     private ParserFactory parserFactory = new ParserFactory();
 
     public ExtractFiles(Shell shell, MenuItem mntmExtractPublicDirectory, List<String> superList,
-	    Table tableExtractedContent, Button btnSaveInJSON, Button btnSaveInCSV) {
+	    Table tableExtractedContent, MenuItem menuItemJSON, MenuItem menuItemCSV) {
 	this.mainShell = shell;
 	this.mntmExtractPublicDirectory = mntmExtractPublicDirectory;
 	this.superList = superList;
 	this.tableExtractedContent = tableExtractedContent;
-	this.btnSaveInJSON = btnSaveInJSON;
-	this.btnSaveInCSV = btnSaveInCSV;
+	this.menuItemJSON = menuItemJSON;
+	this.menuItemCSV = menuItemCSV;
     }
 
     public void handleMenuItemClick() {
@@ -59,8 +59,7 @@ public class ExtractFiles {
 	    displayDocumentsInTable();
 	    status.setText("Finished!");
 
-	    btnSaveInJSON.setEnabled(true);
-	    btnSaveInCSV.setEnabled(true);
+	    enabledSaveAsMenuItems();
 
 	    doneShell.pack();
 	    doneShell.open();
@@ -72,6 +71,11 @@ public class ExtractFiles {
 	    doneShell.setLocation(shellBounds.x + (shellBounds.width - dialogSize.x) / 2,
 		    shellBounds.y + (shellBounds.height - dialogSize.y) / 2);
 	});
+    }
+    
+    private void enabledSaveAsMenuItems() {
+	menuItemJSON.setEnabled(true);
+	menuItemCSV.setEnabled(true);
     }
 
     // display extracted documents in table

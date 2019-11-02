@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.MenuItem;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -23,12 +23,12 @@ public class DocumentDetails {
     private List<ApplicantDocument> applicantDocumentList = new ArrayList<>();
 
     private List<String> superList;
-    private Button btnSaveInJSON;
-    private Button btnSaveInCSV;
+    private MenuItem menuItemJSON;
+    private MenuItem menuItemCSV;
 
-    public DocumentDetails(Button btnSaveDocumentsToDb, Button btnSaveInCsv, List<String> superList) {
-        this.btnSaveInJSON = btnSaveDocumentsToDb;
-        this.btnSaveInCSV = btnSaveInCsv;
+    public DocumentDetails(MenuItem menuItemJSON, MenuItem menuItemCSV, List<String> superList) {
+        this.menuItemJSON = menuItemJSON;
+        this.menuItemCSV = menuItemCSV;
         this.superList = superList;
     }
 
@@ -66,7 +66,7 @@ public class DocumentDetails {
     }
 
     public void handleButtonSaveInJSON() {
-        btnSaveInJSON.addListener(SWT.Selection, arg0 -> {
+        menuItemJSON.addListener(SWT.Selection, arg0 -> {
             storeDocumentAsString();
 
             // For debugging print processed output
@@ -78,7 +78,7 @@ public class DocumentDetails {
             WriteToFile writeToFile = new WriteToFile();
             writeToFile.writeToJSON((new JSONObject(map)).toString());
             if (writeToFile.isHasUpdated()) {
-                btnSaveInJSON.setEnabled(false);
+        	menuItemJSON.setEnabled(false);
                 LOG.info("Write to JSON file success!");
             }
             this.applicantDocumentList.clear();
@@ -86,12 +86,12 @@ public class DocumentDetails {
     }
 
     public void handleButtonSaveInCSV() {
-        btnSaveInCSV.addListener(SWT.Selection, arg0 -> {
+        menuItemCSV.addListener(SWT.Selection, arg0 -> {
             storeDocumentAsString();
             WriteToFile writeToFile = new WriteToFile();
             writeToFile.writeToCSV(getProcessedCandidates());
             if (writeToFile.isHasUpdated()) {
-                btnSaveInCSV.setEnabled(false);
+        	menuItemCSV.setEnabled(false);
                 LOG.info("Write to CSV file success!");
             }
             this.applicantDocumentList.clear();
