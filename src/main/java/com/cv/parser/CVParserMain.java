@@ -107,19 +107,12 @@ public class CVParserMain {
 	MenuItem menuItemOpenFile = new MenuItem(menuFileHeader, SWT.NONE);
 	menuItemOpenFile.setText("Open File...");
 	
-	// save as menu item
+	// separator and Exit menu item
 	new MenuItem(menuFileHeader, SWT.SEPARATOR);
-	MenuItem menuItemSaveAs = new MenuItem(menuFileHeader, SWT.CASCADE);
-	menuItemSaveAs.setText("Save as...");
-	menuItemSaveAs.setEnabled(false);
-	// save as sub menu item
-	Menu cascadeSaveAsMenuItem = new Menu(menuItemSaveAs);
-	menuItemSaveAs.setMenu(cascadeSaveAsMenuItem);
-	MenuItem menuItemJSON = new MenuItem(cascadeSaveAsMenuItem, SWT.NONE);
-	menuItemJSON.setText("JSON");
-	MenuItem menuItemCSV = new MenuItem(cascadeSaveAsMenuItem, SWT.NONE);
-	menuItemCSV.setText("CSV");
-	// extract menu item
+	MenuItem mntmExit = new MenuItem(menuFileHeader, SWT.NONE);
+	mntmExit.setText("Exit");
+	
+	// Extract menu item
 	MenuItem mntmExtract = new MenuItem(menu, SWT.CASCADE);
 	mntmExtract.setText("Extract");
 	Menu casecadeExtractMenuItem = new Menu(mntmExtract);
@@ -127,6 +120,18 @@ public class CVParserMain {
 	MenuItem mntmExtractPublicDirectory = new MenuItem(casecadeExtractMenuItem, SWT.NONE);
 	mntmExtractPublicDirectory.setText("Extract public directory");
 	mntmExtractPublicDirectory.setEnabled(false);
+	
+	// Save As... menu item
+	MenuItem mntmSave = new MenuItem(menu, SWT.CASCADE);
+	mntmSave.setText("Save As...");
+	Menu cascadeSaveAsMenuItem = new Menu(mntmSave);
+	mntmSave.setMenu(cascadeSaveAsMenuItem);
+	MenuItem menuItemJSON = new MenuItem(cascadeSaveAsMenuItem, SWT.NONE);
+	menuItemJSON.setText("JSON");
+	menuItemJSON.setEnabled(false);
+	MenuItem menuItemCSV = new MenuItem(cascadeSaveAsMenuItem, SWT.NONE);
+	menuItemCSV.setText("CSV");
+	menuItemCSV.setEnabled(false);
 	//////////////////////////////////////
 
 
@@ -192,5 +197,7 @@ public class CVParserMain {
 
 	    }
 	});
+	
     }
+    
 }
