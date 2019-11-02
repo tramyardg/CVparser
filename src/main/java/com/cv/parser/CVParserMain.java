@@ -6,6 +6,8 @@ import com.cv.parser.extract.ExtractFiles;
 import com.cv.parser.extract.ParserFactory;
 import com.cv.parser.extract.ParserInterface;
 import com.cv.parser.extract.ExtensionSingleton.Ext;
+import com.cv.parser.menu.FileMenu;
+import com.cv.parser.menu.SaveAsMenu;
 import com.cv.parser.read.ReadFiles;
 import com.cv.parser.read.ValidateRead;
 import org.apache.logging.log4j.LogManager;
@@ -25,8 +27,6 @@ public class CVParserMain {
 
     private File resumesStoragePath = new File(CVParserSingleton.getInstance().resumesStoragePath);
     private Shell shell;
-    private Menu menu;
-    private SaveAsMenu saveAsMenu;
     
     public static void main(String[] args) {
 	try {
@@ -95,24 +95,11 @@ public class CVParserMain {
 	//////////////////////////////////////
 	// start menu and menu item
 
-	menu = new Menu(shell, SWT.BAR);
+	Menu menu = new Menu(shell, SWT.BAR);
 	shell.setMenuBar(menu);
-	MenuItem menuItemFile = new MenuItem(menu, SWT.CASCADE);
-	menuItemFile.setText("File");
-	Menu menuFileHeader = new Menu(menuItemFile);
-	menuItemFile.setMenu(menuFileHeader);
 	
-	// processed file from public directory
-	MenuItem menuItemReadPublicDir = new MenuItem(menuFileHeader, SWT.NONE);
-	menuItemReadPublicDir.setText("Read from Public Directory");
-	// open single file menu item
-	MenuItem menuItemOpenFile = new MenuItem(menuFileHeader, SWT.NONE);
-	menuItemOpenFile.setText("Open File...");
-	
-	// separator and Exit menu item
-	new MenuItem(menuFileHeader, SWT.SEPARATOR);
-	MenuItem mntmExit = new MenuItem(menuFileHeader, SWT.NONE);
-	mntmExit.setText("Exit");
+	FileMenu fileMenu = new FileMenu(menu);
+	fileMenu.create();
 	
 	// Extract menu item
 	MenuItem mntmExtract = new MenuItem(menu, SWT.CASCADE);
@@ -124,13 +111,13 @@ public class CVParserMain {
 	mntmExtractPublicDirectory.setEnabled(false);
 		
 	// Save As... menu and menu item
-	saveAsMenu = new SaveAsMenu(menu);
+	SaveAsMenu saveAsMenu = new SaveAsMenu(menu);
 	saveAsMenu.create();
 	//////////////////////////////////////
 
 
 	/* read files in public directory START */
-	new ReadFiles(menuItemReadPublicDir, filesInPublicDir, tableDirContent, mntmExtractPublicDirectory).handleMenuItemClick();
+	new ReadFiles(fileMenu.getMenuItemReadPublicDir(), filesInPublicDir, tableDirContent, mntmExtractPublicDirectory).handleMenuItemClick();
 	/* reading END **/
 
 	////////////////////////////////////////
@@ -149,7 +136,7 @@ public class CVParserMain {
 	dd.handleButtonSaveInCSV();
 	/* saving contents END */
 
-	menuItemOpenFile.addSelectionListener(new SelectionAdapter() {
+	fileMenu.getMenuItemOpenFile().addSelectionListener(new SelectionAdapter() {
 	    @Override
 	    public void widgetSelected(SelectionEvent arg0) {
 		// User has selected to open a single file
@@ -182,14 +169,14 @@ public class CVParserMain {
 	    }
 	});
 	
-	exit(mntmExit);
+	fileMenu.exit();
 	
     }
     
-    private void exit(MenuItem menuItemExit) {
-	menuItemExit.addListener(SWT.Selection, arg0 -> {
-	    System.exit(0);
-	});
-    }
+//    private void exit(MenuItem menuItemExit) {
+//	menuItemExit.addListener(SWT.Selection, arg0 -> {
+//	    System.exit(0);
+//	});
+//    }
     
 }

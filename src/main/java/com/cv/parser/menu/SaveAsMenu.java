@@ -1,4 +1,4 @@
-package com.cv.parser;
+package com.cv.parser.menu;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Menu;
