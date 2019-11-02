@@ -188,6 +188,14 @@ public class CVParserMain {
 	    }
 	});
 	
+	exit(mntmExit);
+	
+    }
+    
+    public void exit(MenuItem menuItemExit) {
+	menuItemExit.addListener(SWT.Selection, arg0 -> {
+	    System.exit(0);
+	});
     }
     
 }

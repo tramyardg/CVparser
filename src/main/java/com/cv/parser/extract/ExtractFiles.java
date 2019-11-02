@@ -74,6 +74,7 @@ public class ExtractFiles {
     }
     
     private void enabledSaveAsMenuItems() {
+	mntmExtractPublicDirectory.setEnabled(false);
 	menuItemJSON.setEnabled(true);
 	menuItemCSV.setEnabled(true);
     }
