@@ -25,7 +25,9 @@ public class CVParserMain {
 
     private File resumesStoragePath = new File(CVParserSingleton.getInstance().resumesStoragePath);
     private Shell shell;
-
+    private Menu menu;
+    private SaveAsMenu saveAsMenu;
+    
     public static void main(String[] args) {
 	try {
 	    CVParserMain window = new CVParserMain();
@@ -93,7 +95,7 @@ public class CVParserMain {
 	//////////////////////////////////////
 	// start menu and menu item
 
-	Menu menu = new Menu(shell, SWT.BAR);
+	menu = new Menu(shell, SWT.BAR);
 	shell.setMenuBar(menu);
 	MenuItem menuItemFile = new MenuItem(menu, SWT.CASCADE);
 	menuItemFile.setText("File");
@@ -120,18 +122,10 @@ public class CVParserMain {
 	MenuItem mntmExtractPublicDirectory = new MenuItem(casecadeExtractMenuItem, SWT.NONE);
 	mntmExtractPublicDirectory.setText("Extract public directory");
 	mntmExtractPublicDirectory.setEnabled(false);
-	
-	// Save As... menu item
-	MenuItem mntmSave = new MenuItem(menu, SWT.CASCADE);
-	mntmSave.setText("Save As...");
-	Menu cascadeSaveAsMenuItem = new Menu(mntmSave);
-	mntmSave.setMenu(cascadeSaveAsMenuItem);
-	MenuItem menuItemJSON = new MenuItem(cascadeSaveAsMenuItem, SWT.NONE);
-	menuItemJSON.setText("JSON");
-	menuItemJSON.setEnabled(false);
-	MenuItem menuItemCSV = new MenuItem(cascadeSaveAsMenuItem, SWT.NONE);
-	menuItemCSV.setText("CSV");
-	menuItemCSV.setEnabled(false);
+		
+	// Save As... menu and menu item
+	saveAsMenu = new SaveAsMenu(menu);
+	saveAsMenu.create();
 	//////////////////////////////////////
 
 
@@ -143,14 +137,14 @@ public class CVParserMain {
 
 	/* extract file content from directory START */
 	List<String> superList = new ArrayList<>();
-	new ExtractFiles(shell, mntmExtractPublicDirectory, superList, tableExtractedContent, menuItemJSON, menuItemCSV)
+	new ExtractFiles(shell, mntmExtractPublicDirectory, superList, tableExtractedContent, saveAsMenu.getMenuItemJSON(), saveAsMenu.getMenuItemCSV())
 	.handleMenuItemClick();
 	/* extracting END */
 
 	//////////////////////////////////////
 
 	/* saving contents START */
-	DocumentDetails dd = new DocumentDetails(menuItemJSON, menuItemCSV, superList);
+	DocumentDetails dd = new DocumentDetails(saveAsMenu.getMenuItemJSON(), saveAsMenu.getMenuItemCSV(), superList);
 	dd.handleButtonSaveInJSON();
 	dd.handleButtonSaveInCSV();
 	/* saving contents END */
@@ -192,7 +186,7 @@ public class CVParserMain {
 	
     }
     
-    public void exit(MenuItem menuItemExit) {
+    private void exit(MenuItem menuItemExit) {
 	menuItemExit.addListener(SWT.Selection, arg0 -> {
 	    System.exit(0);
 	});
