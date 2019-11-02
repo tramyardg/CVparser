@@ -6,6 +6,7 @@ import com.cv.parser.extract.ExtractFiles;
 import com.cv.parser.extract.ParserFactory;
 import com.cv.parser.extract.ParserInterface;
 import com.cv.parser.extract.ExtensionSingleton.Ext;
+import com.cv.parser.menu.ExtractMenu;
 import com.cv.parser.menu.FileMenu;
 import com.cv.parser.menu.SaveAsMenu;
 import com.cv.parser.read.ReadFiles;
@@ -93,38 +94,30 @@ public class CVParserMain {
 	tableColumnContents.setText("Contents");
 
 	//////////////////////////////////////
-	// start menu and menu item
-
+	// menus and menu items
 	Menu menu = new Menu(shell, SWT.BAR);
 	shell.setMenuBar(menu);
-	
 	FileMenu fileMenu = new FileMenu(menu);
 	fileMenu.create();
-	
 	// Extract menu item
-	MenuItem mntmExtract = new MenuItem(menu, SWT.CASCADE);
-	mntmExtract.setText("Extract");
-	Menu casecadeExtractMenuItem = new Menu(mntmExtract);
-	mntmExtract.setMenu(casecadeExtractMenuItem);
-	MenuItem mntmExtractPublicDirectory = new MenuItem(casecadeExtractMenuItem, SWT.NONE);
-	mntmExtractPublicDirectory.setText("Extract public directory");
-	mntmExtractPublicDirectory.setEnabled(false);
-		
+	ExtractMenu extractMenu = new ExtractMenu(menu);
+	extractMenu.create();
 	// Save As... menu and menu item
 	SaveAsMenu saveAsMenu = new SaveAsMenu(menu);
 	saveAsMenu.create();
+	// end
 	//////////////////////////////////////
 
 
 	/* read files in public directory START */
-	new ReadFiles(fileMenu.getMenuItemReadPublicDir(), filesInPublicDir, tableDirContent, mntmExtractPublicDirectory).handleMenuItemClick();
+	new ReadFiles(fileMenu.getMenuItemReadPublicDir(), filesInPublicDir, tableDirContent, extractMenu.getMntmExtractPublicDirectory()).handleMenuItemClick();
 	/* reading END **/
 
 	////////////////////////////////////////
 
 	/* extract file content from directory START */
 	List<String> superList = new ArrayList<>();
-	new ExtractFiles(shell, mntmExtractPublicDirectory, superList, tableExtractedContent, saveAsMenu.getMenuItemJSON(), saveAsMenu.getMenuItemCSV())
+	new ExtractFiles(shell, extractMenu.getMntmExtractPublicDirectory(), superList, tableExtractedContent, saveAsMenu.getMenuItemJSON(), saveAsMenu.getMenuItemCSV())
 	.handleMenuItemClick();
 	/* extracting END */
 
@@ -172,11 +165,5 @@ public class CVParserMain {
 	fileMenu.exit();
 	
     }
-    
-//    private void exit(MenuItem menuItemExit) {
-//	menuItemExit.addListener(SWT.Selection, arg0 -> {
-//	    System.exit(0);
-//	});
-//    }
     
 }
