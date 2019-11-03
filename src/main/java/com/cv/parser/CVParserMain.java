@@ -59,7 +59,7 @@ public class CVParserMain {
 
     private void createContents() throws NullPointerException {
 	shell = new Shell();
-	shell.setSize(741, 544);
+	shell.setSize(741, 461);
 	shell.setText("Resume Parser Application");
 
 	new ValidateRead(shell).validateBeforeRead();
@@ -68,7 +68,7 @@ public class CVParserMain {
 
 	// read tables
 	Table tableDirContent = new Table(shell, SWT.BORDER | SWT.FULL_SELECTION);
-	tableDirContent.setBounds(10, 10, 705, 102);
+	tableDirContent.setBounds(10, 10, 705, 164);
 	tableDirContent.setHeaderVisible(true);
 	tableDirContent.setLinesVisible(true);
 	TableColumn tableColumnFileCount = new TableColumn(tableDirContent, SWT.NONE);
@@ -86,7 +86,7 @@ public class CVParserMain {
 
 	// extracted tables
 	Table tableExtractedContent = new Table(shell, SWT.BORDER | SWT.FULL_SELECTION);
-	tableExtractedContent.setBounds(10, 180, 705, 128);
+	tableExtractedContent.setBounds(10, 180, 705, 206);
 	tableExtractedContent.setHeaderVisible(true);
 	tableExtractedContent.setLinesVisible(true);
 	TableColumn tableColumnContents = new TableColumn(tableExtractedContent, SWT.NONE);
