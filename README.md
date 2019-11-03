@@ -4,7 +4,7 @@
 - [Features](#features)
 - [Regular expression](#regular-expression)
 - [Extracted Resume Sections](#extracted-resume-sections)
-- [Screenshots](#screenshot)
+- [Screenshots](#screenshots)
 - [Sample Output](#sample-output)
 - [Dependencies](#dependencies)
 - [Usage](#usage)
@@ -35,8 +35,11 @@ section.
 - Education: candidate education
 - Skills: candidate skills and/or expertise
 
-## Screenshot
-![image](https://user-images.githubusercontent.com/5623994/53571858-e30c8780-3b37-11e9-89c6-e0cc7aca0031.png)
+## Screenshots
+![image](https://user-images.githubusercontent.com/5623994/68088591-b9c29a80-fe2e-11e9-8030-f77765fdf6a2.png)
+
+![image](https://user-images.githubusercontent.com/5623994/68088651-1756e700-fe2f-11e9-8d2b-a998003c661e.png)
+
 
 ## Sample Output
 Unformatted output of three candidates. 
