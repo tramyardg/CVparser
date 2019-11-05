@@ -67,31 +67,13 @@ public class CVParserMain {
 	File[] filesInPublicDir = this.resumesStoragePath.listFiles();
 
 	// read tables
+
 	Table tableDirContent = new Table(shell, SWT.BORDER | SWT.FULL_SELECTION);
-	tableDirContent.setBounds(10, 10, 705, 164);
-	tableDirContent.setHeaderVisible(true);
-	tableDirContent.setLinesVisible(true);
-	TableColumn tableColumnFileCount = new TableColumn(tableDirContent, SWT.NONE);
-	tableColumnFileCount.setWidth(57);
-	tableColumnFileCount.setText("#");
-	TableColumn tableColumnFileType = new TableColumn(tableDirContent, SWT.NONE);
-	tableColumnFileType.setWidth(72);
-	tableColumnFileType.setText("Extension");
-	TableColumn tableColumnFileName = new TableColumn(tableDirContent, SWT.NONE);
-	tableColumnFileName.setWidth(272);
-	tableColumnFileName.setText("File name");
-	TableColumn tblclmnNewColumn = new TableColumn(tableDirContent, SWT.NONE);
-	tblclmnNewColumn.setWidth(255);
-	tblclmnNewColumn.setText("Comment");
+	createTablePublicDir(tableDirContent);
 
 	// extracted tables
 	Table tableExtractedContent = new Table(shell, SWT.BORDER | SWT.FULL_SELECTION);
-	tableExtractedContent.setBounds(10, 180, 705, 206);
-	tableExtractedContent.setHeaderVisible(true);
-	tableExtractedContent.setLinesVisible(true);
-	TableColumn tableColumnContents = new TableColumn(tableExtractedContent, SWT.NONE);
-	tableColumnContents.setWidth(664);
-	tableColumnContents.setText("Contents");
+	createTableExtractedContent(tableExtractedContent);
 
 	//////////////////////////////////////
 	// menus and menu items
@@ -166,4 +148,30 @@ public class CVParserMain {
 	
     }
     
+    private void createTablePublicDir(Table tableDirContent) {
+	tableDirContent.setBounds(10, 10, 705, 164);
+	tableDirContent.setHeaderVisible(true);
+	tableDirContent.setLinesVisible(true);
+	TableColumn tableColumnFileCount = new TableColumn(tableDirContent, SWT.NONE);
+	tableColumnFileCount.setWidth(57);
+	tableColumnFileCount.setText("#");
+	TableColumn tableColumnFileType = new TableColumn(tableDirContent, SWT.NONE);
+	tableColumnFileType.setWidth(72);
+	tableColumnFileType.setText("Extension");
+	TableColumn tableColumnFileName = new TableColumn(tableDirContent, SWT.NONE);
+	tableColumnFileName.setWidth(272);
+	tableColumnFileName.setText("File name");
+	TableColumn tblclmnNewColumn = new TableColumn(tableDirContent, SWT.NONE);
+	tblclmnNewColumn.setWidth(255);
+	tblclmnNewColumn.setText("Comment");
+    }
+    
+    private void createTableExtractedContent(Table tableExtractedContent) {
+	tableExtractedContent.setBounds(10, 180, 705, 206);
+	tableExtractedContent.setHeaderVisible(true);
+	tableExtractedContent.setLinesVisible(true);
+	TableColumn tableColumnContents = new TableColumn(tableExtractedContent, SWT.NONE);
+	tableColumnContents.setWidth(664);
+	tableColumnContents.setText("Contents");
+    }
 }
